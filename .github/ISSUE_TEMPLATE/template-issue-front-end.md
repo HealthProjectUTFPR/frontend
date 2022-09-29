@@ -1,7 +1,7 @@
 ---
-name: Issue Front-end
+name: Template Issue Front-end
 about: Template padrão de Issues do Front-end
-title: Issue Front-end
+title: Listagem de blablabla
 labels: ''
 assignees: ''
 
