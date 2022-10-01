@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="scrollbar bg-white h-screen overflow-y-auto top-0 lg:relative"
+    class="scrollbar top-0 h-screen overflow-y-auto bg-white lg:relative"
     :class="[
       style[mobilePosition],
       state.open
@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import SidenavItems from './Items.vue'
-import SidenavHeader from './Header.vue'
+import SidenavItems from './Items.vue';
+import SidenavHeader from './Header.vue';
 
 export default {
   name: 'SideNavigation',
@@ -35,9 +35,9 @@ export default {
         left: 'left-0',
         right: 'right-0',
       },
-    }
+    };
   },
-}
+};
 </script>
 
 <style scoped>
