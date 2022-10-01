@@ -1,12 +1,9 @@
 <template>
-  <div>
-    Hello
-  </div>
+  <div>Hello</div>
 </template>
 
 <script>
-
 export default {
-  components: {}
-}
+  name: 'IndexPage',
+};
 </script>

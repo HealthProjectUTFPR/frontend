@@ -1,15 +1,5 @@
 <template>
-  <div class="
-      bg-white
-      flex
-      items-center
-      justify-center
-      pt-6
-      sticky
-      top-0
-      pb-6
-      z-10
-    ">
+  <div class="sticky top-0 z-10 flex items-center justify-center bg-white py-6">
     <nuxt-link to="/">
       <img src="/images/logo_utfpr.png" width="150" />
     </nuxt-link>

@@ -5,9 +5,10 @@
 </template>
 
 <script>
-import FormCreateSarcopenia from '../../../components/evaluationForms/sarcopenia'
+import FormCreateSarcopenia from '@/components/evaluationForms/sarcopenia/index.vue';
 
 export default {
-  components: {FormCreateSarcopenia}
-}
+  name: 'SarcopeniaForm',
+  components: { FormCreateSarcopenia },
+};
 </script>
