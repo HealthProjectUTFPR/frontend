@@ -1,13 +1,12 @@
 <template>
   <div>
-    <ExampleForm />
+    Hello
   </div>
 </template>
 
 <script>
-import ExampleForm from '../components/evaluationForms/example.vue'
 
 export default {
-  components: {ExampleForm}
+  components: {}
 }
 </script>
