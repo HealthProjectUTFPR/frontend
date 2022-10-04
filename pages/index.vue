@@ -5,9 +5,10 @@
 </template>
 
 <script>
-  import FragilityForm from "@/components/evaluationsForms/FragilityForm.vue";
+import FragilityForm from '@/components/evaluationsForms/fragilityForm/FragilityForm.vue';
 
 export default {
-  components: {FragilityForm}
-}
+  name: 'IndexPage',
+  components: { FragilityForm },
+};
 </script>
