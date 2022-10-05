@@ -1,14 +1,14 @@
 <template>
   <div>
-    <FragilityForm />
+    <BalanceForm />
   </div>
 </template>
 
 <script>
-import FragilityForm from '@/components/evaluationsForms/fragilityForm/FragilityForm.vue';
+import BalanceForm from '@/components/evaluationsForms/balanceForm/BalanceForm.vue';
 
 export default {
   name: 'IndexPage',
-  components: { FragilityForm },
+  components: { BalanceForm },
 };
 </script>
