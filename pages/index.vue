@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import BalanceForm from '@/components/evaluationsForms/balanceForm/BalanceForm.vue';
+import BalanceForm from '@/components/evaluationsForms/balanceForm/index.vue';
 
 export default {
   name: 'IndexPage',
