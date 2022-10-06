@@ -100,12 +100,12 @@
         </el-form-item>
 
         <el-form-item
-          label="Circunferencia de panturrilha (kg/m²)"
+          label="Circunferencia de panturrilha"
           prop="calfCircumference"
         >
           <el-input
             v-model.number="sarcopeniaForm.calfCircumference"
-            placeholder="Circunferencia de panturrilha (kg/m²)"
+            placeholder="Circunferencia de panturrilha"
             type="number"
             min="0"
             step=".01"
@@ -151,6 +151,10 @@
 </template>
 
 <script>
+import moment from 'moment';
+
+moment.locale('pt');
+
 export default {
   name: 'ExampleForm',
   data() {
@@ -163,8 +167,8 @@ export default {
       },
       calculated: false,
       hasSarcopenia: true,
-      indexOfMeasuredMuscleMassPerStature: 0, // measuredMuscleMass / (estatura*estatura)
-      indexOfEstimatedMuscleMassPerStature: 0, // estimatedMuscleMass / (estatura*estatura)
+      indexOfMeasuredMuscleMassPerStature: 0,
+      indexOfEstimatedMuscleMassPerStature: 0,
       sarcopeniaForm: {
         date: '',
         weight: '',
@@ -267,15 +271,91 @@ export default {
     'sarcopeniaForm.weight': {
       handler(newWeight) {
         this.sarcopeniaForm.estimatedMuscleMass =
-          this.calculateEstimatedMuscleMass(newWeight);
+          +this.calculateEstimatedMuscleMass(newWeight);
       },
     },
+    'sarcopeniaForm.measuredMuscleMass': {
+      handler(newMeasuredMuscleMass) {
+        this.indexOfMeasuredMuscleMassPerStature =
+          this.calculateIndexOfMeasuredMuscleMassPerStature(
+            newMeasuredMuscleMass,
+          );
+      },
+    },
+    'sarcopeniaForm.estimatedMuscleMass': {
+      handler(newEstimatedMuscleMass) {
+        this.indexOfEstimatedMuscleMassPerStature =
+          this.calculateIndexOfEstimatedMuscleMassPerStature(
+            newEstimatedMuscleMass,
+          );
+      },
+    },
+    indexOfEstimatedMuscleMassPerStature: {
+      handler(newIndexOfEstimatedMuscleMassPerStature) {
+        if (!this.indexOfMeasuredMuscleMassPerStature) {
+          this.sarcopeniaForm.muscleMassIndex =
+            newIndexOfEstimatedMuscleMassPerStature.toFixed(2);
+        }
+      },
+    },
+    indexOfMeasuredMuscleMassPerStature: {
+      handler(newIndexOfMeasuredMuscleMassPerStature) {
+        this.calculateMuscleMassIndex(
+          newIndexOfMeasuredMuscleMassPerStature,
+          this.indexOfEstimatedMuscleMassPerStature,
+        );
+      },
+    },
+    sarcopeniaForm: {
+      handler() {
+        this.classifyResult();
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    this.sarcopeniaForm.estimatedMuscleMass = this.calculateEstimatedMuscleMass(
+      this.sarcopeniaForm.weight,
+    );
+
+    this.indexOfMeasuredMuscleMassPerStature =
+      this.calculateIndexOfMeasuredMuscleMassPerStature(
+        this.sarcopeniaForm.measuredMuscleMass,
+      );
+    this.indexOfEstimatedMuscleMassPerStature =
+      this.calculateIndexOfEstimatedMuscleMassPerStature(
+        this.sarcopeniaForm.estimatedMuscleMass,
+      );
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.calculated = true;
+          const {
+            date,
+            weight,
+            measuredMuscleMass,
+            estimatedMuscleMass,
+            walkingSpeed,
+            handgripStrength,
+            calfCircumference,
+            muscleMassIndex,
+          } = this.sarcopeniaForm;
+
+          const parsedDate = moment(date);
+
+          alert(
+            JSON.stringify({
+              weight,
+              measuredMuscleMass,
+              estimatedMuscleMass,
+              walkingSpeed,
+              handgripStrength,
+              calfCircumference,
+              muscleMassIndex,
+              parsedDate,
+            }),
+          );
         }
         return false;
       });
@@ -285,6 +365,8 @@ export default {
       this.calculated = false;
     },
     calculateEstimatedMuscleMass(newWeight) {
+      if (!newWeight) return '';
+
       const sexValue = this.mockup.sex === 'Homem' ? 1 : 0;
       let raceValue = 1.4;
 
@@ -301,6 +383,76 @@ export default {
         0.098 * this.mockup.age +
         (raceValue - 3.3)
       ).toFixed(3);
+    },
+    calculateIndexOfMeasuredMuscleMassPerStature(measuredMuscleMass) {
+      return measuredMuscleMass / this.mockup.height ** 2;
+    },
+    calculateIndexOfEstimatedMuscleMassPerStature(estimatedMuscleMass) {
+      return estimatedMuscleMass / this.mockup.height ** 2;
+    },
+    calculateMuscleMassIndex(
+      indexOfMeasuredMuscleMassPerStature,
+      indexOfEstimatedMuscleMassPerStature,
+    ) {
+      if (indexOfMeasuredMuscleMassPerStature) {
+        this.sarcopeniaForm.muscleMassIndex =
+          +indexOfMeasuredMuscleMassPerStature.toFixed(2);
+      } else {
+        this.sarcopeniaForm.muscleMassIndex =
+          +indexOfEstimatedMuscleMassPerStature.toFixed(2);
+      }
+    },
+    classifyResult() {
+      const isAllFieldsFilled = Object.values(this.sarcopeniaForm).every(
+        (field) => !!field,
+      );
+
+      if (isAllFieldsFilled) {
+        if (this.mockup.sex === 'Homem') {
+          this.verifySarcopeniaOfMan();
+        } else {
+          this.verifySarcopeniaOfWoman();
+        }
+      }
+    },
+    verifySarcopeniaOfMan() {
+      const { walkingSpeed, handgripStrength, muscleMassIndex } =
+        this.sarcopeniaForm;
+
+      if (walkingSpeed > 0.8 && handgripStrength > 30) {
+        this.hasSarcopenia = false;
+      } else if (
+        walkingSpeed > 0.8 &&
+        handgripStrength <= 30 &&
+        muscleMassIndex > 8.9
+      ) {
+        this.hasSarcopenia = false;
+      } else if (walkingSpeed <= 0.8 && muscleMassIndex > 8.9) {
+        this.hasSarcopenia = false;
+      } else {
+        this.hasSarcopenia = true;
+      }
+
+      this.calculated = true;
+    },
+    verifySarcopeniaOfWoman() {
+      const { walkingSpeed, handgripStrength, muscleMassIndex } =
+        this.sarcopeniaForm;
+
+      if (walkingSpeed > 0.8 && handgripStrength > 20) {
+        this.hasSarcopenia = false;
+      } else if (
+        walkingSpeed > 0.8 &&
+        handgripStrength <= 20 &&
+        muscleMassIndex > 6.37
+      ) {
+        this.hasSarcopenia = false;
+      } else if (walkingSpeed <= 0.8 && muscleMassIndex > 6.37) {
+        this.hasSarcopenia = false;
+      } else {
+        this.hasSarcopenia = true;
+      }
+      this.calculated = true;
     },
   },
 };
