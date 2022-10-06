@@ -5,13 +5,13 @@
 </template>
 
 <script>
-
 export default {
+  name: 'EvaluationIndex',
   components: {},
   methods: {
-    goToSarcopenia(){
-      this.$router.push('/evaluation/create/sarcopenia')
-    }
-  }
-}
+    goToSarcopenia() {
+      this.$router.push('/evaluation/create/sarcopenia');
+    },
+  },
+};
 </script>
