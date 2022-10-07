@@ -121,9 +121,6 @@ export default {
         title: '',
         type: '',
       },
-      string: 'teste',
-      description: 'descricao',
-      type: 'success',
       cardiorespiratoryCapacityForm: {
         date: '',
         weight: '',
