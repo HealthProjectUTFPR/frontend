@@ -78,7 +78,7 @@
         </el-form-item>
       </div>
 
-      <el-form v-if="calculated">
+      <div v-if="calculated">
         <el-divider content-position="center">Classificação</el-divider>
         <el-alert
           :title="elAlertState.title"
@@ -86,7 +86,7 @@
           :closable="false"
           show-icon
         ></el-alert>
-      </el-form>
+      </div>
 
       <div class="mt-10 flex w-full justify-center">
         <el-button
