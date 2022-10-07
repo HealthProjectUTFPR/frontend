@@ -210,19 +210,19 @@ export default {
     },
   },
   mounted() {
-    console.log('mounted');
+    this.calculateVO2MlKg();
+    this.calculateVO2LMin();
   },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log('alo');
+          alert(JSON.stringify(this.cardiorespiratoryCapacityForm));
         }
         return false;
       });
     },
     resetForm(formName) {
-      console.log('aaaa');
       this.$refs[formName].resetFields();
       this.calculated = false;
     },
