@@ -3,8 +3,8 @@
     <sidenav-item title="Dashboard" to="/">
       <font-awesome-icon icon="chart-simple" />
     </sidenav-item>
-    <sidenav-item title="Categoria" to="/category">
-      <font-awesome-icon icon="list-ul" />
+    <sidenav-item title="Avaliação" to="/evaluation">
+      <font-awesome-icon icon="dna" />
     </sidenav-item>
   </ul>
 </template>

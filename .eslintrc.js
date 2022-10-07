@@ -24,6 +24,8 @@ module.exports = {
     'tailwindcss/no-custom-classname': 'off',
     'max-len': 'off',
     'no-param-reassign': 'off',
+    'operator-linebreak': 'off',
+    'comma-dangle': ['error', 'always-multiline'],
   },
   settings: {
     'import/core-modules': ['vue', 'vuex'], // these modules are included in nuxt.js
