@@ -6,7 +6,11 @@
       >
     </div>
 
-    <el-form ref="cardiorespiratoryCapacityForm" label-position="top">
+    <el-form
+      ref="cardiorespiratoryCapacityForm"
+      label-position="top"
+      :model="cardiorespiratoryCapacityForm"
+    >
       <div class="grid grid-cols-1 gap-x-4 lg:grid-cols-2">
         <el-form-item label="Data" prop="date">
           <el-date-picker
@@ -171,6 +175,7 @@ export default {
       });
     },
     resetForm(formName) {
+      console.log('aaaa');
       this.$refs[formName].resetFields();
       this.calculated = false;
     },
