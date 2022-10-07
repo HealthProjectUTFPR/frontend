@@ -151,6 +151,12 @@ export default {
         this.calculateVO2LMin();
       },
     },
+    cardiorespiratoryCapacityForm: {
+      handler() {
+        this.classifyResult();
+      },
+      deep: true,
+    },
   },
   mounted() {
     console.log('mounted');
@@ -199,6 +205,77 @@ export default {
         0.0115 * finalFC;
 
       this.cardiorespiratoryCapacityForm.vo2Lmin = result.toFixed(2);
+    },
+    classifyResult() {
+      const isAllFieldsFilled = Object.values(
+        this.cardiorespiratoryCapacityForm,
+      ).every((field) => !!field);
+
+      if (isAllFieldsFilled) {
+        if (this.mockup.sex === 'Homem') {
+          this.verifyCardiorespiratoryCapacityOfMan();
+        } else {
+          this.verifyCardiorespiratoryCapacityOfWoman();
+        }
+      }
+    },
+    verifyCardiorespiratoryCapacityOfMan() {
+      let type = '';
+      let title = '';
+
+      const { vo2MlKG } = this.cardiorespiratoryCapacityForm;
+
+      if (vo2MlKG >= 42.5) {
+        type = 'success';
+        title = 'Muito bom!';
+      } else if (vo2MlKG >= 35.3) {
+        type = 'success';
+        title = 'Bom!';
+      } else if (vo2MlKG >= 31.8) {
+        type = 'warning';
+        title = 'Suficiente!';
+      } else if (vo2MlKG >= 28.7) {
+        type = 'warning';
+        title = 'Fraco!';
+      } else {
+        type = 'error';
+        title = 'Muito Fraco!';
+      }
+
+      this.calculated = true;
+      this.elAlertState = {
+        type,
+        title,
+      };
+    },
+    verifyCardiorespiratoryCapacityOfWoman() {
+      let type = '';
+      let title = '';
+
+      const { vo2MlKG } = this.cardiorespiratoryCapacityForm;
+
+      if (vo2MlKG >= 35.2) {
+        type = 'success';
+        title = 'Muito bom!';
+      } else if (vo2MlKG >= 29.4) {
+        type = 'success';
+        title = 'Bom!';
+      } else if (vo2MlKG >= 25.8) {
+        type = 'warning';
+        title = 'Suficiente!';
+      } else if (vo2MlKG >= 23.6) {
+        type = 'warning';
+        title = 'Fraco!';
+      } else {
+        type = 'error';
+        title = 'Muito Fraco!';
+      }
+
+      this.calculated = true;
+      this.elAlertState = {
+        type,
+        title,
+      };
     },
   },
 };
