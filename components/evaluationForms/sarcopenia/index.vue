@@ -116,19 +116,9 @@
       <div v-if="calculated">
         <el-divider content-position="center">Classificação</el-divider>
         <el-alert
-          v-if="!hasSarcopenia"
-          title="Sem sarcopenia"
-          type="success"
-          description="De acordo com os dados informados, o paciente não sofre de Sarcopenia."
-          show-icon
-          :closable="false"
-        ></el-alert>
-
-        <el-alert
-          v-else
-          title="Com sarcopenia"
-          type="error"
-          description="De acordo com os dados informados, o paciente possui Sarcopenia."
+          :title="elAlertState.title"
+          :type="elAlertState.type"
+          :description="elAlertState.description"
           show-icon
           :closable="false"
         ></el-alert>
@@ -164,6 +154,10 @@ export default {
         age: 70,
         race: 'Branco',
         height: 1.92,
+      },
+      elAlertState: {
+        title: '',
+        type: '',
       },
       calculated: false,
       hasSarcopenia: true,
@@ -419,6 +413,11 @@ export default {
       const { walkingSpeed, handgripStrength, muscleMassIndex } =
         this.sarcopeniaForm;
 
+      let title = 'Sem sarcopenia';
+      let description =
+        'De acordo com os dados informados, o paciente não sofre de Sarcopenia.';
+      let type = 'success';
+
       if (walkingSpeed > 0.8 && handgripStrength > 30) {
         this.hasSarcopenia = false;
       } else if (
@@ -431,13 +430,28 @@ export default {
         this.hasSarcopenia = false;
       } else {
         this.hasSarcopenia = true;
+
+        title = 'Com sarcopenia';
+        type = 'error';
+        description =
+          'De acordo com os dados informados, o paciente possui Sarcopenia.';
       }
 
+      this.elAlertState = {
+        type,
+        description,
+        title,
+      };
       this.calculated = true;
     },
     verifySarcopeniaOfWoman() {
       const { walkingSpeed, handgripStrength, muscleMassIndex } =
         this.sarcopeniaForm;
+
+      let title = 'Sem sarcopenia';
+      let description =
+        'De acordo com os dados informados, o paciente não sofre de Sarcopenia.';
+      let type = 'success';
 
       if (walkingSpeed > 0.8 && handgripStrength > 20) {
         this.hasSarcopenia = false;
@@ -451,7 +465,18 @@ export default {
         this.hasSarcopenia = false;
       } else {
         this.hasSarcopenia = true;
+
+        title = 'Com sarcopenia';
+        type = 'error';
+        description =
+          'De acordo com os dados informados, o paciente possui Sarcopenia.';
       }
+
+      this.elAlertState = {
+        type,
+        description,
+        title,
+      };
       this.calculated = true;
     },
   },
