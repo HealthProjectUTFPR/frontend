@@ -73,14 +73,15 @@
         </el-form-item>
       </div>
 
-      <el-divider content-position="center">Classificação</el-divider>
-      <el-alert
-        :title="string"
-        :type="type"
-        :description="description"
-        show-icon
-        :closable="false"
-      ></el-alert>
+      <el-form v-if="calculated">
+        <el-divider content-position="center">Classificação</el-divider>
+        <el-alert
+          :title="elAlertState.title"
+          :type="elAlertState.type"
+          :closable="false"
+          show-icon
+        ></el-alert>
+      </el-form>
 
       <div class="mt-10 flex w-full justify-center">
         <el-button
@@ -109,7 +110,11 @@ export default {
       mockup: {
         sex: 'Homem',
         age: 70,
-        height: 1.92,
+      },
+      calculated: false,
+      elAlertState: {
+        title: '',
+        type: '',
       },
       string: 'teste',
       description: 'descricao',
@@ -128,6 +133,12 @@ export default {
     'cardiorespiratoryCapacityForm.weight': {
       handler() {
         this.calculateVO2LMin();
+        this.calculateVO2MlKg();
+      },
+    },
+    'cardiorespiratoryCapacityForm.vo2Lmin': {
+      handler() {
+        this.calculateVO2MlKg();
       },
     },
     'cardiorespiratoryCapacityForm.finalFC': {
@@ -157,6 +168,17 @@ export default {
       this.$refs[formName].resetFields();
       this.calculated = false;
     },
+    calculateVO2MlKg() {
+      const { weight, vo2Lmin } = this.cardiorespiratoryCapacityForm;
+
+      if (!weight) {
+        this.cardiorespiratoryCapacityForm.vo2MlKG = '';
+      }
+
+      const result = (vo2Lmin * 1000) / weight;
+
+      this.cardiorespiratoryCapacityForm.vo2MlKG = result.toFixed(2);
+    },
     calculateVO2LMin() {
       const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
       const { age } = this.mockup;
@@ -168,14 +190,15 @@ export default {
 
       const sexWeight = this.mockup.sex === 'Homem' ? 1 : 0;
 
-      this.cardiorespiratoryCapacityForm.vo2Lmin = (
+      const result =
         6.952 +
         0.0091 * (weight * 2.205) -
         0.0257 * age +
         0.5955 * sexWeight -
         0.224 * time -
-        0.0115 * finalFC
-      ).toFixed(2);
+        0.0115 * finalFC;
+
+      this.cardiorespiratoryCapacityForm.vo2Lmin = result.toFixed(2);
     },
   },
 };
