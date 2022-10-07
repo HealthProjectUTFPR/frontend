@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-button @click="goToSarcopenia()">Sarcopenia</el-button>
+    <el-button @click="goToCardiorespiratoryCapacity()"
+      >Capacidade Cardiorrespiratória</el-button
+    >
   </div>
 </template>
 
@@ -9,8 +11,8 @@ export default {
   name: 'EvaluationIndex',
   components: {},
   methods: {
-    goToSarcopenia() {
-      this.$router.push('/evaluation/create/sarcopenia');
+    goToCardiorespiratoryCapacity() {
+      this.$router.push('/evaluation/create/cardiorespiratoryCapacity');
     },
   },
 };
