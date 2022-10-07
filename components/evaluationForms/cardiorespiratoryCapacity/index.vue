@@ -10,6 +10,7 @@
       ref="cardiorespiratoryCapacityForm"
       label-position="top"
       :model="cardiorespiratoryCapacityForm"
+      :rules="rules"
     >
       <div class="grid grid-cols-1 gap-x-4 lg:grid-cols-2">
         <el-form-item label="Data" prop="date">
@@ -130,6 +131,52 @@ export default {
         finalFC: '',
         vo2Lmin: '',
         vo2MlKG: '',
+      },
+      rules: {
+        date: [
+          {
+            type: 'date',
+            required: true,
+            message: 'Por favor, escolha uma data',
+            trigger: 'change',
+          },
+        ],
+        weight: [
+          {
+            required: true,
+            message: 'Por favor, informe um peso',
+            trigger: 'blur',
+          },
+          {
+            type: 'number',
+            message: 'Por favor, informe uma faixa de peso válida (>0)',
+            trigger: 'blur',
+          },
+        ],
+        time: [
+          {
+            required: true,
+            message: 'Por favor, informe o tempo',
+            trigger: 'blur',
+          },
+          {
+            type: 'number',
+            message: 'Por favor, informe um tempo válido',
+            trigger: 'blur',
+          },
+        ],
+        finalFC: [
+          {
+            required: true,
+            message: 'Por favor, informe o FC Final',
+            trigger: 'blur',
+          },
+          {
+            type: 'number',
+            message: 'Por favor, informe um FC Final',
+            trigger: 'blur',
+          },
+        ],
       },
     };
   },
