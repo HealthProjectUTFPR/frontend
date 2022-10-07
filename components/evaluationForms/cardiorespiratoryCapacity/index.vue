@@ -10,6 +10,7 @@
       <div class="grid grid-cols-1 gap-x-4 lg:grid-cols-2">
         <el-form-item label="Data" prop="date">
           <el-date-picker
+            v-model="cardiorespiratoryCapacityForm.date"
             type="date"
             placeholder="XX/XX/XXXX"
             size="large"
@@ -17,6 +18,58 @@
             format="dd/MM/yyyy"
           >
           </el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="Peso (kg)" prop="weight">
+          <el-input
+            v-model.number="cardiorespiratoryCapacityForm.weight"
+            placeholder="Peso (kg)"
+            type="number"
+            min="0"
+            step=".01"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="Tempo" prop="time">
+          <el-input
+            v-model.number="cardiorespiratoryCapacityForm.time"
+            placeholder="Tempo"
+            type="number"
+            min="0"
+            step=".01"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="FC Final" prop="finalFC">
+          <el-input
+            v-model.number="cardiorespiratoryCapacityForm.finalFC"
+            placeholder="FC Final"
+            type="number"
+            min="0"
+            step=".01"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="VO2 (L/min)" prop="vo2Lmin">
+          <el-input
+            v-model.number="cardiorespiratoryCapacityForm.vo2Lmin"
+            placeholder="O valor será calculado automaticamente..."
+            type="number"
+            min="0"
+            step=".01"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="VO2 (ml.kg-1.min-1)" prop="vo2MlKG">
+          <el-input
+            v-model.number="cardiorespiratoryCapacityForm.vo2MlKG"
+            placeholder="O valor será calculado automaticamente..."
+            type="number"
+            min="0"
+            step=".01"
+            :disabled="true"
+          ></el-input>
         </el-form-item>
       </div>
 
@@ -61,7 +114,32 @@ export default {
       string: 'teste',
       description: 'descricao',
       type: 'success',
+      cardiorespiratoryCapacityForm: {
+        date: '',
+        weight: '',
+        time: '',
+        finalFC: '',
+        vo2Lmin: '',
+        vo2MlKG: '',
+      },
     };
+  },
+  watch: {
+    'cardiorespiratoryCapacityForm.weight': {
+      handler() {
+        this.calculateVO2LMin();
+      },
+    },
+    'cardiorespiratoryCapacityForm.finalFC': {
+      handler() {
+        this.calculateVO2LMin();
+      },
+    },
+    'cardiorespiratoryCapacityForm.time': {
+      handler() {
+        this.calculateVO2LMin();
+      },
+    },
   },
   mounted() {
     console.log('mounted');
@@ -78,6 +156,26 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.calculated = false;
+    },
+    calculateVO2LMin() {
+      const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
+      const { age } = this.mockup;
+
+      if (!weight) {
+        this.cardiorespiratoryCapacityForm.vo2Lmin = '';
+        return;
+      }
+
+      const sexWeight = this.mockup.sex === 'Homem' ? 1 : 0;
+
+      this.cardiorespiratoryCapacityForm.vo2Lmin = (
+        6.952 +
+        0.0091 * (weight * 2.205) -
+        0.0257 * age +
+        0.5955 * sexWeight -
+        0.224 * time -
+        0.0115 * finalFC
+      ).toFixed(2);
     },
   },
 };
