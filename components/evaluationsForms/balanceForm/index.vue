@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <template #header>
       <div class="flex h-full w-full justify-center">
-        <span class="text-center">TESTE DE EQUILÍBRIO DE BERG 1</span>
+        <span class="text-center font-extrabold uppercase">TESTE DE EQUILÍBRIO DE BERG 1</span>
       </div>
     </template>
 
@@ -95,12 +95,32 @@
         <strong class="mr-2">TOTAL:</strong>
         {{ total }}
       </div>
+
+      <el-divider content-position="center">Descrição</el-divider>
+        <el-alert
+          :title="`${total} PONTOS`"
+          :type="getTotalMsg().type"
+          :description="getTotalMsg().description"
+          show-icon
+          :closable="false"
+        ></el-alert>
+
+        <div class="mt-10 flex w-full justify-center">
+        <el-button
+          type="primary"
+          icon="el-icon-success"
+          @click="submitForm()"
+        >
+          Salvar
+        </el-button>
+      </div>
     </div>
   </el-card>
 </template>
 
 <script>
 import RadioInputGroup from '@/components/evaluationsForms/balanceForm/RadioInputGroup.vue';
+import descriptions from '@/components/evaluationsForms/balanceForm/descriptions';
 
 export default {
   name: 'BalanceForm',
@@ -135,6 +155,18 @@ export default {
   computed: {
     total() {
       return Object.values(this.optionsGroups).reduce((a, b) => a + b);
+    },
+  },
+
+  methods: {
+    getTotalMsg() {
+      if (this.total <= 36) return { description: descriptions['total-descriptions'][0], type: 'error' };
+      if (this.total <= 44) return { description: descriptions['total-descriptions'][1], type: 'warning' };
+      return { description: descriptions['total-descriptions'][2], type: 'success' };
+    },
+
+    submitForm() {
+      console.log('submited');
     },
   },
 };
