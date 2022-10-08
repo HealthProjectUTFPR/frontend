@@ -25,45 +25,8 @@
           </el-date-picker>
         </el-form-item>
 
-        <el-form-item label="Idade" prop="age">
-          <el-input
-            v-model.number="bodyCompositionForm.age"
-            placeholder="Idade"
-            type="number"
-            min="0"
-            step=".01"
-          ></el-input>
-        </el-form-item>
-
         <el-form-item
-          label="Estatura (cm)"
-          prop="stature"
-        >
-          <el-input
-            v-model.number="bodyCompositionForm.stature"
-            placeholder="Estatura (cm)"
-            type="number"
-            min="0"
-            step=".01"
-          ></el-input>
-        </el-form-item>
-
-        <!-- <el-form-item
-          label="Massa muscular estimada (kg)"
-          prop="estimatedMuscleMass"
-        >
-          <el-input
-            v-model.number="sarcopeniaForm.estimatedMuscleMass"
-            placeholder="O valor será calculado automaticamente..."
-            type="number"
-            min="0"
-            :disabled="true"
-            step=".01"
-          ></el-input>
-        </el-form-item> -->
-
-        <el-form-item
-          label="Peso (kg)"
+        label="Peso (kg)"
           prop="weight"
         >
           <el-input
@@ -99,12 +62,48 @@
         </el-form-item>
 
         <el-form-item
-          label="Escapula (cm)"
+          label="Cintura/Estatura"
+          prop="estimatedMuscleMass"
+        >
+          <el-input
+            v-model.number="waistEstature"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item
+          label="Cintura/Quadril"
+          prop="estimatedMuscleMass"
+        >
+          <el-input
+            v-model.number="waistHip"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item
+          label="IMC"
+          prop="estimatedMuscleMass"
+        >
+          <el-input
+            v-model.number="imc"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item
+          label="Subescapula (cm)"
           prop="scapula"
         >
           <el-input
             v-model.number="bodyCompositionForm.scapula"
-            placeholder="Escapula (cm)"
+            placeholder="Subescapula (cm)"
             type="number"
             min="0"
             step=".01"
@@ -149,28 +148,121 @@
             step=".01"
           ></el-input>
         </el-form-item>
+
+        <el-form-item
+            label="Soma Pregas"
+            prop="estimatedMuscleMass"
+          >
+            <el-input
+              v-model.number="sumPleats"
+              placeholder="Este campo será calculado automaticamente..."
+              type="number"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item
+            label="Densidade"
+            prop="estimatedMuscleMass"
+          >
+            <el-input
+              v-model.number="density"
+              placeholder="Este campo será calculado automaticamente..."
+              type="number"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item
+            label="Gordura Corporal"
+            prop="estimatedMuscleMass"
+          >
+            <el-input
+              v-model.number="bodyFat"
+              placeholder="Este campo será calculado automaticamente..."
+              type="number"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item
+            label="MG (kg)"
+            prop="estimatedMuscleMass"
+          >
+            <el-input
+              v-model.number="mg"
+              placeholder="Este campo será calculado automaticamente..."
+              type="number"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item
+            label="MCM (kg)"
+            prop="estimatedMuscleMass"
+          >
+            <el-input
+              v-model.number="mcm"
+              placeholder="Este campo será calculado automaticamente..."
+              type="number"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item
+            label="Peso mínimo (kg)"
+            prop="estimatedMuscleMass"
+          >
+            <el-input
+              v-model.number="minimumWeight"
+              placeholder="Este campo será calculado automaticamente..."
+              type="number"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item
+            label="Peso máximo (kg)"
+            prop="estimatedMuscleMass"
+          >
+            <el-input
+              v-model.number="maximumWeight"
+              placeholder="Este campo será calculado automaticamente..."
+              type="number"
+              :disabled="true"
+            ></el-input>
+          </el-form-item>
       </div>
 
-      <!-- <div v-if="calculated">
+      <div v-if="waistEstature > 0 && waistHip > 0">
         <el-divider content-position="center">Classificação</el-divider>
+        <span>Risco cardiovascular</span>
         <el-alert
-          v-if="!hasSarcopenia"
-          title="Sem sarcopenia"
-          type="success"
-          description="De acordo com os dados informados, o paciente não sofre de Sarcopenia."
+          title="Circunferência de cintura"
+          :type="checkRisks().waistEstatureHighRisk ? 'error' : 'warning'"
+          :description="checkRisks().waistEstatureHighRisk ? 'Risco elevado' : 'Risco aumentado'"
           show-icon
           :closable="false"
         ></el-alert>
 
         <el-alert
+          class="mt-important"
+          title="RCQ"
+          :type="checkRisks().waistHipHighRisk ? 'error' : 'warning'"
+          :description="checkRisks().waistHipHighRisk ? 'Risco elevado' : 'Risco aumentado'"
+          show-icon
+          :closable="false"
+        ></el-alert>
+
+        <!-- <el-alert
           v-else
           title="Com sarcopenia"
           type="error"
           description="De acordo com os dados informados, o paciente possui Sarcopenia."
           show-icon
           :closable="false"
-        ></el-alert>
-      </div> -->
+        ></el-alert> -->
+      </div>
 
       <div class="mt-10 flex w-full justify-center">
         <el-button icon="el-icon-error" @click="resetForm('bodyCompositionForm')">
@@ -194,10 +286,10 @@ export default {
   data() {
     return {
       mockup: {
-        sex: 'Homem',
+        sex: 'Mulher',
         age: 70,
         race: 'Branco',
-        height: 1.92,
+        height: 192.5,
       },
       // calculated: false,
       // hasSarcopenia: true,
@@ -210,10 +302,20 @@ export default {
         weight: '',
         waist: '',
         hip: '',
+        waistEstature: '',
+        waistHip: '',
+        imc: '',
         scapula: '',
         triceps: '',
         biceps: '',
         suprailiac: '',
+        sumPleats: '',
+        density: '',
+        bodyFat: '',
+        mg: '',
+        mcm: '',
+        minimumWeight: '',
+        maximumWeight: '',
       },
       rules: {
         date: [
@@ -342,15 +444,55 @@ export default {
       },
     };
   },
-  watch: {
-    'sarcopeniaForm.weight': {
-      handler(newWeight) {
-        this.sarcopeniaForm.estimatedMuscleMass = this.calculateEstimatedMuscleMass(newWeight);
-      },
+
+  computed: {
+    waistEstature() {
+      return (this.bodyCompositionForm.waist / this.mockup.height).toFixed(2);
+    },
+
+    waistHip() {
+      return (this.bodyCompositionForm.waist / this.bodyCompositionForm.hip).toFixed(2);
+    },
+
+    imc() {
+      return (this.bodyCompositionForm.weight / (this.mockup.height / 100) ** 2).toFixed(2);
+    },
+
+    sumPleats() {
+      return (this.bodyCompositionForm.scapula + this.bodyCompositionForm.triceps + this.bodyCompositionForm.biceps + this.bodyCompositionForm.suprailiac);
+    },
+
+    density() {
+      if (this.mockup.sex === 'Mulher') {
+        return (1.1715 - 0.0779 * Math.log10(this.sumPleats)).toFixed(2);
+      }
+      return (1.1567 - 0.0717 * Math.log10(this.sumPleats)).toFixed(2);
+    },
+
+    bodyFat() {
+      return 4.95 / this.density ? ((4.95 / this.density - 4.5) * 100).toFixed(2) : (0).toFixed(2);
+    },
+
+    mg() {
+      return ((this.bodyCompositionForm.weight * this.bodyFat) / 100).toFixed(2);
+    },
+
+    mcm() {
+      return (this.bodyCompositionForm.weight - this.mg).toFixed(2);
+    },
+
+    minimumWeight() {
+      return (this.mcm * 1.3888888888889).toFixed(2);
+    },
+
+    maximumWeight() {
+      return (this.mcm * 1.47058824).toFixed(2);
     },
   },
+
   methods: {
     submitForm(formName) {
+      this.getAllComputed();
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.calculated = true;
@@ -362,26 +504,41 @@ export default {
       this.$refs[formName].resetFields();
       this.calculated = false;
     },
-    calculateEstimatedMuscleMass(newWeight) {
-      const sexValue = this.mockup.sex === 'Homem' ? 1 : 0;
-      let raceValue = 1.4;
-      if (this.mockup.race === 'Branco') {
-        raceValue = 0;
-      } else if (this.mockup.race === 'Asiático') {
-        raceValue = 1.2;
+
+    getAllComputed() {
+      this.bodyCompositionForm.waistEstature = this.waistEstature;
+      this.bodyCompositionForm.waistHip = this.waistHip;
+      this.bodyCompositionForm.imc = this.imc;
+      this.bodyCompositionForm.sumPleats = this.sumPleats;
+      this.bodyCompositionForm.density = this.density;
+      this.bodyCompositionForm.bodyFat = this.bodyFat;
+      this.bodyCompositionForm.mg = this.mg;
+      this.bodyCompositionForm.mcm = this.mcm;
+      this.bodyCompositionForm.minimumWeight = this.minimumWeight;
+      this.bodyCompositionForm.maximumWeight = this.maximumWeight;
+    },
+
+    checkRisks() {
+      let waistEstatureHighRisk;
+      let waistHipHighRisk;
+
+      if (this.mockup.sex === 'Mulher') {
+        waistEstatureHighRisk = this.waistEstature >= 0.88;
+        waistHipHighRisk = this.waistHip >= 1;
+      } else {
+        waistEstatureHighRisk = this.waistEstature >= 1;
+        waistHipHighRisk = this.waistHip >= 1;
       }
-      return (
-        0.244 * newWeight
-        + 7.8 * this.mockup.height
-        + 6.6 * sexValue
-        - 0.098 * this.mockup.age
-        + (raceValue - 3.3)
-      ).toFixed(3);
+
+      return { waistEstatureHighRisk, waistHipHighRisk };
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
+.mt-important {
+  margin-top: 8px;
+}
 
 </style>
