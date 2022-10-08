@@ -234,34 +234,26 @@
           </el-form-item>
       </div>
 
-      <div v-if="waistEstature > 0 && waistHip > 0">
-        <el-divider content-position="center">Classificação</el-divider>
-        <span>Risco cardiovascular</span>
+      <div v-if="checkRisks().waistEstatureRisk !== 'none' || checkRisks().waistHipRisk !== 'none'">
+        <el-divider content-position="center">Risco cardiovascular</el-divider>
         <el-alert
+          v-if="checkRisks().waistEstatureRisk === 'increased' || checkRisks().waistEstatureRisk === 'high'"
           title="Circunferência de cintura"
-          :type="checkRisks().waistEstatureHighRisk ? 'error' : 'warning'"
-          :description="checkRisks().waistEstatureHighRisk ? 'Risco elevado' : 'Risco aumentado'"
+          :type="checkRisks().waistEstatureRisk === 'high' ? 'error' : 'warning'"
+          :description="checkRisks().waistEstatureRisk === 'high'? 'Risco elevado' : 'Risco aumentado'"
           show-icon
           :closable="false"
         ></el-alert>
 
         <el-alert
+          v-if="checkRisks().waistHipRisk === 'increased' || checkRisks().waistHipRisk === 'high'"
           class="mt-important"
           title="RCQ"
-          :type="checkRisks().waistHipHighRisk ? 'error' : 'warning'"
-          :description="checkRisks().waistHipHighRisk ? 'Risco elevado' : 'Risco aumentado'"
+          :type="checkRisks().waistHipRisk === 'high' ? 'error' : 'warning'"
+          :description="checkRisks().waistHipRisk === 'high' ? 'Risco elevado' : 'Risco aumentado'"
           show-icon
           :closable="false"
         ></el-alert>
-
-        <!-- <el-alert
-          v-else
-          title="Com sarcopenia"
-          type="error"
-          description="De acordo com os dados informados, o paciente possui Sarcopenia."
-          show-icon
-          :closable="false"
-        ></el-alert> -->
       </div>
 
       <div class="mt-10 flex w-full justify-center">
@@ -291,10 +283,6 @@ export default {
         race: 'Branco',
         height: 192.5,
       },
-      // calculated: false,
-      // hasSarcopenia: true,
-      // indexOfMeasuredMuscleMassPerStature: 0, // measuredMuscleMass / (estatura*estatura)
-      // indexOfEstimatedMuscleMassPerStature: 0, // estimatedMuscleMass / (estatura*estatura)
       bodyCompositionForm: {
         date: '',
         age: '',
@@ -500,6 +488,7 @@ export default {
         return false;
       });
     },
+
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.calculated = false;
@@ -519,18 +508,38 @@ export default {
     },
 
     checkRisks() {
-      let waistEstatureHighRisk;
-      let waistHipHighRisk;
+      let waistEstatureRisk = 'none';
+      let waistHipRisk = 'none';
 
       if (this.mockup.sex === 'Mulher') {
-        waistEstatureHighRisk = this.waistEstature >= 0.88;
-        waistHipHighRisk = this.waistHip >= 1;
+        if (this.waistEstature > 0.8) {
+          waistEstatureRisk = 'increased';
+          if (this.waistEstature > 0.88) {
+            waistEstatureRisk = 'high';
+          }
+        }
+        if (this.waistHip > 0.85) {
+          waistHipRisk = 'increased';
+          if (this.waistHip > 1) {
+            waistHipRisk = 'high';
+          }
+        }
       } else {
-        waistEstatureHighRisk = this.waistEstature >= 1;
-        waistHipHighRisk = this.waistHip >= 1;
+        if (this.waistEstature > 0.94) {
+          waistEstatureRisk = 'increased';
+          if (this.waistEstature > 1) {
+            waistEstatureRisk = 'high';
+          }
+        }
+        if (this.waistHip > 0.9) {
+          waistHipRisk = 'increased';
+          if (this.waistHip > 1) {
+            waistHipRisk = 'high';
+          }
+        }
       }
 
-      return { waistEstatureHighRisk, waistHipHighRisk };
+      return { waistEstatureRisk, waistHipRisk };
     },
   },
 };
@@ -538,7 +547,7 @@ export default {
 
 <style scoped>
 .mt-important {
-  margin-top: 8px;
+  margin-top: 8px !important;
 }
 
 </style>
