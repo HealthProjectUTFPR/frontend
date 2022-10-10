@@ -142,6 +142,7 @@
 
 <script>
 import moment from 'moment';
+import calculateEstimatedMuscleMass from '@/helpers/evaluations/sarcopenia/calculateEstimatedMuscleMass';
 
 moment.locale('pt');
 
@@ -263,9 +264,16 @@ export default {
   },
   watch: {
     'sarcopeniaForm.weight': {
-      handler(newWeight) {
-        this.sarcopeniaForm.estimatedMuscleMass =
-          +this.calculateEstimatedMuscleMass(newWeight);
+      handler(weight) {
+        const { age, sex, race, height } = this.mockup;
+
+        this.sarcopeniaForm.estimatedMuscleMass = calculateEstimatedMuscleMass({
+          weight,
+          age,
+          sex,
+          race,
+          height,
+        });
       },
     },
     'sarcopeniaForm.measuredMuscleMass': {
@@ -308,9 +316,16 @@ export default {
     },
   },
   mounted() {
-    this.sarcopeniaForm.estimatedMuscleMass = this.calculateEstimatedMuscleMass(
-      this.sarcopeniaForm.weight,
-    );
+    const { weight } = this.sarcopeniaForm;
+    const { age, sex, race, height } = this.mockup;
+
+    this.sarcopeniaForm.estimatedMuscleMass = calculateEstimatedMuscleMass({
+      weight,
+      age,
+      sex,
+      race,
+      height,
+    });
 
     this.indexOfMeasuredMuscleMassPerStature =
       this.calculateIndexOfMeasuredMuscleMassPerStature(
@@ -357,26 +372,6 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.calculated = false;
-    },
-    calculateEstimatedMuscleMass(newWeight) {
-      if (!newWeight) return '';
-
-      const sexValue = this.mockup.sex === 'Homem' ? 1 : 0;
-      let raceValue = 1.4;
-
-      if (this.mockup.race === 'Branco') {
-        raceValue = 0;
-      } else if (this.mockup.race === 'Asiático') {
-        raceValue = 1.2;
-      }
-
-      return (
-        0.244 * newWeight +
-        7.8 * this.mockup.height +
-        6.6 * sexValue -
-        0.098 * this.mockup.age +
-        (raceValue - 3.3)
-      ).toFixed(3);
     },
     calculateIndexOfMeasuredMuscleMassPerStature(measuredMuscleMass) {
       return measuredMuscleMass / this.mockup.height ** 2;
