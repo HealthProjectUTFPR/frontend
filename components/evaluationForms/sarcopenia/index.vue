@@ -144,6 +144,7 @@
 import moment from 'moment';
 import calculateEstimatedMuscleMass from '@/helpers/evaluations/sarcopenia/calculateEstimatedMuscleMass';
 import calculateIndexOfMeasuredMuscleMassPerStature from '@/helpers/evaluations/sarcopenia/calculateIndexOfMeasuredMuscleMassPerStature';
+import calculateIndexOfEstimatedMuscleMassPerStature from '@/helpers/evaluations/sarcopenia/calculateIndexOfEstimatedMuscleMassPerStature';
 
 moment.locale('pt');
 
@@ -289,11 +290,14 @@ export default {
       },
     },
     'sarcopeniaForm.estimatedMuscleMass': {
-      handler(newEstimatedMuscleMass) {
+      handler(estimatedMuscleMass) {
+        const { height } = this.mockup;
+
         this.indexOfEstimatedMuscleMassPerStature =
-          this.calculateIndexOfEstimatedMuscleMassPerStature(
-            newEstimatedMuscleMass,
-          );
+          calculateIndexOfEstimatedMuscleMassPerStature({
+            height,
+            estimatedMuscleMass,
+          });
       },
     },
     indexOfEstimatedMuscleMassPerStature: {
@@ -336,10 +340,14 @@ export default {
         height,
         measuredMuscleMass,
       });
+
+    const { estimatedMuscleMass } = this.sarcopeniaForm;
+
     this.indexOfEstimatedMuscleMassPerStature =
-      this.calculateIndexOfEstimatedMuscleMassPerStature(
-        this.sarcopeniaForm.estimatedMuscleMass,
-      );
+      calculateIndexOfEstimatedMuscleMassPerStature({
+        height,
+        estimatedMuscleMass,
+      });
   },
   methods: {
     submitForm(formName) {
@@ -377,9 +385,6 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.calculated = false;
-    },
-    calculateIndexOfEstimatedMuscleMassPerStature(estimatedMuscleMass) {
-      return estimatedMuscleMass / this.mockup.height ** 2;
     },
     calculateMuscleMassIndex(
       indexOfMeasuredMuscleMassPerStature,
