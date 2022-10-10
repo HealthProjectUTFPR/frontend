@@ -108,12 +108,14 @@
 </template>
 
 <script>
+import calculateVO2LMin from '@/helpers/evaluations/cardiorespiratoryCapacity/calculateVO2Lmin';
+
 export default {
   name: 'CardiorespiratoryCapacityForm',
   data() {
     return {
       mockup: {
-        sex: 'Homem',
+        sex: 'Mulher',
         age: 70,
       },
       calculated: false,
@@ -180,7 +182,16 @@ export default {
   watch: {
     'cardiorespiratoryCapacityForm.weight': {
       handler() {
-        this.calculateVO2LMin();
+        const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
+        const { age, sex } = this.mockup;
+
+        this.cardiorespiratoryCapacityForm.vo2Lmin = calculateVO2LMin({
+          weight,
+          finalFC,
+          time,
+          age,
+          sex,
+        });
         this.calculateVO2MlKg();
       },
     },
@@ -191,12 +202,30 @@ export default {
     },
     'cardiorespiratoryCapacityForm.finalFC': {
       handler() {
-        this.calculateVO2LMin();
+        const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
+        const { age, sex } = this.mockup;
+
+        this.cardiorespiratoryCapacityForm.vo2Lmin = calculateVO2LMin({
+          weight,
+          finalFC,
+          time,
+          age,
+          sex,
+        });
       },
     },
     'cardiorespiratoryCapacityForm.time': {
       handler() {
-        this.calculateVO2LMin();
+        const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
+        const { age, sex } = this.mockup;
+
+        this.cardiorespiratoryCapacityForm.vo2Lmin = calculateVO2LMin({
+          weight,
+          finalFC,
+          time,
+          age,
+          sex,
+        });
       },
     },
     cardiorespiratoryCapacityForm: {
@@ -207,8 +236,17 @@ export default {
     },
   },
   mounted() {
+    const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
+    const { age, sex } = this.mockup;
+
     this.calculateVO2MlKg();
-    this.calculateVO2LMin();
+    this.cardiorespiratoryCapacityForm.vo2Lmin = calculateVO2LMin({
+      weight,
+      finalFC,
+      time,
+      age,
+      sex,
+    });
   },
   methods: {
     submitForm(formName) {
@@ -233,27 +271,6 @@ export default {
       const result = (vo2Lmin * 1000) / weight;
 
       this.cardiorespiratoryCapacityForm.vo2MlKG = result.toFixed(2);
-    },
-    calculateVO2LMin() {
-      const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
-      const { age } = this.mockup;
-
-      if (!weight) {
-        this.cardiorespiratoryCapacityForm.vo2Lmin = '';
-        return;
-      }
-
-      const sexWeight = this.mockup.sex === 'Homem' ? 1 : 0;
-
-      const result =
-        6.952 +
-        0.0091 * (weight * 2.205) -
-        0.0257 * age +
-        0.5955 * sexWeight -
-        0.224 * time -
-        0.0115 * finalFC;
-
-      this.cardiorespiratoryCapacityForm.vo2Lmin = result.toFixed(2);
     },
     classifyResult() {
       const isAllFieldsFilled = Object.values(
