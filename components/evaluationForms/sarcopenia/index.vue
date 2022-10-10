@@ -143,6 +143,7 @@
 <script>
 import moment from 'moment';
 import calculateEstimatedMuscleMass from '@/helpers/evaluations/sarcopenia/calculateEstimatedMuscleMass';
+import calculateIndexOfMeasuredMuscleMassPerStature from '@/helpers/evaluations/sarcopenia/calculateIndexOfMeasuredMuscleMassPerStature';
 
 moment.locale('pt');
 
@@ -277,11 +278,14 @@ export default {
       },
     },
     'sarcopeniaForm.measuredMuscleMass': {
-      handler(newMeasuredMuscleMass) {
+      handler(measuredMuscleMass) {
+        const { height } = this.mockup;
+
         this.indexOfMeasuredMuscleMassPerStature =
-          this.calculateIndexOfMeasuredMuscleMassPerStature(
-            newMeasuredMuscleMass,
-          );
+          calculateIndexOfMeasuredMuscleMassPerStature({
+            height,
+            measuredMuscleMass,
+          });
       },
     },
     'sarcopeniaForm.estimatedMuscleMass': {
@@ -316,7 +320,7 @@ export default {
     },
   },
   mounted() {
-    const { weight } = this.sarcopeniaForm;
+    const { weight, measuredMuscleMass } = this.sarcopeniaForm;
     const { age, sex, race, height } = this.mockup;
 
     this.sarcopeniaForm.estimatedMuscleMass = calculateEstimatedMuscleMass({
@@ -328,9 +332,10 @@ export default {
     });
 
     this.indexOfMeasuredMuscleMassPerStature =
-      this.calculateIndexOfMeasuredMuscleMassPerStature(
-        this.sarcopeniaForm.measuredMuscleMass,
-      );
+      calculateIndexOfMeasuredMuscleMassPerStature({
+        height,
+        measuredMuscleMass,
+      });
     this.indexOfEstimatedMuscleMassPerStature =
       this.calculateIndexOfEstimatedMuscleMassPerStature(
         this.sarcopeniaForm.estimatedMuscleMass,
@@ -372,9 +377,6 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.calculated = false;
-    },
-    calculateIndexOfMeasuredMuscleMassPerStature(measuredMuscleMass) {
-      return measuredMuscleMass / this.mockup.height ** 2;
     },
     calculateIndexOfEstimatedMuscleMassPerStature(estimatedMuscleMass) {
       return estimatedMuscleMass / this.mockup.height ** 2;
