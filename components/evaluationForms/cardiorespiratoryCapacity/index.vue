@@ -110,13 +110,14 @@
 <script>
 import calculateVO2LMin from '@/helpers/evaluations/cardiorespiratoryCapacity/calculateVO2Lmin';
 import calculateVO2MlKg from '@/helpers/evaluations/cardiorespiratoryCapacity/calculateVO2MlKg';
+import classifyResult from '@/helpers/evaluations/cardiorespiratoryCapacity/classifyResult';
 
 export default {
   name: 'CardiorespiratoryCapacityForm',
   data() {
     return {
       mockup: {
-        sex: 'Mulher',
+        sex: 'Homem',
         age: 70,
       },
       calculated: false,
@@ -239,7 +240,7 @@ export default {
     },
     cardiorespiratoryCapacityForm: {
       handler() {
-        this.classifyResult();
+        this.calculateResult();
       },
       deep: true,
     },
@@ -274,76 +275,23 @@ export default {
       this.$refs[formName].resetFields();
       this.calculated = false;
     },
-    classifyResult() {
+    calculateResult() {
       const isAllFieldsFilled = Object.values(
         this.cardiorespiratoryCapacityForm,
       ).every((field) => !!field);
 
+      const { sex } = this.mockup;
+      const { vo2MlKG } = this.cardiorespiratoryCapacityForm;
+
       if (isAllFieldsFilled) {
-        if (this.mockup.sex === 'Homem') {
-          this.verifyCardiorespiratoryCapacityOfMan();
-        } else {
-          this.verifyCardiorespiratoryCapacityOfWoman();
-        }
+        const { type, title } = classifyResult({ sex, vo2MlKG });
+
+        this.calculated = true;
+        this.elAlertState = {
+          type,
+          title,
+        };
       }
-    },
-    verifyCardiorespiratoryCapacityOfMan() {
-      let type = '';
-      let title = '';
-
-      const { vo2MlKG } = this.cardiorespiratoryCapacityForm;
-
-      if (vo2MlKG >= 42.5) {
-        type = 'success';
-        title = 'Muito bom!';
-      } else if (vo2MlKG >= 35.3) {
-        type = 'success';
-        title = 'Bom!';
-      } else if (vo2MlKG >= 31.8) {
-        type = 'warning';
-        title = 'Suficiente!';
-      } else if (vo2MlKG >= 28.7) {
-        type = 'warning';
-        title = 'Fraco!';
-      } else {
-        type = 'error';
-        title = 'Muito Fraco!';
-      }
-
-      this.calculated = true;
-      this.elAlertState = {
-        type,
-        title,
-      };
-    },
-    verifyCardiorespiratoryCapacityOfWoman() {
-      let type = '';
-      let title = '';
-
-      const { vo2MlKG } = this.cardiorespiratoryCapacityForm;
-
-      if (vo2MlKG >= 35.2) {
-        type = 'success';
-        title = 'Muito bom!';
-      } else if (vo2MlKG >= 29.4) {
-        type = 'success';
-        title = 'Bom!';
-      } else if (vo2MlKG >= 25.8) {
-        type = 'warning';
-        title = 'Suficiente!';
-      } else if (vo2MlKG >= 23.6) {
-        type = 'warning';
-        title = 'Fraco!';
-      } else {
-        type = 'error';
-        title = 'Muito Fraco!';
-      }
-
-      this.calculated = true;
-      this.elAlertState = {
-        type,
-        title,
-      };
     },
   },
 };

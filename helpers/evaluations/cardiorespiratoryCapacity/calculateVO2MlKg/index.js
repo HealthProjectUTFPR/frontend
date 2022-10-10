@@ -5,7 +5,7 @@ const calculateVO2MlKg = ({ weight, vo2Lmin }) => {
 
   const result = (vo2Lmin * 1000) / weight;
 
-  return result;
+  return +result;
 };
 
 export default calculateVO2MlKg;
