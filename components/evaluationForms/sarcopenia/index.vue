@@ -145,6 +145,7 @@ import moment from 'moment';
 import calculateEstimatedMuscleMass from '@/helpers/evaluations/sarcopenia/calculateEstimatedMuscleMass';
 import calculateIndexOfMeasuredMuscleMassPerStature from '@/helpers/evaluations/sarcopenia/calculateIndexOfMeasuredMuscleMassPerStature';
 import calculateIndexOfEstimatedMuscleMassPerStature from '@/helpers/evaluations/sarcopenia/calculateIndexOfEstimatedMuscleMassPerStature';
+import classifyResult from '@/helpers/evaluations/sarcopenia/classifyResult';
 
 moment.locale('pt');
 
@@ -318,7 +319,7 @@ export default {
     },
     sarcopeniaForm: {
       handler() {
-        this.classifyResult();
+        this.calculateResult();
       },
       deep: true,
     },
@@ -398,88 +399,33 @@ export default {
           +indexOfEstimatedMuscleMassPerStature.toFixed(2);
       }
     },
-    classifyResult() {
+    calculateResult() {
       const isAllFieldsFilled = Object.values(this.sarcopeniaForm).every(
         (field) => !!field,
       );
 
+      const { walkingSpeed, handgripStrength, muscleMassIndex } =
+        this.sarcopeniaForm;
+      const { sex } = this.mockup;
+
       if (isAllFieldsFilled) {
-        if (this.mockup.sex === 'Homem') {
-          this.verifySarcopeniaOfMan();
-        } else {
-          this.verifySarcopeniaOfWoman();
-        }
+        const result = classifyResult({
+          sex,
+          walkingSpeed,
+          handgripStrength,
+          muscleMassIndex,
+        });
+
+        const { title, description, type, hasSarcopenia } = result;
+
+        this.elAlertState = {
+          type,
+          description,
+          title,
+        };
+        this.calculated = true;
+        this.hasSarcopenia = hasSarcopenia;
       }
-    },
-    verifySarcopeniaOfMan() {
-      const { walkingSpeed, handgripStrength, muscleMassIndex } =
-        this.sarcopeniaForm;
-
-      let title = 'Sem sarcopenia';
-      let description =
-        'De acordo com os dados informados, o paciente não sofre de Sarcopenia.';
-      let type = 'success';
-
-      if (walkingSpeed > 0.8 && handgripStrength > 30) {
-        this.hasSarcopenia = false;
-      } else if (
-        walkingSpeed > 0.8 &&
-        handgripStrength <= 30 &&
-        muscleMassIndex > 8.9
-      ) {
-        this.hasSarcopenia = false;
-      } else if (walkingSpeed <= 0.8 && muscleMassIndex > 8.9) {
-        this.hasSarcopenia = false;
-      } else {
-        this.hasSarcopenia = true;
-
-        title = 'Com sarcopenia';
-        type = 'error';
-        description =
-          'De acordo com os dados informados, o paciente possui Sarcopenia.';
-      }
-
-      this.elAlertState = {
-        type,
-        description,
-        title,
-      };
-      this.calculated = true;
-    },
-    verifySarcopeniaOfWoman() {
-      const { walkingSpeed, handgripStrength, muscleMassIndex } =
-        this.sarcopeniaForm;
-
-      let title = 'Sem sarcopenia';
-      let description =
-        'De acordo com os dados informados, o paciente não sofre de Sarcopenia.';
-      let type = 'success';
-
-      if (walkingSpeed > 0.8 && handgripStrength > 20) {
-        this.hasSarcopenia = false;
-      } else if (
-        walkingSpeed > 0.8 &&
-        handgripStrength <= 20 &&
-        muscleMassIndex > 6.37
-      ) {
-        this.hasSarcopenia = false;
-      } else if (walkingSpeed <= 0.8 && muscleMassIndex > 6.37) {
-        this.hasSarcopenia = false;
-      } else {
-        this.hasSarcopenia = true;
-
-        title = 'Com sarcopenia';
-        type = 'error';
-        description =
-          'De acordo com os dados informados, o paciente possui Sarcopenia.';
-      }
-
-      this.elAlertState = {
-        type,
-        description,
-        title,
-      };
-      this.calculated = true;
     },
   },
 };
