@@ -109,6 +109,7 @@
 
 <script>
 import calculateVO2LMin from '@/helpers/evaluations/cardiorespiratoryCapacity/calculateVO2Lmin';
+import calculateVO2MlKg from '@/helpers/evaluations/cardiorespiratoryCapacity/calculateVO2MlKg';
 
 export default {
   name: 'CardiorespiratoryCapacityForm',
@@ -182,7 +183,8 @@ export default {
   watch: {
     'cardiorespiratoryCapacityForm.weight': {
       handler() {
-        const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
+        const { weight, finalFC, time, vo2Lmin } =
+          this.cardiorespiratoryCapacityForm;
         const { age, sex } = this.mockup;
 
         this.cardiorespiratoryCapacityForm.vo2Lmin = calculateVO2LMin({
@@ -192,12 +194,19 @@ export default {
           age,
           sex,
         });
-        this.calculateVO2MlKg();
+        this.cardiorespiratoryCapacityForm.vo2MlKG = calculateVO2MlKg({
+          weight,
+          vo2Lmin,
+        });
       },
     },
     'cardiorespiratoryCapacityForm.vo2Lmin': {
       handler() {
-        this.calculateVO2MlKg();
+        const { weight, vo2Lmin } = this.cardiorespiratoryCapacityForm;
+        this.cardiorespiratoryCapacityForm.vo2MlKG = calculateVO2MlKg({
+          weight,
+          vo2Lmin,
+        });
       },
     },
     'cardiorespiratoryCapacityForm.finalFC': {
@@ -236,10 +245,14 @@ export default {
     },
   },
   mounted() {
-    const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
+    const { weight, finalFC, time, vo2Lmin } =
+      this.cardiorespiratoryCapacityForm;
     const { age, sex } = this.mockup;
 
-    this.calculateVO2MlKg();
+    this.cardiorespiratoryCapacityForm.vo2MlKG = calculateVO2MlKg({
+      weight,
+      vo2Lmin,
+    });
     this.cardiorespiratoryCapacityForm.vo2Lmin = calculateVO2LMin({
       weight,
       finalFC,
@@ -260,17 +273,6 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
       this.calculated = false;
-    },
-    calculateVO2MlKg() {
-      const { weight, vo2Lmin } = this.cardiorespiratoryCapacityForm;
-
-      if (!weight) {
-        this.cardiorespiratoryCapacityForm.vo2MlKG = '';
-      }
-
-      const result = (vo2Lmin * 1000) / weight;
-
-      this.cardiorespiratoryCapacityForm.vo2MlKG = result.toFixed(2);
     },
     classifyResult() {
       const isAllFieldsFilled = Object.values(

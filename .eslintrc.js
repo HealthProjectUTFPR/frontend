@@ -26,6 +26,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'operator-linebreak': 'off',
     'comma-dangle': ['error', 'always-multiline'],
+    'object-curly-newline': ['error', { multiline: true }],
   },
   settings: {
     'import/core-modules': ['vue', 'vuex'], // these modules are included in nuxt.js

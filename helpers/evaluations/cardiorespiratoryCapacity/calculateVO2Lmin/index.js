@@ -1,6 +1,4 @@
-const calculateVO2LMin = ({
-  weight, finalFC, time, age, sex,
-}) => {
+const calculateVO2LMin = ({ weight, finalFC, time, age, sex }) => {
   if (!weight) {
     return '';
   }
@@ -15,7 +13,7 @@ const calculateVO2LMin = ({
         0.224 * time -
         0.0115 * finalFC;
 
-  return result.toFixed(2);
+  return result;
 };
 
 export default calculateVO2LMin;
