@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import calculateVO2MlKg from './index';
 
-describe('calculate VO2 l/Min', () => {
+describe('calculateVO2MlKg', () => {
   it('should return 31.08 based on mockup values', () => {
     const weight = 87;
     const vo2Lmin = 2.7036985;
