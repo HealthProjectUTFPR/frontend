@@ -53,6 +53,7 @@ export default {
                 password: '',
                 name: '',
                 plan: null,
+                id: '',
             },
 
             options: [
@@ -102,11 +103,12 @@ export default {
 
         async doSignup() {
             try {
-                await this.$axios.post("http://localhost:3333/auth/register", {
+                const { data } = await this.$axios.post("http://localhost:3333/auth/register", {
                     email: this.signup.email,
                     name: this.signup.name,
                     password: this.signup.password
                 });
+                localStorage.setItem("usr-id", data.id);
                 this.$router.push("/login");
                 this.$notify.success({
                     title: 'Sucesso!',
