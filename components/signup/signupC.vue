@@ -31,12 +31,12 @@
             </el-form>
         </div>
         <div class="button pt-2 flex justify-center">
-            <el-button type="primary" @click="submitForm()">Cadastre-se</el-button>
+            <el-button type="primary" @click="submitForm">Cadastre-se</el-button>
         </div>
         <div class="signup flex justify-center font-medium">
             <span class="text-sm">Já possui uma conta?
                 <el-link :underline="false" type="primary">
-                    <span class="font-medium text-sm"> Login </span>
+                    <span class="font-medium text-sm" @click="goToLog"> Login </span>
                 </el-link>
             </span>
         </div>
@@ -87,6 +87,39 @@ export default {
             },
         }
     },
+
+    methods: {
+        error1() {
+            this.$notify.error({
+                title: 'Erro',
+                message: 'Email ou senha inválidos'
+            });
+        },
+
+        async doSignup() {
+            try {
+                await this.$axios.post("/auth/register", this.signup);
+                this.$router.push("/login");
+            } catch (e) {
+                this.error1();
+            }
+        },
+
+        submitForm() {
+            this.$refs.LoginForm.validate((valid) => {
+                if (valid) {
+                    this.doSignup();
+                } else {
+                    this.error1();
+                }
+            });
+        },
+
+        goToLog() {
+            this.$router.push("/login");
+        },
+    },
+
 }
 </script>
       
