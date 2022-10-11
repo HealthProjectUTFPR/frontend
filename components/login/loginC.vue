@@ -65,13 +65,20 @@ export default {
             });
         },
 
+        error2() {
+            this.$notify.error({
+                title: 'Erro',
+                message: 'Probelmas no servidor'
+            });
+        },
+
         async doLogin() {
             try {
                 const { data } = await this.$axios.post("/auth/login", this.login);
                 localStorage.setItem("token", data);
                 this.$router.push("/");
             } catch (e) {
-                this.error();
+                this.error2();
             }
         },
 
@@ -86,7 +93,7 @@ export default {
         },
 
         goToReg() {
-            this.$router.push("/register");
+            this.$router.push("/signup");
         },
     },
 }
