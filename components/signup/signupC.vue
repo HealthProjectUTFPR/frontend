@@ -93,20 +93,30 @@ export default {
                 message: 'Email ou senha inválidos'
             });
         },
+        error2() {
+            this.$notify.error({
+                title: 'Erro',
+                message: 'Email já cadastrado'
+            });
+        },
 
         async doSignup() {
             try {
-                await this.$axios.post("/auth/register", {
+                await this.$axios.post("http://localhost:3333/auth/register", {
                     email: this.signup.email,
-                    password: this.signup.password,
-                    name: this.signup.name
+                    name: this.signup.name,
+                    password: this.signup.password
                 });
-                console.log(this.signup.email);
                 this.$router.push("/login");
                 this.$notify.success({
                     title: 'Sucesso!',
                     message: "Conta criada com sucesso!"})
             } catch (e) {
+                if(e.response?.data?.statusCode === 409)
+                {
+                    this.error2();
+                    return;
+                }
                 this.error1();
             }
         },
