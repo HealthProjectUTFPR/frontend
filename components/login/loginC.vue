@@ -74,7 +74,7 @@ export default {
 
         async doLogin() {
             try {
-                const { data } = await this.$axios.post("/auth/login", this.login);
+                const { data } = await this.$axios.post("http://localhost:3333/auth/login", this.login);
                 localStorage.setItem("token", data);
                 this.$router.push("/");
             } catch (e) {
