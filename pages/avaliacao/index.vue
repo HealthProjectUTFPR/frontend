@@ -10,7 +10,7 @@ export default {
   components: {},
   methods: {
     goToSarcopenia() {
-      this.$router.push('/evaluation/create/sarcopenia');
+      this.$router.push('/avaliacao/criar/sarcopenia');
     },
   },
 };
