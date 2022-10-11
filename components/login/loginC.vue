@@ -27,7 +27,7 @@
         <div class="signup flex justify-center font-medium">
             <span class="text-sm">Não possui uma conta?
                 <el-link :underline="false" type="primary">
-                    <span class="font-medium text-sm"> Cadastre-se </span>
+                    <span class="font-medium text-sm" @click="goToReg"> Cadastre-se </span>
                 </el-link>
             </span>
         </div>
@@ -76,13 +76,17 @@ export default {
         },
 
         submitForm() {
-            this.$refs.loginForm.validate((valid) => {
+            this.$refs.LoginForm.validate((valid) => {
                 if (valid) {
                     this.doLogin();
                 } else {
                     this.error();
                 }
             });
+        },
+
+        goToReg() {
+            this.$router.push("/register");
         },
     },
 }
