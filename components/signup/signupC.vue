@@ -18,12 +18,8 @@
                 <el-form-item prop="password">
                     <el-input v-model="signup.password" show-password="true" placeholder="Insira sua senha"></el-input>
                 </el-form-item>
-                <el-form-item prop="passwordC">
-                    <el-input v-model="signup.passwordC" show-password="true" placeholder="Confirme sua senha">
-                    </el-input>
-                </el-form-item>
                 <el-form-item class="flex justify-center">
-                    <el-select v-model="value" placeholder="Selecione seu plano">
+                    <el-select v-model="value" placeholder="Selecione seu plano" clearable>
                         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
@@ -56,17 +52,19 @@ export default {
                 email: '',
                 password: '',
                 name: '',
-                passwordC: '',
+                plan: null,
             },
 
             options: [
                 {
                     value: 'Option1',
                     label: 'Gratuito',
+                    plan: false,
                 },
                 {
                     value: 'Option2',
                     label: 'Pago',
+                    plan: true,
                 },
             ],
 
@@ -81,9 +79,9 @@ export default {
                 name: [
                     { required: true, message: 'Campo obrigatório', trigger: 'blur' },
                 ],
-                passwordC: [
+                plan: [
                     { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-                ],
+                ]
             },
         }
     },
@@ -98,8 +96,16 @@ export default {
 
         async doSignup() {
             try {
-                await this.$axios.post("/auth/register", this.signup);
+                await this.$axios.post("/auth/register", {
+                    email: this.signup.email,
+                    password: this.signup.password,
+                    name: this.signup.name
+                });
+                console.log(this.signup.email);
                 this.$router.push("/login");
+                this.$notify.success({
+                    title: 'Sucesso!',
+                    message: "Conta criada com sucesso!"})
             } catch (e) {
                 this.error1();
             }
