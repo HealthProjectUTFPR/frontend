@@ -12,7 +12,7 @@ export default {
   components: {},
   methods: {
     goToCardiorespiratoryCapacity() {
-      this.$router.push('/evaluation/create/cardiorespiratoryCapacity');
+      this.$router.push('/avaliacao/criar/capacidadeCardiorrespiratoria');
     },
   },
 };
