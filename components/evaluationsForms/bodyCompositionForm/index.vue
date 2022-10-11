@@ -435,15 +435,15 @@ export default {
 
   computed: {
     waistEstature() {
-      return (this.bodyCompositionForm.waist / this.mockup.height).toFixed(2);
+      return (this.bodyCompositionForm.waist / this.mockup.height);
     },
 
     waistHip() {
-      return (this.bodyCompositionForm.waist / this.bodyCompositionForm.hip).toFixed(2);
+      return (this.bodyCompositionForm.waist / this.bodyCompositionForm.hip);
     },
 
     imc() {
-      return (this.bodyCompositionForm.weight / (this.mockup.height / 100) ** 2).toFixed(2);
+      return (this.bodyCompositionForm.weight / (this.mockup.height / 100) ** 2);
     },
 
     sumPleats() {
@@ -452,29 +452,29 @@ export default {
 
     density() {
       if (this.mockup.sex === 'Mulher') {
-        return (1.1715 - 0.0779 * Math.log10(this.sumPleats)).toFixed(2);
+        return (1.1715 - 0.0779 * Math.log10(this.sumPleats));
       }
-      return (1.1567 - 0.0717 * Math.log10(this.sumPleats)).toFixed(2);
+      return (1.1567 - 0.0717 * Math.log10(this.sumPleats));
     },
 
     bodyFat() {
-      return 4.95 / this.density ? ((4.95 / this.density - 4.5) * 100).toFixed(2) : (0).toFixed(2);
+      return 4.95 / this.density ? (((4.95 / this.density) - 4.5) * 100) : (0);
     },
 
     mg() {
-      return ((this.bodyCompositionForm.weight * this.bodyFat) / 100).toFixed(2);
+      return ((this.bodyCompositionForm.weight * this.bodyFat) / 100);
     },
 
     mcm() {
-      return (this.bodyCompositionForm.weight - this.mg).toFixed(2);
+      return (this.bodyCompositionForm.weight - this.mg);
     },
 
     minimumWeight() {
-      return (this.mcm * 1.3888888888889).toFixed(2);
+      return (this.mcm * 1.3888888888889);
     },
 
     maximumWeight() {
-      return (this.mcm * 1.47058824).toFixed(2);
+      return (this.mcm * 1.47058824);
     },
   },
 
