@@ -22,18 +22,27 @@
           label="Data"
           align="center"
           header-align="center"
+          sortable
+          :filters="dataFilterValues"
+          :filter-method="filterHandler"
         ></el-table-column>
         <el-table-column
           prop="avaliacao"
           label="Avaliação"
           align="center"
           header-align="center"
+          sortable
+          :filters="evalutationFilterValues"
+          :filter-method="filterHandler"
         ></el-table-column>
         <el-table-column
           prop="resultado"
           label="Resultado"
           align="center"
           header-align="center"
+          sortable
+          :filters="resultFilterValues"
+          :filter-method="filterHandler"
         ></el-table-column>
         <el-table-column>
           <template slot-scope="scope">
@@ -174,6 +183,27 @@ export default {
       evaluationToBeDeleted: {},
     }
   },
+  computed: {
+    dataFilterValues() {
+      const values = [...new Set(this.tableData.map(({ data }) => data))]
+
+      return values.map((item) => ({ text: item, value: item }))
+    },
+    evalutationFilterValues() {
+      const values = [
+        ...new Set(this.tableData.map(({ avaliacao }) => avaliacao)),
+      ]
+
+      return values.map((item) => ({ text: item, value: item }))
+    },
+    resultFilterValues() {
+      const values = [
+        ...new Set(this.tableData.map(({ resultado }) => resultado)),
+      ]
+
+      return values.map((item) => ({ text: item, value: item }))
+    },
+  },
   mounted() {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
@@ -182,8 +212,9 @@ export default {
     window.removeEventListener('resize', this.handleResize)
   },
   methods: {
-    tableRowClassName({ row, rowIndex }) {
-      return 'teste'
+    filterHandler(value, row, column) {
+      const property = column.property
+      return row[property] === value
     },
     handleResize() {
       this.window.width = window.innerWidth
@@ -192,15 +223,15 @@ export default {
     goToSarcopenia() {
       this.$router.push('/evaluation/create/sarcopenia')
     },
-    handleEdit(index, row) {
-      console.log(index, row)
-    },
     handleOpenModalDelete(index, row) {
       this.openDeleteModal = true
       this.evaluationToBeDeleted = {
         index,
         row,
       }
+    },
+    handleEdit(index, row) {
+      console.log(index, row)
     },
     handleDelete() {
       console.log(this.evaluationToBeDeleted)
