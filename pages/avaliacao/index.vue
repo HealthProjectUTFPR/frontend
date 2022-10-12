@@ -122,17 +122,20 @@
 
     <!-- CAIXA PARA DELETAR AVALIAÇÃO -->
     <el-dialog
-      title="Deseja realmente remover esta avaliação?"
       :visible.sync="openDeleteModal"
+      class="m-[30px]"
+      :width="window.width < 768 ? '90%' : '50%'"
       center
     >
-      <p class="text-center">
+      <span slot="title">Deseja realmente remover esta avaliação?</span>
+
+      <p class="text-center text-xs">
         A avaliação {{ evaluationToBeDeleted?.row?.avaliacao }}, realizada no
         dia {{ evaluationToBeDeleted?.row?.data }}, será ocultada após clicar no
         botão Deletar.
       </p>
 
-      <div slot="footer" class="dialog-footer flex justify-center">
+      <div slot="footer" class="dialog-footer flex justify-center gap-[10px]">
         <el-button type="danger" plain @click="handleDelete()">
           Deletar
         </el-button>
