@@ -29,11 +29,7 @@
           <el-form-item label="Nome do registro" prop="name">
             <el-input v-model="form.name" autocomplete="off"></el-input>
           </el-form-item>
-          
-          <!-- Pre treino -->
-          <el-form-item> Pré Treino </el-form-item>
 
-          <!-- Data e Hora -->
           <el-form-item>
             <el-col>
               <el-date-picker
@@ -41,10 +37,18 @@
                 type="date"
                 placeholder="Data inicial"
               />
-              <span class="text-gray-500">-</span>
+            </el-col>
+          </el-form-item>
+          
+          <!-- Pre treino -->
+          <el-form-item> Pré Treino </el-form-item>
+
+          <!-- Data e Hora -->
+          <el-form-item>
+            <el-col>
               <el-time-picker 
                 v-model="form.date1"
-                placeholder="Horas"
+                placeholder="Horário"
               />
             </el-col>
           </el-form-item>
@@ -52,14 +56,14 @@
           <!-- Informacoes do exame -->
           <el-form-item>
             <el-col>
-              <el-input v-model="form.name" placeholder="PAS(mmHg)" autocomplete="off" ></el-input>
-              <el-input v-model="form.name" placeholder="PAD(mmHg)" autocomplete="off" ></el-input>
-              <el-input v-model="form.name" placeholder="PSE-s" autocomplete="off" ></el-input>
+              <el-input v-model="form.name" placeholder="PAS(mmHg)" autocomplete="off" style="width:160px"></el-input>
+            <el-input v-model="form.name" placeholder="PAD(mmHg)" autocomplete="off" style="width:160px"></el-input>
+            <el-input v-model="form.name" placeholder="PSE-s" autocomplete="off" style="width:160px"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item>
             <el-input v-model="form.name" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:240px"></el-input>
-            <el-input v-model="form.name" placeholder="Tempo de treino(min)" autocomplete="off" style="width:240px"></el-input>
+            <el-input v-model="form.name" placeholder="Inicio do treino(min)" autocomplete="off" style="width:240px"></el-input>
           </el-form-item>
 
           <!-- Pos treino -->
@@ -68,15 +72,9 @@
           <!-- Data e Hora -->
           <el-form-item>
             <el-col>
-              <el-date-picker
-                v-model="form.date2"
-                type="date"
-                placeholder="Data inicial"
-              />
-              <span class="text-gray-500">-</span>
               <el-time-picker 
                 v-model="form.date2"
-                placeholder="Horas"
+                placeholder="Horário"
               />
             </el-col>
           </el-form-item>
@@ -89,9 +87,14 @@
           </el-form-item>
           <el-form-item>
             <el-input v-model="form.name" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:240px"></el-input>
-            <el-input v-model="form.name" placeholder="Tempo de treino(min)" autocomplete="off" style="width:240px"></el-input>
+            <el-input v-model="form.name" placeholder="Termino do treino(min)" autocomplete="off" style="width:240px"></el-input>
           </el-form-item>
           
+          <!-- Tempo total do treino -->
+          <el-form-item label="Tempo total do treino(min)">
+            <el-input v-model="form.name" autocomplete="off" style="width:240px"></el-input>
+          </el-form-item>
+
           <!-- Observacao -->
           <el-form-item>
             <el-input v-model="form.desc" type="textarea" placeholder="Observação" />
@@ -116,6 +119,19 @@
         dialogFormVisible: false,
         form: {
           name: '',
+          date: "Date",
+          horarioPre: "Date",
+          pasPre: "number",
+          padPre: "number",
+          pseEPre: "number",
+          glicemiaPre: "number",
+          horarioPos: "Date",
+          pasPos: "number",
+          padPos: "number",
+          pseEPos: "number",
+          glicemiaPos: "number",
+          horarioTreino: "number",
+          observacao: "string"
         },
         rules: {
           name: [
