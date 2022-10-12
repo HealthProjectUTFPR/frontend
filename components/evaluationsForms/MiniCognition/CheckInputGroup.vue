@@ -1,11 +1,9 @@
 <template>
-    <div class="px-5 mb-2">
-        <span>
-            <span class="justify-center">{{text}}</span>
-            <div class="px-5">
-                <el-checkbox v-model="checkedGroups[checked]">Conseguiu</el-checkbox>
-            </div>
-        </span>
+    <div class="px-4 mb-4">
+        <span class="justify-center">{{text}}</span>
+        <div class="px-2">
+            <el-checkbox v-model="checkedGroups[checked]">Conseguiu</el-checkbox>
+        </div>
     </div>
 </template>
 
