@@ -16,7 +16,7 @@
         </div>
       </template>
 
-      <el-table :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100%" size="small">
         <el-table-column
           prop="data"
           label="Data"
