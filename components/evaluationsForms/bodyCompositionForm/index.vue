@@ -273,6 +273,10 @@
 </template>
 
 <script>
+import imcFunc from '../../../helpers/evaluations/bodyComposition/imc/index';
+import densityFunc from '../../../helpers/evaluations/bodyComposition/density/index';
+import bodyFatFunc from '../../../helpers/evaluations/bodyComposition/bodyFat/index';
+
 export default {
   name: 'BodyCompositionForm',
   data() {
@@ -443,7 +447,7 @@ export default {
     },
 
     imc() {
-      return (this.bodyCompositionForm.weight / (this.mockup.height / 100) ** 2);
+      return imcFunc(this.bodyCompositionForm.weight, this.mockup.height);
     },
 
     sumPleats() {
@@ -451,14 +455,11 @@ export default {
     },
 
     density() {
-      if (this.mockup.sex === 'Mulher') {
-        return (1.1715 - 0.0779 * Math.log10(this.sumPleats));
-      }
-      return (1.1567 - 0.0717 * Math.log10(this.sumPleats));
+      return densityFunc(this.mockup.sex, this.sumPleats);
     },
 
     bodyFat() {
-      return 4.95 / this.density ? (((4.95 / this.density) - 4.5) * 100) : (0);
+      return 4.95 / this.density ? bodyFatFunc(this.density) : (0);
     },
 
     mg() {
