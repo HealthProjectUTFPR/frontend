@@ -1,151 +1,146 @@
 <template>
   <div>
     <el-card class="box-card">
-    <template #header>
-      <div class="flex h-full w-full justify-between items-center	">
-          <span class="text-center w-full font-black">HISTÓRICO DE AVALIAÇÕES</span>
-        <el-button
-          type="primary"
-          icon="el-icon-circle-plus"
-          @click="outerVisible = true"
+      <template #header>
+        <div class="flex h-full w-full justify-between items-center">
+          <span class="text-center w-full font-black"
+            >HISTÓRICO DE AVALIAÇÕES</span
           >
-          CRIAR
-        </el-button>
-      </div>
-    </template>
-
-    <el-table
-      :data="tableData"
-      style="width: 100%"
-      
-    >
-      <el-table-column
-        prop="data"
-        label="Data"
-        align="center"  
-        header-align="center"
-        ></el-table-column>
-      <el-table-column
-        prop="avaliacao"
-        label="Avaliação"
-        align="center"  
-        header-align="center"
-        ></el-table-column>
-      <el-table-column
-        prop="resultado"
-        label="Resultado"
-        align="center"  
-        header-align="center"
-      ></el-table-column>
-      <el-table-column
-        
-      >
-        <template slot-scope="scope">
-          <div class="flex flex-col md:flex-row items-center justify-center">
-            <el-tooltip effect="dark" content="Editar" placement="bottom">
-              <el-button
-                size="mini"
-                type="primary"
-                icon="el-icon-edit"
-                circle
-                class="m-0"
-                ></el-button>
-            </el-tooltip>
-  
-            <el-tooltip effect="dark" content="Remover" placement="bottom">
-              <el-button
-                class="md:m-0 mt-1"
-                size="mini"
-                type="danger"
-                icon="el-icon-delete"
-                circle
-                @click="handleDelete(scope.$index, scope.row)"></el-button>
-            </el-tooltip>
-          </div>
+          <el-button
+            type="primary"
+            icon="el-icon-circle-plus"
+            @click="outerVisible = true"
+          >
+            CRIAR
+          </el-button>
+        </div>
       </template>
 
-      </el-table-column>
-    </el-table>
-  </el-card>
+      <el-table :data="tableData" style="width: 100%">
+        <el-table-column
+          prop="data"
+          label="Data"
+          align="center"
+          header-align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="avaliacao"
+          label="Avaliação"
+          align="center"
+          header-align="center"
+        ></el-table-column>
+        <el-table-column
+          prop="resultado"
+          label="Resultado"
+          align="center"
+          header-align="center"
+        ></el-table-column>
+        <el-table-column>
+          <template slot-scope="scope">
+            <div class="flex flex-col md:flex-row items-center justify-center">
+              <el-tooltip effect="dark" content="Editar" placement="bottom">
+                <el-button
+                  size="mini"
+                  type="primary"
+                  icon="el-icon-edit"
+                  circle
+                  class="m-0"
+                ></el-button>
+              </el-tooltip>
 
-  <el-dialog title="Escolha uma avaliação para fazer" :visible.sync="outerVisible">
-    <div class="flex justify-between items-baseline flex-col">
-      <div class="flex flex-col gap-4 w-full">
-        <el-button
-          type="secondary"
-          @click="outerVisible = true"
-          >
-          Avaliação de fragilidade
+              <el-tooltip effect="dark" content="Remover" placement="bottom">
+                <el-button
+                  class="md:m-0 mt-1"
+                  size="mini"
+                  type="danger"
+                  icon="el-icon-delete"
+                  circle
+                  @click="handleOpenModalDelete(scope.$index, scope.row)"
+                ></el-button>
+              </el-tooltip>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-card>
+
+    <!-- CAIXA PARA CRIAR AVALIAÇÃO -->
+    <el-dialog
+      title="Escolha uma Avaliação"
+      :visible.sync="outerVisible"
+      :fullscreen="window.width < 768 ? true : false"
+      center
+    >
+      <div
+        class="
+          flex
+          justify-between
+          flex-col
+          gap-4
+          md:max-h-[50vh] md:overflow-y-scroll
+        "
+      >
+        <el-button @click="outerVisible = true">
+          Avaliação de Fragilidade
         </el-button>
-    
-        <el-button
-          type="secondary"
-          @click="outerVisible = true"
-          >
-          Independência nas atividades diárias
+
+        <el-button @click="outerVisible = true">
+          Independência nas Atividades Diárias
         </el-button>
-    
-        <el-button
-          type="secondary"
-          @click="outerVisible = true"
-          >
-          Avaliação de equilíbrio
+
+        <el-button @click="outerVisible = true">
+          Avaliação de Equilíbrio
+        </el-button>
+
+        <el-button @click="outerVisible = true">Mini Cognição</el-button>
+
+        <el-button @click="outerVisible = true">
+          Escala de Depressão Geriátrica
+        </el-button>
+
+        <el-button @click="outerVisible = true">
+          Avaliação de Sarcopenia
+        </el-button>
+
+        <el-button @click="outerVisible = true">Bateria Funcional</el-button>
+
+        <el-button @click="outerVisible = true">
+          Capacidade Cardiorrespiratória
+        </el-button>
+
+        <el-button @click="outerVisible = true">
+          Composição Corporal
         </el-button>
       </div>
 
-      <div class="flex flex-col gap-4 mt-4 w-full">
-        <el-button
-          type="secondary"
-          @click="outerVisible = true"
-          >
-          Mini cognição
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="outerVisible = false"
+          >Fechar</el-button
+        >
+      </div>
+    </el-dialog>
+
+    <!-- CAIXA PARA DELETAR AVALIAÇÃO -->
+    <el-dialog
+      title="Deseja realmente remover esta avaliação?"
+      :visible.sync="openDeleteModal"
+      center
+    >
+      <p class="text-center">
+        A avaliação {{ evaluationToBeDeleted?.row?.avaliacao }}, realizada no
+        dia {{ evaluationToBeDeleted?.row?.data }}, será ocultada após clicar no
+        botão Deletar.
+      </p>
+
+      <div slot="footer" class="dialog-footer flex justify-center">
+        <el-button type="danger" plain @click="handleDelete()">
+          Deletar
         </el-button>
-    
-        <el-button
-          type="secondary"
-          @click="outerVisible = true"
-          >
-          Escala de depressão geriátrica
-        </el-button>
-    
-        <el-button
-          type="secondary"
-          @click="outerVisible = true"
-          >
-          Avaliação de sarcopênia
+        <el-button type="primary" @click="openDeleteModal = false">
+          Cancelar
         </el-button>
       </div>
-
-      <div class="flex flex-col gap-4 mt-4 w-full">
-        <el-button
-          type="secondary"
-          @click="outerVisible = true"
-          >
-         Bateria funcional
-        </el-button>
-    
-        <el-button
-          type="secondary"
-          @click="outerVisible = true"
-          >
-          Capacidade cardio respiratória
-        </el-button>
-    
-        <el-button
-          type="secondary"
-          @click="outerVisible = true"
-          >
-          Composição corporal
-        </el-button>
-      </div>
-
-  </div>
-
-
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="outerVisible = false">Fechar</el-button>
-    </div>
-  </el-dialog>
+    </el-dialog>
   </div>
 </template>
 
@@ -155,47 +150,60 @@ export default {
   components: {},
   data() {
     return {
-      tableData: [{
-        data: '2016-05-03',
-        avaliacao: 'Tom',
-        pontuacao: 'No. 189, Grove St, Los Angeles',
-        resultado: 'No. 189, Grove St, Los Angeles'
-
-      }, {
-        data: '2016-05-02',
-        avaliacao: 'Tom',
-        resultado: 'No. 189, Grove St, Los Angeles',
-        pontuacao: 'No. 189, Grove St, Los Angeles'
-      }, {
-        data: '2016-05-04',
-        avaliacao: 'Tom',
-        resultado: 'No. 189, Grove St, Los Angeles',
-        pontuacao: 'No. 189, Grove St, Los Angeles'
-      }, {
-        data: '2016-05-01',
-        avaliacao: 'Tom',
-        resultado: 'No. 189, Grove St, Los Angeles',
-        pontuacao: 'No. 189, Grove St, Los Angeles',
-      }],
+      window: {
+        width: 0,
+        height: 0,
+      },
+      tableData: [
+        {
+          data: '12/10/2022',
+          avaliacao: 'Sarcopenia',
+          resultado: 'Com Sarcopenia',
+        },
+        {
+          data: '12/01/2022',
+          avaliacao: 'Sarcopenia',
+          resultado: 'Sem Sarcopenia',
+        },
+      ],
       outerVisible: false,
-        innerVisible: false
+      openDeleteModal: false,
+      evaluationToBeDeleted: {},
     }
+  },
+  mounted() {
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
   },
   methods: {
-    tableRowClassName({row, rowIndex}) {
-      return 'teste';
+    tableRowClassName({ row, rowIndex }) {
+      return 'teste'
+    },
+    handleResize() {
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
     },
     goToSarcopenia() {
-      this.$router.push('/evaluation/create/sarcopenia');
+      this.$router.push('/evaluation/create/sarcopenia')
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      console.log(index, row)
     },
-    handleDelete(index, row) {
-      console.log(index, row);
-    }
+    handleOpenModalDelete(index, row) {
+      this.openDeleteModal = true
+      this.evaluationToBeDeleted = {
+        index,
+        row,
+      }
+    },
+    handleDelete() {
+      console.log(this.evaluationToBeDeleted)
+    },
   },
-};
+}
 </script>
 
 <style scoped>
