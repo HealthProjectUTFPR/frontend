@@ -10,10 +10,10 @@
       <el-table-column label="glicemiaPre" prop="glicemiaPre" />
       <el-table-column label="pseEPre" prop="pseEPre" />
       <el-table-column label="horarioPos" prop="horarioPos" />
-      <el-table-column label="padPos" prop="padPro" />
-      <el-table-column label="pasPos" prop="pasPro" />
-      <el-table-column label="glicemiaPos" prop="glicemiaPro" />
-      <el-table-column label="pseEPos" prop="pseEPro" />
+      <el-table-column label="padPos" prop="padPos" />
+      <el-table-column label="pasPos" prop="pasPos" />
+      <el-table-column label="glicemiaPos" prop="glicemiaPos" />
+      <el-table-column label="pseEPos" prop="pseEPos" />
       <el-table-column label="horarioTreino" prop="horarioTreino" />
       <el-table-column label="observacao" prop="observacao" />
       <el-table-column align="right">
@@ -54,14 +54,14 @@
           horarioPos : "date",
           horarioPre : "date",
           pasPre : "number",
-          pasPro : "number",
+          pasPos : "number",
           padPre: "number",
-          padPro: "number",
+          padPos: "number",
           glicemiaPre: "number",
-          glicemiaPro: "number",
+          glicemiaPos: "number",
           horarioTreino: "number",
           pseEPre: "number",
-          pseEPro: "number",
+          pseEPos: "number",
           observacao: "string",
         },
         rules: {
