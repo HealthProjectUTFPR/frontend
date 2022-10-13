@@ -55,11 +55,13 @@ export default {
   },
 
   mounted() {
+    
     this.fetchData();
   },
 
   methods: {
     async fetchData() {
+  
       this.loading = true;
       try {
         const { data } = await this.$axios.get("/category/get");

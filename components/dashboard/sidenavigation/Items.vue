@@ -6,6 +6,9 @@
     <sidenav-item title="Categoria" to="/category">
       <font-awesome-icon icon="list-ul" />
     </sidenav-item>
+    <sidenav-item title="Histórico de monitoramento" to="/prepos">
+      <font-awesome-icon icon="list-ul" />
+    </sidenav-item>
   </ul>
 </template>
 
