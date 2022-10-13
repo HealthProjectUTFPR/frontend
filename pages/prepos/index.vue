@@ -26,7 +26,7 @@
         <el-form ref="ruleForm" :model="form" :rules="rules">
           
           <!-- Nome do registro -->
-          <el-form-item label="Nome do registro" prop="name">
+          <el-form-item label="Nome do treino" prop="name">
             <el-input v-model="form.name" autocomplete="off"></el-input>
           </el-form-item>
 
@@ -47,7 +47,7 @@
           <el-form-item>
             <el-col>
               <el-time-picker 
-                v-model="form.date1"
+                v-model="form.date2"
                 placeholder="Horário"
               />
             </el-col>
@@ -56,14 +56,12 @@
           <!-- Informacoes do exame -->
           <el-form-item>
             <el-col>
-              <el-input v-model="form.name" placeholder="PAS(mmHg)" autocomplete="off" style="width:160px"></el-input>
-            <el-input v-model="form.name" placeholder="PAD(mmHg)" autocomplete="off" style="width:160px"></el-input>
-            <el-input v-model="form.name" placeholder="PSE-s" autocomplete="off" style="width:160px"></el-input>
+              <el-input v-model="form.pasPre" placeholder="PAS(mmHg)" autocomplete="off" style="width:160px"></el-input>
+              <el-input v-model="form.padPre" placeholder="PAD(mmHg)" autocomplete="off" style="width:160px"></el-input>
+              <el-input v-model="form.pseEPre" placeholder="PSE-s" autocomplete="off" style="width:160px"></el-input>
+              <el-input v-model="form.glicemiaPre" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:240px"></el-input>
+              <el-input v-model="form.horarioPre" placeholder="Inicio do treino(min)" autocomplete="off" style="width:240px"></el-input>
             </el-col>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="form.name" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:240px"></el-input>
-            <el-input v-model="form.name" placeholder="Inicio do treino(min)" autocomplete="off" style="width:240px"></el-input>
           </el-form-item>
 
           <!-- Pos treino -->
@@ -73,7 +71,7 @@
           <el-form-item>
             <el-col>
               <el-time-picker 
-                v-model="form.date2"
+                v-model="form.date3"
                 placeholder="Horário"
               />
             </el-col>
@@ -81,18 +79,18 @@
 
           <!-- Informacoes do exame -->
           <el-form-item>
-            <el-input v-model="form.name" placeholder="PAS(mmHg)" autocomplete="off" style="width:160px"></el-input>
-            <el-input v-model="form.name" placeholder="PAD(mmHg)" autocomplete="off" style="width:160px"></el-input>
-            <el-input v-model="form.name" placeholder="PSE-s" autocomplete="off" style="width:160px"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="form.name" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:240px"></el-input>
-            <el-input v-model="form.name" placeholder="Termino do treino(min)" autocomplete="off" style="width:240px"></el-input>
+            <el-col>
+              <el-input v-model="form.pasPos" placeholder="PAS(mmHg)" autocomplete="off" style="width:160px"></el-input>
+              <el-input v-model="form.padPos" placeholder="PAD(mmHg)" autocomplete="off" style="width:160px"></el-input>
+              <el-input v-model="form.pseEPos" placeholder="PSE-s" autocomplete="off" style="width:160px"></el-input>
+              <el-input v-model="form.glicemiaPos" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:240px"></el-input>
+              <el-input v-model="form.horarioPos" placeholder="Inicio do treino(min)" autocomplete="off" style="width:240px"></el-input>
+            </el-col>
           </el-form-item>
           
           <!-- Tempo total do treino -->
           <el-form-item label="Tempo total do treino(min)">
-            <el-input v-model="form.name" autocomplete="off" style="width:240px"></el-input>
+            <el-input v-model="form.horarioTreino" autocomplete="off" style="width:240px"></el-input>
           </el-form-item>
 
           <!-- Observacao -->
