@@ -56,11 +56,13 @@
           <!-- Informacoes do exame -->
           <el-form-item>
             <el-col>
-              <el-input v-model="form.pasPre" placeholder="PAS(mmHg)" autocomplete="off" style="width:160px"></el-input>
-              <el-input v-model="form.padPre" placeholder="PAD(mmHg)" autocomplete="off" style="width:160px"></el-input>
-              <el-input v-model="form.pseEPre" placeholder="PSE-s" autocomplete="off" style="width:160px"></el-input>
-              <el-input v-model="form.glicemiaPre" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:240px"></el-input>
-              <el-input v-model="form.horarioPre" placeholder="Inicio do treino(min)" autocomplete="off" style="width:240px"></el-input>
+              <el-input v-model="form.pasPre" placeholder="PAS(mmHg)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.padPre" placeholder="PAD(mmHg)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.pseEPre" placeholder="PSE-s" autocomplete="off" style="width:auto"></el-input>
+            </el-col>
+            <el-col>
+              <el-input v-model="form.glicemiaPre" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.horarioPre" placeholder="Inicio do treino(min)" autocomplete="off" style="width:auto"></el-input>
             </el-col>
           </el-form-item>
 
@@ -80,11 +82,13 @@
           <!-- Informacoes do exame -->
           <el-form-item>
             <el-col>
-              <el-input v-model="form.pasPos" placeholder="PAS(mmHg)" autocomplete="off" style="width:160px"></el-input>
-              <el-input v-model="form.padPos" placeholder="PAD(mmHg)" autocomplete="off" style="width:160px"></el-input>
-              <el-input v-model="form.pseEPos" placeholder="PSE-s" autocomplete="off" style="width:160px"></el-input>
-              <el-input v-model="form.glicemiaPos" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:240px"></el-input>
-              <el-input v-model="form.horarioPos" placeholder="Inicio do treino(min)" autocomplete="off" style="width:240px"></el-input>
+              <el-input v-model="form.pasPos" placeholder="PAS(mmHg)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.padPos" placeholder="PAD(mmHg)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.pseEPos" placeholder="PSE-s" autocomplete="off" style="width:auto"></el-input>
+            </el-col>
+            <el-col>
+              <el-input v-model="form.glicemiaPos" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.horarioPos" placeholder="Inicio do treino(min)" autocomplete="off" style="width:auto"></el-input>
             </el-col>
           </el-form-item>
           
