@@ -14,7 +14,10 @@
           
           <section class="container wrap">
            
-            <div class= "pre_style " m="4">
+            <div class= "scrool_div ">
+
+
+            <div class= "pre_style " >
               <h1>Pré</h1>
               <h2>Horario</h2>
               <p>{{ moment(props.row.horarioPre ).format("HH:mm")}}</p>
@@ -28,7 +31,7 @@
               <p>{{ props.row.pseEPre }}</p>
             </div>
             
-            <div class= "pos_style" m="4">
+            <div class= "pos_style" >
               <h1>Pós</h1>
               <h2>Horario</h2>
               <p>{{ moment(props.row.horarioPos ).format("HH:mm")}}</p>
@@ -41,8 +44,7 @@
               <h2>PSE-s </h2>  
               <p>{{ props.row.pseEPos }}</p>
             </div>
-            
-
+          </div>
           </section>
 
           <!-- Informaçoes gerais-->
@@ -76,14 +78,8 @@
               </el-popconfirm>  
             </div>
           </section>
-          
-            
-          
-  
-          
+
         </template>
-
-
 
       </el-table-column>
         
@@ -443,13 +439,26 @@
     border-radius: 10px;
   }
 
-  .pre_style::-webkit-scrollbar{
+  .scrool_div::-webkit-scrollbar{
     width: 3px;
   }
 
-  .pre_style::-webkit-scrollbar-thumb{
+  .scrool_div::-webkit-scrollbar-thumb{
     background-color: gray;
     border-radius: 10px
+
+  }
+
+
+  .scrool_div{
+        margin: 5px;
+    float: left;
+    width: 160px;
+    height: 200px;
+    flex: 1;
+    flex-direction:row;
+    text-align: center;
+    overflow-y: scroll;
 
   }
 
@@ -462,10 +471,10 @@
     margin: 5px;
     float: right;
     width: 160px;
-    height: 100px;
+    height: 200px;
     flex: 1;
     text-align: center;
-    overflow-y: scroll;
+    
 
   }
 
@@ -474,10 +483,10 @@
     margin: 5px;
     float: left;
     width: 160px;
-    height: 100px;
+    height: 200px;
     flex: 1;
     text-align: center;
-    overflow-y: scroll;
+    
     
 
   }
@@ -486,7 +495,7 @@
     margin: 5px;
     float: left;
     width: 160px;
-    height: 100px;
+    height: 200px;
     flex: 1;
     flex-direction:row;
     text-align: center;
