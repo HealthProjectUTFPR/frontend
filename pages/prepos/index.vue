@@ -104,17 +104,93 @@
     
     </el-table>
 
-    <el-dialog :title="`${form.id ? 'Editar' : 'Adicionar nova'} categoria`" :visible.sync="dialogFormVisible">
-      <el-form ref="ruleForm" :model="form" :rules="rules">
-        <el-form-item label="Nome do cavalo" prop="name">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancfasdfselar</el-button>
-        <el-button type="primary" @click="handleConfirm()">Confirmar</el-button>
-      </span>
-    </el-dialog>
+    <!-- Modal -->
+      <el-dialog :title="`${form.id ? 'Editar' : 'Adicionar novo'} registro`" :visible.sync="dialogFormVisible">
+        <el-form ref="ruleForm" :model="form" :rules="rules">
+          
+          <!-- Nome do registro -->
+          <el-form-item label="Nome do treino" prop="name">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-col>
+              <el-date-picker
+                v-model="form.date1"
+                type="date"
+                placeholder="Data inicial"
+              />
+            </el-col>
+          </el-form-item>
+          
+          <!-- Pre treino -->
+          <el-form-item> Pré Treino </el-form-item>
+
+          <!-- Data e Hora -->
+          <el-form-item>
+            <el-col>
+              <el-time-picker 
+                v-model="form.date2"
+                placeholder="Horário"
+              />
+            </el-col>
+          </el-form-item>
+
+          <!-- Informacoes do exame -->
+          <el-form-item>
+            <el-col>
+              <el-input v-model="form.pasPre" placeholder="PAS(mmHg)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.padPre" placeholder="PAD(mmHg)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.pseEPre" placeholder="PSE-s" autocomplete="off" style="width:auto"></el-input>
+            </el-col>
+            <el-col>
+              <el-input v-model="form.glicemiaPre" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.horarioPre" placeholder="Inicio do treino(min)" autocomplete="off" style="width:auto"></el-input>
+            </el-col>
+          </el-form-item>
+
+          <!-- Pos treino -->
+          <el-form-item> Pós Treino </el-form-item>
+
+          <!-- Data e Hora -->
+          <el-form-item>
+            <el-col>
+              <el-time-picker 
+                v-model="form.date3"
+                placeholder="Horário"
+              />
+            </el-col>
+          </el-form-item>
+
+          <!-- Informacoes do exame -->
+          <el-form-item>
+            <el-col>
+              <el-input v-model="form.pasPos" placeholder="PAS(mmHg)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.padPos" placeholder="PAD(mmHg)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.pseEPos" placeholder="PSE-s" autocomplete="off" style="width:auto"></el-input>
+            </el-col>
+            <el-col>
+              <el-input v-model="form.glicemiaPos" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:auto"></el-input>
+              <el-input v-model="form.horarioPos" placeholder="Inicio do treino(min)" autocomplete="off" style="width:auto"></el-input>
+            </el-col>
+          </el-form-item>
+          
+          <!-- Tempo total do treino -->
+          <el-form-item label="Tempo total do treino(min)">
+            <el-input v-model="form.horarioTreino" autocomplete="off" style="width:240px"></el-input>
+          </el-form-item>
+
+          <!-- Observacao -->
+          <el-form-item>
+            <el-input v-model="form.desc" type="textarea" placeholder="Observação" />
+          </el-form-item>
+        </el-form>
+        
+        <span slot="footer" class="dialog-footer">
+          <el-button type="danger" plain @click="dialogFormVisible = false">Cancelar</el-button>
+          <el-button type="success" plain @click="handleConfirm()">Confirmar</el-button>
+        </span>
+      </el-dialog>
 
 
   </div>
@@ -177,7 +253,6 @@
       },
   
       getEntity(row) {
-
         this.form = { ...row };
         this.dialogFormVisible = true
       },
