@@ -1,48 +1,129 @@
 
 
 <template>
+  
   <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
+    
     <el-table v-loading="loading" :data="tableData">
-      <el-table-column label="DATA" prop="date" />
-      <el-table-column label="horarioPre" prop="horarioPre" />
-      <el-table-column label="padPre" prop="padPre" />
-      <el-table-column label="pasPre" prop="pasPre" />
-      <el-table-column label="glicemiaPre" prop="glicemiaPre" />
-      <el-table-column label="pseEPre" prop="pseEPre" />
-      <el-table-column label="horarioPos" prop="horarioPos" />
-      <el-table-column label="padPos" prop="padPos" />
-      <el-table-column label="pasPos" prop="pasPos" />
-      <el-table-column label="glicemiaPos" prop="glicemiaPos" />
-      <el-table-column label="pseEPos" prop="pseEPos" />
-      <el-table-column label="horarioTreino" prop="horarioTreino" />
-      <el-table-column label="observacao" prop="observacao" />
+      
+      <el-table-column type="expand">
+        
+        <template #default="props" >
+
+          <!-- Pre e Pos-->
+          
+          <section class="container wrap">
+           
+            <div class= "pre_style " m="4">
+              <h1>Pré</h1>
+              <h2>Horario</h2>
+              <p>{{ moment(props.row.horarioPre ).format("HH:mm")}}</p>
+              <h2>PAS(mmHg) </h2>  
+              <p>{{ props.row.pasPre }}</p>  
+              <h2>PAD(mmHg)</h2>   
+              <p>{{ props.row.padPre }}</p>
+              <h2>Glicemia </h2> 
+              <p> {{ props.row.glicemiaPre }}</p>
+              <h2>PSE-s </h2>  
+              <p>{{ props.row.pseEPre }}</p>
+            </div>
+            
+            <div class= "pos_style" m="4">
+              <h1>Pós</h1>
+              <h2>Horario</h2>
+              <p>{{ moment(props.row.horarioPos ).format("HH:mm")}}</p>
+              <h2>PAS(mmHg) </h2>  
+              <p>{{ props.row.pasPos }}</p>  
+              <h2>PAD(mmHg)</h2>   
+              <p>{{ props.row.padPos }}</p>
+              <h2>Glicemia </h2> 
+              <p> {{ props.row.glicemiaPos }}</p>
+              <h2>PSE-s </h2>  
+              <p>{{ props.row.pseEPos }}</p>
+            </div>
+            
+
+          </section>
+
+          <!-- Informaçoes gerais-->
+
+          <section class="container wrap">
+
+          <div class= "info_gerais" m="4">
+              <h1>Informações Gerais</h1>
+              <h2>Horario total de Treino</h2>  
+              <p>{{ props.row.horarioTreino }}</p>
+              <h2>Observação </h2>  
+              <div class = "text_box">
+                <p>{{ props.row.observacao }}</p>
+
+              </div>
+          </div>
+          </section>
+          <!-- Botões Editar e Deletar-->
+      
+        
+            <section class="container wrap">
+              
+              <div class = "edit_delet">
+               
+                <el-button type="primary" round size="mini" @click="getEntity(props.row)" >Editar</el-button>
+                <el-popconfirm title="Tem certeza de que deseja excluir este item?" confirm-button-text='OK'
+                cancel-button-text='Cancelar' @confirm="handleDelete(props.$index, props.row)">
+                <el-button  slot="reference" size="mini" type="danger" round >
+                  Deletar
+                </el-button>
+              </el-popconfirm>  
+            </div>
+          </section>
+          
+            
+          
+  
+          
+        </template>
+
+
+
+      </el-table-column>
+        
+      <el-table-column label="DATA">
+        <template #default="props">
+          <h3>{{ moment(props.row.date).format("DD/MM/YYYY HH:mm") }}</h3>
+          
+        </template> 
+      </el-table-column>
+      
       <el-table-column align="right">
         <template slot="header">
           <el-button size="mini" type="primary" @click="addNewEntity()">
             Adicionar
           </el-button>
         </template>
-        <template slot-scope="scope">
-          <el-button size="mini" @click="getEntity(scope.row)">Editar</el-button>
-          <el-popconfirm title="Tem certeza de que deseja excluir este item?" confirm-button-text='OK'
-            cancel-button-text='Cancelar' @confirm="handleDelete(scope.$index, scope.row)">
-            <el-button slot="reference" size="mini" type="danger">
-              Deletar
-            </el-button>
-          </el-popconfirm>
-        </template>
       </el-table-column>
+    
     </el-table>
 
+    <el-dialog :title="`${form.id ? 'Editar' : 'Adicionar nova'} categoria`" :visible.sync="dialogFormVisible">
+      <el-form ref="ruleForm" :model="form" :rules="rules">
+        <el-form-item label="Nome do cavalo" prop="name">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancfasdfselar</el-button>
+        <el-button type="primary" @click="handleConfirm()">Confirmar</el-button>
+      </span>
+    </el-dialog>
 
 
-    </div>
+  </div>
 
-    
-  </template>
-  
+</template>
+
 <script>
-  
+  import moment from 'moment';
+
   export default {
     data() {
       return {
@@ -78,6 +159,7 @@
     },
   
     methods: {
+      moment,
       async fetchData() {
         this.loading = true;
         try {
@@ -95,6 +177,7 @@
       },
   
       getEntity(row) {
+
         this.form = { ...row };
         this.dialogFormVisible = true
       },
@@ -190,5 +273,160 @@
       }
     },
   }
-  </script>
+</script>
   
+
+<style>
+
+  h1{
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  p{
+    color: rgba(44, 54, 50, 0.767);
+  }
+
+
+  h2{
+    font-size: 17px;
+    font-weight: bold;
+    
+  }
+  
+  h3{
+    font-size: 20px;
+    
+  }
+
+  @media only screen and (max-device-width: 507px) {
+    h3{
+      font-size: 17px;
+      
+    }
+  }
+
+  @media only screen and (max-device-width: 432px) {
+    h3{
+      font-size: 15px;
+      
+    }
+  }
+
+  @media only screen and (max-device-width: 395px) {
+    h3{
+      font-size: 13px;
+      
+    }
+  }
+  
+  @media only screen and (max-device-width: 375px) {
+    h3{
+      font-size: 20px;
+    }
+  }
+
+  @media only screen and (max-device-width: 361px) {
+    h3{
+      font-size: 18px;
+
+    }
+  }
+  @media only screen and (max-device-width: 338px) {
+    h3{
+      font-size: 16px;
+
+    }
+  }
+  .text_box{
+    margin-left: 10%;
+    margin-right: 5%;
+    clear: both;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .info_gerais::-webkit-scrollbar{
+    width: 3px;
+  }
+
+  .info_gerais::-webkit-scrollbar-thumb{
+    background-color: gray;
+    border-radius: 10px;
+  }
+
+  .pos_style::-webkit-scrollbar{
+    width: 3px;
+  }
+
+  .pos_style::-webkit-scrollbar-thumb{
+    background-color: gray;
+    border-radius: 10px;
+  }
+
+  .pre_style::-webkit-scrollbar{
+    width: 3px;
+  }
+
+  .pre_style::-webkit-scrollbar-thumb{
+    background-color: gray;
+    border-radius: 10px
+
+  }
+
+  .edit_delet{
+    text-align: center;
+    flex: 1;
+  }
+
+  .pos_style{
+    margin: 5px;
+    float: right;
+    width: 160px;
+    height: 100px;
+    flex: 1;
+    text-align: center;
+    overflow-y: scroll;
+
+  }
+
+  .pre_style{
+    
+    margin: 5px;
+    float: left;
+    width: 160px;
+    height: 100px;
+    flex: 1;
+    text-align: center;
+    overflow-y: scroll;
+    
+
+  }
+
+  .info_gerais{
+    margin: 5px;
+    float: left;
+    width: 160px;
+    height: 100px;
+    flex: 1;
+    flex-direction:row;
+    text-align: center;
+    overflow-y: scroll;
+    
+  }
+  .wrap {
+	  flex-wrap: wrap;
+  }
+
+  .container {
+  
+    margin: 0 auto;
+    display: flex;
+  
+  }
+
+</style>
