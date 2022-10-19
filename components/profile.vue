@@ -23,7 +23,7 @@
         </div>
         <div class=" mr-3 flex items-center justify-between">
           <span class=" my-1 ml-3 block font-sans text-xs font-medium leading-5">{{ user.name }}</span>
-          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalName = true"></el-button>
+          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalName = true, modalName.inputNewName = '',  modalName.inputOldPassword = ''"></el-button>
           <div v-if="toggleModalName" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
               <div class=" h-56 w-80 rounded bg-white">
@@ -60,7 +60,7 @@
         </div>
         <div class=" mr-3 flex items-center justify-between">
           <span class=" my-1 ml-3 block font-sans text-xs font-medium leading-5">{{ user.email }}</span>
-          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalEmail = true"></el-button>
+          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalEmail = true, modalEmail.inputNewEmail = '', modalEmail.inputOldPassword = '', modalEmail.inputConfirmEmail = ''"></el-button>
           <div v-if="toggleModalEmail" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
               <div class=" h-72 w-80 rounded bg-white">
@@ -102,7 +102,7 @@
         </div>
         <div class=" mr-3 flex items-center justify-between">
           <span class=" my-1 ml-3 block font-sans text-xs font-medium leading-5">********</span>
-          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalPassword = true"></el-button>
+          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalPassword = true, modalPassword.inputOldPassword = '', modalPassword.inputNewPassword = ''"></el-button>
           <div v-if="toggleModalPassword" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
               <div class=" h-56 w-80 rounded bg-white">
@@ -233,16 +233,14 @@ export default {
       this.user.name = data.name;
       this.user.email = data.email;
       this.user.id = data.id;
+      this.user.password = data.password;
     },
     async updateName() {
       const newName = {
-        name: this.inputNewName,
+        name: this.modalName.inputNewName,
       };
       await axios.patch(`http://localhost:3333/users/editMe/${this.user.id}`, newName);
-      this.user.name = this.inputNewName;
-      this.inputNewName = '';
-      this.inputOldPassword = '';
-      this.$router.go();
+      this.user.name = this.modalName.inputNewName;
     },
     submitName() {
       this.$refs.modalNameForm.validate((valid) => {
@@ -253,47 +251,36 @@ export default {
             title: 'Erro',
             message: 'Nome ou senha inválidos',
           });
-          this.inputNewName = '';
-          this.inputOldPassword = '';
         }
       });
     },
     async updateEmail() {
       const newEmail = {
-        email: this.inputNewEmail,
+        email: this.modalEmail.inputNewEmail,
       };
       await axios.patch(`http://localhost:3333/users/editMe/${this.user.id}`, newEmail);
-      this.inputOldPassword = '';
-      this.inputNewEmail = '';
-      this.$router.go();
+      this.user.email = this.modalEmail.inputNewEmail;
     },
     submitEmail() {
       this.$refs.modalEmailForm.validate((valid) => {
-        if (valid) {
-          if (this.inputConfirmEmail === this.inputNewEmail) {
-            this.updateEmail();
-          }
+        if (valid && this.inputConfirmEmail === this.inputNewEmail) {
+          this.updateEmail();
         } else {
           this.$notify.error({
             title: 'Erro',
             message: 'Email ou senha inválidos',
           });
-          this.inputOldPassword = '';
-          this.inputNewEmail = '';
         }
       });
     },
     async updatePassword() {
       const newPassword = {
-        password: this.inputNewPassword,
+        password: this.modalPassword.inputNewPassword,
       };
       await axios.patch(`http://localhost:3333/users/editMe/${this.user.id}`, newPassword);
-      this.inputOldPassword = '';
-      this.inputNewPassword = '';
-      this.$router.go();
     },
     submitPassword() {
-      this.$refs.modalEmailForm.validate((valid) => {
+      this.$refs.modalPasswordForm.validate((valid) => {
         if (valid) {
           this.updatePassword();
         } else {
@@ -301,8 +288,6 @@ export default {
             title: 'Erro',
             message: 'Senha inválida',
           });
-          this.inputOldPassword = '';
-          this.inputNewPassword = '';
         }
       });
     },
