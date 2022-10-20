@@ -2,7 +2,11 @@
     <div class="px-4 mb-4">
         <span class="justify-center">{{text}}</span>
         <div class="px-2">
-            <el-checkbox v-model="checkedGroups[checked]">Conseguiu</el-checkbox>
+            <el-switch
+                v-model="checkedGroups[checked]"
+                active-text="Sim"
+                inactive-text="Não">
+            </el-switch>
         </div>
     </div>
 </template>
