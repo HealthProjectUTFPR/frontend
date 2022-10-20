@@ -51,7 +51,7 @@
 
           <section class="container wrap">
 
-          <div class= "info_gerais" m="4">
+          <div class= "info_gerais" >
               <h1>Informações Gerais</h1>
               <h2>Horario total de Treino</h2>  
               <p>{{ props.row.horarioTreino }}</p>
@@ -451,10 +451,10 @@
 
 
   .scrool_div{
-        margin: 5px;
+    margin: 5px;
     float: left;
-    width: 160px;
     height: 200px;
+    display: flex;
     flex: 1;
     flex-direction:row;
     text-align: center;
