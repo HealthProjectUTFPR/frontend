@@ -136,7 +136,7 @@ export default {
   methods: {
     handleCommand(command) {
       switch (command) {
-        case 'logout': localStorage.removeItem('token'); this.$router.push('/login'); break;
+        case 'logout': localStorage.removeItem('token'); this.$router.push('/'); break;
         case 'profile': this.$router.push('/profile'); break;
       }
     }
