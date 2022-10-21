@@ -5,6 +5,10 @@
 * Em opções **booleanas**, unsar **Switch toggle**
 * padrão de input :: labels (like —> [Issue#67](https://github.com/HealthProjectUTFPR/frontend/pull/85))
 
+#### Fontsize
+
+#### Color pallet
+
 ---
 
 #### AVD forms
@@ -27,3 +31,9 @@
 
 * Ajustar scroll
 * Ajustar modal de fullscreen
+
+---
+
+#### [Issue#67](https://www.figma.com/file/8YFIWpMEetx81gBBPMivvD/Health-Project?node-id=4%3A43994)
+
+* inputs em duas colunas (com tela maior)
