@@ -14,37 +14,38 @@
           
           <section class="container wrap">
            
-            <div class= "scrool_div ">
+            <div class= "pre_pos_div ">
 
+              <div class= "pre_style " >
+                <h1>Pré</h1>
+                <h2>Horario</h2>
+                <p>{{ moment(props.row.horarioPre ).format("HH:mm")}}</p>
+                <h2>PAS(mmHg) </h2>  
+                <p>{{ props.row.pasPre }}</p>  
+                <h2>PAD(mmHg)</h2>   
+                <p>{{ props.row.padPre }}</p>
+                <h2>Glicemia </h2> 
+                <p> {{ props.row.glicemiaPre }}</p>
+                <h2>PSE-s </h2>  
+                <p>{{ props.row.pseEPre }}</p>
+              </div>
+              
+              <div class= "pos_style" >
+                <h1>Pós</h1>
+                <h2>Horario</h2>
+                <p>{{ moment(props.row.horarioPos ).format("HH:mm")}}</p>
+                <h2>PAS(mmHg) </h2>  
+                <p>{{ props.row.pasPos }}</p>  
+                <h2>PAD(mmHg)</h2>   
+                <p>{{ props.row.padPos }}</p>
+                <h2>Glicemia </h2> 
+                <p> {{ props.row.glicemiaPos }}</p>
+                <h2>PSE-s </h2>  
+                <p>{{ props.row.pseEPos }}</p>
+              </div>
 
-            <div class= "pre_style " >
-              <h1>Pré</h1>
-              <h2>Horario</h2>
-              <p>{{ moment(props.row.horarioPre ).format("HH:mm")}}</p>
-              <h2>PAS(mmHg) </h2>  
-              <p>{{ props.row.pasPre }}</p>  
-              <h2>PAD(mmHg)</h2>   
-              <p>{{ props.row.padPre }}</p>
-              <h2>Glicemia </h2> 
-              <p> {{ props.row.glicemiaPre }}</p>
-              <h2>PSE-s </h2>  
-              <p>{{ props.row.pseEPre }}</p>
             </div>
-            
-            <div class= "pos_style" >
-              <h1>Pós</h1>
-              <h2>Horario</h2>
-              <p>{{ moment(props.row.horarioPos ).format("HH:mm")}}</p>
-              <h2>PAS(mmHg) </h2>  
-              <p>{{ props.row.pasPos }}</p>  
-              <h2>PAD(mmHg)</h2>   
-              <p>{{ props.row.padPos }}</p>
-              <h2>Glicemia </h2> 
-              <p> {{ props.row.glicemiaPos }}</p>
-              <h2>PSE-s </h2>  
-              <p>{{ props.row.pseEPos }}</p>
-            </div>
-          </div>
+
           </section>
 
           <!-- Informaçoes gerais-->
@@ -69,10 +70,10 @@
               
               <div class = "edit_delet">
                
-                <el-button type="primary" round size="mini" @click="getEntity(props.row)" >Editar</el-button>
+                <el-button type="primary" round size="medium" @click="getEntity(props.row)" >Editar</el-button>
                 <el-popconfirm title="Tem certeza de que deseja excluir este item?" confirm-button-text='OK'
                 cancel-button-text='Cancelar' @confirm="handleDelete(props.$index, props.row)">
-                <el-button  slot="reference" size="mini" type="danger" round >
+                <el-button  slot="reference" size="medium" type="danger" round >
                   Deletar
                 </el-button>
               </el-popconfirm>  
@@ -414,51 +415,22 @@
     margin-right: 5%;
     clear: both;
     width: 80%;
+    font-size: larger;
     display: flex;
-    flex-direction: row;
+    text-align: justify;
     justify-content: center;
     align-items: center;
 
   }
 
-  .info_gerais::-webkit-scrollbar{
-    width: 3px;
-  }
-
-  .info_gerais::-webkit-scrollbar-thumb{
-    background-color: gray;
-    border-radius: 10px;
-  }
-
-  .pos_style::-webkit-scrollbar{
-    width: 3px;
-  }
-
-  .pos_style::-webkit-scrollbar-thumb{
-    background-color: gray;
-    border-radius: 10px;
-  }
-
-  .scrool_div::-webkit-scrollbar{
-    width: 3px;
-  }
-
-  .scrool_div::-webkit-scrollbar-thumb{
-    background-color: gray;
-    border-radius: 10px
-
-  }
-
-
-  .scrool_div{
+  .pre_pos_div{
     margin: 5px;
     float: left;
-    height: 200px;
     display: flex;
     flex: 1;
     flex-direction:row;
     text-align: center;
-    overflow-y: scroll;
+    
 
   }
 
@@ -470,8 +442,7 @@
   .pos_style{
     margin: 5px;
     float: right;
-    width: 160px;
-    height: 200px;
+
     flex: 1;
     text-align: center;
     
@@ -482,8 +453,6 @@
     
     margin: 5px;
     float: left;
-    width: 160px;
-    height: 200px;
     flex: 1;
     text-align: center;
     
@@ -493,13 +462,10 @@
 
   .info_gerais{
     margin: 5px;
-    float: left;
     width: 160px;
-    height: 200px;
     flex: 1;
     flex-direction:row;
     text-align: center;
-    overflow-y: scroll;
     
   }
   .wrap {
