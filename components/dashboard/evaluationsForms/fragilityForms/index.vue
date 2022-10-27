@@ -77,7 +77,7 @@
                     <span>Minutos por Dia</span>
                     <el-input class="input" placeholder="Please input" v-model="input8"></el-input>                </b-col>
                 <div class="mb-3 flex flex-col">
-                    <span>METs{{ mets1 }}:</span>
+                    <span>METs:</span>
                 </div>
             </b-row>
 
@@ -90,7 +90,7 @@
                     <span>Minutos por Dia</span>
                     <el-input class="input" placeholder="Please input" v-model="input10"></el-input>                </b-col>
                 <div class="mb-3 flex flex-col">
-                    <span>METs{{mets2}}:</span>
+                    <span>METs:</span>
                 </div>
             </b-row>
 
@@ -105,13 +105,13 @@
                     <el-input class="input" placeholder="Please input" v-model="input12"></el-input>
                 </b-col>
                 <div class="mb-3 flex flex-col">
-                    <span>METs{{mets3}}:</span>
+                    <span>METs:</span>
                 </div>
             </b-row>
         </div>
         <div class="mb-3 flex flex-col">
-            <span>METs Total:{{ metsTotal }}</span>
-            <span>KCAL:{{}}</span>
+            <span>METs Total:</span>
+            <span>KCAL:</span>
         </div>
 
         <el-divider content-position="center">Descrição</el-divider>
