@@ -1,14 +1,14 @@
 <template>
   <div>
-    <BalanceForm />
+    <BodyCompositionForm />
   </div>
 </template>
 
 <script>
-import BalanceForm from '@/components/evaluationsForms/balanceForm/index.vue';
+import BodyCompositionForm from '@/components/evaluationsForms/bodyCompositionForm/index.vue';
 
 export default {
   name: 'IndexPage',
-  components: { BalanceForm },
+  components: { BodyCompositionForm },
 };
 </script>
