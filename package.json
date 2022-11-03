@@ -26,6 +26,7 @@
     "@vitejs/plugin-vue2": "2.0.0",
     "core-js": "3.15.1",
     "element-ui": "2.15.10",
+    "install-peerdeps": "^3.0.3",
     "nuxt": "2.15.7",
     "vite": "3.1.7"
   },
