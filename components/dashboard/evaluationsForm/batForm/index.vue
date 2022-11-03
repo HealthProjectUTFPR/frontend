@@ -21,65 +21,90 @@
             </div>
         </div>
 
-        <div class="px-6 py-3">
-            <div class="mb-3 flex flex-col">
-                <span>1. Sentar e levantar (30 segundos)</span>
-                <el-input
-                    v-model="input2"
-                    placeholder="Please input">
-                </el-input>
-            </div>
-        </div>
+        <el-form
+            ref="bateriaFunc"
+            :rules="rules"
+            :model="bateriaFunc"
+            label-position="top"
+        >
+        <el-form-item
+        label="1. Sentar e levantar (30 segundos)"
+        prop="sitAndDown"
+        >
+            <el-input
+            v-model.number="bateriaFunc.sitAndDown"
+            placeholder=""
+            type="number"
+            min="0"
+            step="1"
+          ></el-input>
+        </el-form-item>
 
-        <div class="px-6 py-3">
-            <div class="mb-3 flex flex-col">
-                <span>2. Flexão de cotovelos (30 segundos)</span>
-                <el-input
-                    v-model="input3"
-                    placeholder="Please input">
-                </el-input>
-            </div>
-        </div>
+        <el-form-item
+        label="2. Flexão de cotovelos (30 segundos)"
+        prop="elbowFlexion"
+        >
+            <el-input
+            v-model.number="bateriaFunc.elbowFlexion"
+            placeholder=""
+            type="number"
+            min="0"
+            step="1"
+          ></el-input>
+        </el-form-item>
 
-        <div class="px-6 py-3">
-            <div class="mb-3 flex flex-col">
-                <span>3. Marcha estacionária (2 minutos)</span>
-                <el-input
-                    v-model="input4"
-                    placeholder="Please input">
-                </el-input>
-            </div>
-        </div>
+        <el-form-item
+        label="3. Marcha estacionária (2 minutos)"
+        prop="marchWouldPark"
+        >
+            <el-input
+            v-model.number="bateriaFunc.marchWouldPark"
+            placeholder=""
+            type="number"
+            min="0"
+            step="1"
+          ></el-input>
+        </el-form-item>
 
-        <div class="px-6 py-3">
-            <div class="mb-3 flex flex-col">
-                <span>4. Sentar e alcançar os pés</span>
-                <el-input
-                    v-model="input5"
-                    placeholder="Please input">
-                </el-input>
-            </div>
-        </div>
+        <el-form-item
+        label="4. Sentar e alcançar os pés"
+        prop="sitAndReachYourFeet"
+        >
+            <el-input
+            v-model.number="bateriaFunc.sitAndReachYourFeet"
+            placeholder=""
+            type="number"
+            min="0"
+            step="1"
+          ></el-input>
+        </el-form-item>
 
-        <div class="px-6 py-3">
-            <div class="mb-3 flex flex-col">
-                <span>5. Alcançar as costas</span>
-                <el-input
-                    v-model="input6"
-                    placeholder="Please input">
-                </el-input>
-            </div>
-        </div>
+        <el-form-item
+        label="5. Alcançar as costas"
+        prop="reachTheBack"
+        >
+            <el-input
+            v-model.number="bateriaFunc.reachTheBack"
+            placeholder=""
+            type="number"
+            min="0"
+            step="1"
+          ></el-input>
+        </el-form-item>
 
-        <div class="px-6 py-3">
-            <div class="mb-3 flex flex-col">
-                <span>6. TUG (2,5 mestros ou 3 metros)</span>
-                <el-input
-                    v-model="input7"
-                    placeholder="Please input">
-                </el-input>
-            </div>
-        </div>
+        <el-form-item
+        label="6. TUG (2,5 mestros ou 3 metros)"
+        prop="tug"
+        >
+            <el-input
+            v-model.number="bateriaFunc.tug"
+            placeholder=""
+            type="number"
+            min="0"
+            step=".1"
+          ></el-input>
+        </el-form-item>
+        </el-form>
 
         <div class="mt-10 flex w-full justify-center">
                 <el-button
@@ -128,46 +153,751 @@
         </div>
     </el-card>
 </template>
-<script>
 
+<script>
+import description from '@/components/dashboard/evaluationsForm/batForm/description.js'
 export default {
     name: 'BatForm',
     data(){
         return {
+            indiceTable1: 18,
+            indiceTable2: 18,
+            indiceTable3: 18,
+            indiceTable4: 18,
+            indiceTable5: 18,
+            indiceTable6: 18,
+            resultTable1: '',
+            resultTable2: '',
+            resultTable3: '',
+            resultTable4: '',
+            resultTable5: '',
+            resultTable6: '',
             input1: '',
-            input2: '',
-            input3: '',
-            input4: '',
-            input5: '',
-            input6: '',
-            input7: '',
+            var1: 60,
+            var2: 64,
+            genero: 'homem',
             result: '',
             percent: '',
             classif: '',
             tableData: [],
+            bateriaFunc: {
+                sitAndDown: '',
+                elbowFlexion: '',
+                marchWouldPark: '',
+                sitAndReachYourFeet: '',
+                reachTheBack: '',
+                tug: ''
+            },
+            rules: {
+
+            }
         }
     },
     methods: {
-        add(){
-            if(this.input2.trim() === '' && this.input3.trim() === '' && this.input4.trim() === '' && this.input5.trim() === '' && this.input6.trim() === '' && this.input7.trim() === ''){
-                return;
+        gerarPercentil(){
+            if(this.genero === 'homem'){
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarHomem.sessentaAsessentaequatro[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarHomem.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarHomem.setentaAsetentaequatro[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarHomem.setentaecincoAsetentaenove[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarHomem.oitentaAoitentaequatro[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarHomem.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarHomem.noventaAnoventaequatro[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                }
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloHomem.sessentaAsessentaequatro[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloHomem.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloHomem.setentaAsetentaequatro[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloHomem.setentaecincoAsetentaenove[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloHomem.oitentaAoitentaequatro[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloHomem.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloHomem.noventaAnoventaequatro[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } 
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaHomem.sessentaAsessentaequatro[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaHomem.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaHomem.setentaAsetentaequatro[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaHomem.setentaecincoAsetentaenove[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaHomem.oitentaAoitentaequatro[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaHomem.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaHomem.noventaAnoventaequatro[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                }
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarHomem.sessentaAsessentaequatro[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarHomem.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarHomem.setentaAsetentaequatro[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarHomem.setentaecincoAsetentaenove[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarHomem.oitentaAoitentaequatro[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarHomem.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarHomem.noventaAnoventaequatro[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                }
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasHomem.sessentaAsessentaequatro[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasHomem.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasHomem.setentaAsetentaequatro[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasHomem.setentaecincoAsetentaenove[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasHomem.oitentaAoitentaequatro[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasHomem.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasHomem.noventaAnoventaequatro[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } 
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.homemTUG.sessentaAsessentaequatro[i]){
+                            this.indiceTable6 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.homemTUG.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable6 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.homemTUG.setentaAsetentaequatro[i]){
+                            this.indiceTable6 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.homemTUG.setentaecincoAsetentaenove[i]){
+                            this.indiceTable6 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.homemTUG.oitentaAoitentaequatro[i]){
+                            this.indiceTable6 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.homemTUG.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable6 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.homemTUG.noventaAnoventaequatro[i]){
+                            this.indiceTable6 =  i + 1;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarMulher.sessentaAsessentaequatro[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarMulher.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarMulher.setentaAsetentaequatro[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarMulher.setentaecincoAsetentaenove[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarMulher.oitentaAoitentaequatro[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarMulher.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndDown >= description.sentarLevantarMulher.noventaAnoventaequatro[i]){
+                            this.indiceTable1 =  i + 1;
+                            break;
+                        }
+                    }
+                }
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloMulher.sessentaAsessentaequatro[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloMulher.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloMulher.setentaAsetentaequatro[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloMulher.setentaecincoAsetentaenove[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloMulher.oitentaAoitentaequatro[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloMulher.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.elbowFlexion >= description.flexaoCotoveloMulher.noventaAnoventaequatro[i]){
+                            this.indiceTable2 =  i + 1;
+                            break;
+                        }
+                    }
+                } 
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaMulher.sessentaAsessentaequatro[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaMulher.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaMulher.setentaAsetentaequatro[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaMulher.setentaecincoAsetentaenove[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaMulher.oitentaAoitentaequatro[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaMulher.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.marchWouldPark >= description.marchaEstacionariaMulher.noventaAnoventaequatro[i]){
+                            this.indiceTable3 =  i + 1;
+                            break;
+                        }
+                    }
+                }
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarMulher.sessentaAsessentaequatro[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarMulher.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarMulher.setentaAsetentaequatro[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarMulher.setentaecincoAsetentaenove[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarMulher.oitentaAoitentaequatro[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarMulher.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.sitAndReachYourFeet >= description.sentarAlcancarMulher.noventaAnoventaequatro[i]){
+                            this.indiceTable4 =  i + 1;
+                            break;
+                        }
+                    }
+                }
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasMulher.sessentaAsessentaequatro[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasMulher.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasMulher.setentaAsetentaequatro[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasMulher.setentaecincoAsetentaenove[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasMulher.oitentaAoitentaequatro[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasMulher.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.reachTheBack >= description.alcancarCostasMulher.noventaAnoventaequatro[i]){
+                            this.indiceTable5 =  i + 1;
+                            break;
+                        }
+                    }
+                } 
+                if(this.input1 >= 60 && this.input1 <= 64){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.mulherTUG.sessentaAsessentaequatro[i]){
+                            this.indiceTable6 =  i + 1;
+                        }
+                    }
+                } else if(this.input1 >= 65 && this.input1 <= 69){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.mulherTUG.sessentaecincoAsessentaenove[i]){
+                            this.indiceTable6 =  i + 1;
+                        }
+                    }
+                } else if(this.input1 >= 70 && this.input1 <= 74){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.mulherTUG.setentaAsetentaequatro[i]){
+                            this.indiceTable6 =  i + 1;
+                        }
+                    }
+                } else if(this.input1 >= 75 && this.input1 <= 79){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.mulherTUG.setentaecincoAsetentaenove[i]){
+                            this.indiceTable6 =  i + 1;
+                        }
+                    }
+                } else if(this.input1 >= 80 && this.input1 <= 84){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.mulherTUG.oitentaAoitentaequatro[i]){
+                            this.indiceTable6 =  i + 1;
+                        }
+                    }
+                } else if(this.input1 >= 85 && this.input1 <= 89){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.mulherTUG.oitentaecincoAoitentaenove[i]){
+                            this.indiceTable6 =  i + 1;
+                        }
+                    }
+                } else if(this.input1 >= 90 && this.input1 <= 94){
+                    for(let i = 0; i < 19; i++){
+                        if(this.bateriaFunc.tug >= description.mulherTUG.noventaAnoventaequatro[i]){
+                            this.indiceTable6 =  i + 1;
+                        }
+                    }
+                }
             }
-            this.tableData.push({ result: this.input2});
-            this.tableData.push({ result: this.input3});
-            this.tableData.push({ result: this.input4});
-            this.tableData.push({ result: this.input5});
-            this.tableData.push({ result: this.input6});
-            this.tableData.push({ result: this.input7});
-            this.input2 = "";
-            this.input3 = "";
-            this.input4 = "";
-            this.input5 = "";
-            this.input6 = "";
-            this.input7 = "";
+            if(this.indiceTable1 === 19){
+                this.indiceTable1--; 
+            } else if(this.indiceTable2 === 19){
+                this.indiceTable2--;
+            } else if(this.indiceTable3 === 19){
+                this.indiceTable3--;
+            } else if(this.indiceTable4 === 19){
+                this.indiceTable4--;
+            } else if(this.indiceTable5 === 19){
+                this.indiceTable5--;
+            } else if(this.indiceTable6 === 19){
+                this.indiceTable6--;
+            }
+            if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1] < 30){
+                this.resultTable1 = "RUIM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1] < 55){
+                this.resultTable1 = "REGULAR"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1] <= 70){
+                this.resultTable1 = "BOM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1] > 70){
+                this.resultTable1 = "ÓTIMO"
+            }
+            if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable2] < 30){
+                this.resultTable2 = "RUIM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable2] < 55){
+                this.resultTable2 = "REGULAR"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable2] <= 70){
+                this.resultTable2 = "BOM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable2] > 70){
+                this.resultTable2 = "ÓTIMO"
+            }
+            if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable3] < 30){
+                this.resultTable3 = "RUIM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable3] < 55){
+                this.resultTable3 = "REGULAR"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable3] <= 70){
+                this.resultTable3 = "BOM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable3] > 70){
+                this.resultTable3 = "ÓTIMO"
+            }
+            if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable4] < 30){
+                this.resultTable4 = "RUIM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable4] < 55){
+                this.resultTable4 = "REGULAR"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable4] <= 70){
+                this.resultTable4 = "BOM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable4] > 70){
+                this.resultTable4 = "ÓTIMO"
+            }
+            if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable5] < 30){
+                this.resultTable5 = "RUIM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable5] < 55){
+                this.resultTable5 = "REGULAR"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable5] <= 70){
+                this.resultTable5 = "BOM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable5] > 70){
+                this.resultTable5 = "ÓTIMO"
+            }
+            if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable6] < 30){
+                this.resultTable6 = "RUIM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable6] < 55){
+                this.resultTable6 = "REGULAR"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable6] <= 70){
+                this.resultTable6 = "BOM"
+            } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable6] > 70){
+                this.resultTable6 = "ÓTIMO"
+            }
+        },
+        add(){
+            this.gerarPercentil();
+            if(this.genero === 'homem'){
+                this.tableData.push({ result: this.bateriaFunc.sitAndDown, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1], classif: this.resultTable1});
+                this.tableData.push({ result: this.bateriaFunc.elbowFlexion, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable2], classif: this.resultTable2});
+                this.tableData.push({ result: this.bateriaFunc.marchWouldPark, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable3], classif: this.resultTable3});
+                this.tableData.push({ result: this.bateriaFunc.sitAndReachYourFeet, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable4], classif: this.resultTable4});
+                this.tableData.push({ result: this.bateriaFunc.reachTheBack, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable5], classif: this.resultTable5});
+                this.tableData.push({ result: this.bateriaFunc.tug, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable6], classif: this.resultTable6});
+            } else {
+                this.tableData.push({ result: this.bateriaFunc.sitAndDown, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1], classif: this.resultTable1});
+                this.tableData.push({ result: this.bateriaFunc.elbowFlexion, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable2], classif: this.resultTable2});
+                this.tableData.push({ result: this.bateriaFunc.marchWouldPark, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable3], classif: this.resultTable3});
+                this.tableData.push({ result: this.bateriaFunc.sitAndReachYourFeet, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable4], classif: this.resultTable4});
+                this.tableData.push({ result: this.bateriaFunc.reachTheBack, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable5], classif: this.resultTable5});
+                this.tableData.push({ result: this.bateriaFunc.tug, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable6], classif: this.resultTable6});
+            }
+            
+            this.bateriaFunc.sitAndDown = "";
+            this.bateriaFunc.elbowFlexion = "";
+            this.bateriaFunc.marchWouldPark = "";
+            this.bateriaFunc.sitAndReachYourFeet = "";
+            this.bateriaFunc.reachTheBack = "";
+            this.bateriaFunc.tug = "";
+
         },
         submitForm() {
+            console.log()
             console.log('submited');
+            console.log(this.indiceTable1)
+            console.log(this.indiceTable2)
+            console.log(this.indiceTable3)
+            console.log(this.indiceTable4)
+            console.log(this.indiceTable5)
+            console.log(this.indiceTable6)
+            console.log(this.resultTable1)
+            
         },
-    },  
+    }
 };
 </script>
+
