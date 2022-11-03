@@ -308,6 +308,11 @@ export default {
         mcm: '',
         minimumWeight: '',
         maximumWeight: '',
+        cardiovascularRisk: {
+          waistCircumference: 'none',
+          rcq: 'none',
+        },
+
       },
       rules: {
         date: [
@@ -484,6 +489,7 @@ export default {
       this.getAllComputed();
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          alert(JSON.stringify(this.bodyCompositionForm, null, 2));
           this.calculated = true;
         }
         return false;
@@ -511,31 +517,44 @@ export default {
     checkRisks() {
       let waistEstatureRisk = 'none';
       let waistHipRisk = 'none';
+      this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'none';
+      this.bodyCompositionForm.cardiovascularRisk.rcq = 'none';
 
       if (this.mockup.sex === 'Mulher') {
         if (this.waistEstature > 0.8) {
           waistEstatureRisk = 'increased';
+          this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'Risco aumentado';
           if (this.waistEstature > 0.88) {
             waistEstatureRisk = 'high';
+            this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'Risco elevado';
           }
         }
         if (this.waistHip > 0.85) {
           waistHipRisk = 'increased';
+          this.bodyCompositionForm.cardiovascularRisk.rcq = 'Risco aumentado';
+
           if (this.waistHip > 1) {
+            this.bodyCompositionForm.cardiovascularRisk.rcq = 'Risco elevado';
             waistHipRisk = 'high';
           }
         }
       } else {
         if (this.waistEstature > 0.94) {
           waistEstatureRisk = 'increased';
+          this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'Risco aumentado';
+
           if (this.waistEstature > 1) {
             waistEstatureRisk = 'high';
+            this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'Risco elevado';
           }
         }
         if (this.waistHip > 0.9) {
           waistHipRisk = 'increased';
+          this.bodyCompositionForm.cardiovascularRisk.rcq = 'Risco aumentado';
+
           if (this.waistHip > 1) {
             waistHipRisk = 'high';
+            this.bodyCompositionForm.cardiovascularRisk.rcq = 'Risco elevado';
           }
         }
       }
