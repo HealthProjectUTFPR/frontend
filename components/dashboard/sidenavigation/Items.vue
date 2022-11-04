@@ -10,14 +10,12 @@
 </template>
 
 <script>
-import SidenavItem from './Item.vue'
+import SidenavItem from './Item.vue';
 
 /* ICONS */
 
 export default {
   name: 'SidenavItems',
-  components: {
-    SidenavItem,
-  },
-}
+  components: { SidenavItem },
+};
 </script>
