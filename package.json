@@ -15,7 +15,7 @@
     "prepare": "husky install",
     "commit": "git-cz --disable-emoji",
     "lint": "yarn lint:js",
-    "test": "vitest --watch --reporter verbose",
+    "test": "vitest --watch --reporter verbose --watch --reporter verbose",
     "coverage": "vitest run --coverage"
   },
   "lint-staged": {
