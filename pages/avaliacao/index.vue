@@ -169,75 +169,75 @@ export default {
       tableData: [
         {
           data: '12/10/2022',
-          avaliacao: 'Sarcopenia',
+          avaliacao: 'Composição Corporal',
           resultado: 'Com Sarcopenia',
         },
         {
           data: '12/01/2022',
-          avaliacao: 'Sarcopenia',
+          avaliacao: 'Equilíbrio',
           resultado: 'Sem Sarcopenia',
         },
       ],
       outerVisible: false,
       openDeleteModal: false,
       evaluationToBeDeleted: {},
-    }
+    };
   },
   computed: {
     dataFilterValues() {
-      const values = [...new Set(this.tableData.map(({ data }) => data))]
+      const values = [...new Set(this.tableData.map(({ data }) => data))];
 
-      return values.map((item) => ({ text: item, value: item }))
+      return values.map((item) => ({ text: item, value: item }));
     },
     evalutationFilterValues() {
       const values = [
         ...new Set(this.tableData.map(({ avaliacao }) => avaliacao)),
-      ]
+      ];
 
-      return values.map((item) => ({ text: item, value: item }))
+      return values.map((item) => ({ text: item, value: item }));
     },
     resultFilterValues() {
       const values = [
         ...new Set(this.tableData.map(({ resultado }) => resultado)),
-      ]
+      ];
 
-      return values.map((item) => ({ text: item, value: item }))
+      return values.map((item) => ({ text: item, value: item }));
     },
   },
   mounted() {
-    window.addEventListener('resize', this.handleResize)
-    this.handleResize()
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
   },
   destroyed() {
-    window.removeEventListener('resize', this.handleResize)
+    window.removeEventListener('resize', this.handleResize);
   },
   methods: {
     filterHandler(value, row, column) {
-      const property = column.property
-      return row[property] === value
+      const { property } = column;
+      return row[property] === value;
     },
     handleResize() {
-      this.window.width = window.innerWidth
-      this.window.height = window.innerHeight
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
     },
     goToSarcopenia() {
-      this.$router.push('/evaluation/create/sarcopenia')
+      this.$router.push('/evaluation/create/sarcopenia');
     },
     handleOpenModalDelete(index, row) {
-      this.openDeleteModal = true
+      this.openDeleteModal = true;
       this.evaluationToBeDeleted = {
         index,
         row,
-      }
+      };
     },
     handleEdit(index, row) {
-      console.log(index, row)
+      console.log(index, row);
     },
     handleDelete() {
-      console.log(this.evaluationToBeDeleted)
+      console.log(this.evaluationToBeDeleted);
     },
   },
-}
+};
 </script>
 
 <style scoped>

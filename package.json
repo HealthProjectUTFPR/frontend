@@ -15,7 +15,7 @@
     "prepare": "husky install",
     "commit": "git-cz --disable-emoji",
     "lint": "yarn lint:js",
-    "test": "vitest",
+    "test": "vitest --watch --reporter verbose",
     "coverage": "vitest run --coverage"
   },
   "lint-staged": {
@@ -26,6 +26,8 @@
     "@vitejs/plugin-vue2": "2.0.0",
     "core-js": "3.15.1",
     "element-ui": "2.15.10",
+    "moment": "2.29.4",
+    "install-peerdeps": "^3.0.3",
     "nuxt": "2.15.7",
     "vite": "3.1.7"
   },
