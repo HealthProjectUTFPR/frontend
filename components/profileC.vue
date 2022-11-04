@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class=" my-2 flex w-full items-center justify-end">
+  <div class=" h-848 rounded-2xl bg-white shadow">
+    <!-- <div class=" my-2 flex w-full items-center justify-end">
       <span class=" mr-1 font-sans text-xs">Professor {{ user.name }}</span>
       <div class=" mr-1 h-8 w-8">
         <img src="/images/user.png" class=" rounded-full object-cover"/>
@@ -8,25 +8,24 @@
     </div>
     <div class=" h-5 w-full bg-gray-700 text-center">
       <span class=" font-sans text-xs font-bold text-white">Meus Dados</span>
-    </div>
-    <div class="mt-5 flex items-center justify-center gap-3">
-      <div class=" h-14 w-14">
+    </div> -->
+    <div class=" mx-auto flex items-center justify-center gap-3 pt-7 ">
+      <div class="h-20 w-20 ">
         <img src="/images/user.png" class=" rounded-full object-cover"/>
       </div>
-      <span class="font-sans text-sm font-bold leading-5">{{ user.name }}</span>
     </div>
-    <div class=" mx-auto mt-16 h-44 w-80 shadow-2xl">
+    <div class=" min-w-8 mx-auto mt-10 h-44 max-w-xl shadow-2xl">
       <!-- Modal Name Comeca -->
       <div class=" mb-10 h-5 w-full bg-gray-700">
         <div class="text-center">
-          <span class=" font-sans text-xs font-bold text-white">Nome de Usuário</span>
+          <span class=" font-sans text-base font-bold text-white">Nome de Usuário</span>
         </div>
         <div class=" mr-3 flex items-center justify-between">
-          <span class=" my-1 ml-3 block font-sans text-xs font-medium leading-5">{{ user.name }}</span>
+          <span class=" my-1 ml-3 block font-sans text-base font-medium leading-5">{{ user.name }}</span>
           <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalName = true, modalName.inputNewName = '',  modalName.inputOldPassword = ''"></el-button>
           <div v-if="toggleModalName" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
-              <div class=" h-56 w-80 rounded bg-white">
+              <div class=" h-64 w-80 rounded bg-white py-1">
                 <div class=" mt-5 text-center">
                   <span class=" text-base font-bold">Editar Nome</span>
                 </div>
@@ -56,14 +55,14 @@
       <!-- Modal Email Comeca -->
       <div class=" mb-10 h-5 w-full bg-gray-700">
         <div class="text-center">
-          <span class=" font-sans text-xs font-bold text-white">E-mail</span>
+          <span class=" font-sans text-base font-bold text-white">E-mail</span>
         </div>
         <div class=" mr-3 flex items-center justify-between">
-          <span class=" my-1 ml-3 block font-sans text-xs font-medium leading-5">{{ user.email }}</span>
+          <span class=" my-1 ml-3 block font-sans text-base font-medium leading-5">{{ user.email }}</span>
           <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalEmail = true, modalEmail.inputNewEmail = '', modalEmail.inputOldPassword = '', modalEmail.inputConfirmEmail = ''"></el-button>
           <div v-if="toggleModalEmail" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
-              <div class=" h-72 w-80 rounded bg-white">
+              <div class=" h-80 w-80 rounded bg-white py-1">
                 <div class=" mt-5 text-center">
                   <span class=" text-base font-bold">Editar Email</span>
                 </div>
@@ -98,14 +97,14 @@
       <!-- Modal Senha Comeca -->
       <div class=" mb-10 h-5 w-full bg-gray-700">
         <div class="text-center">
-          <span class=" font-sans text-xs font-bold text-white">Senha</span>
+          <span class=" font-sans text-base font-bold text-white">Senha</span>
         </div>
         <div class=" mr-3 flex items-center justify-between">
-          <span class=" my-1 ml-3 block font-sans text-xs font-medium leading-5">********</span>
+          <span class=" my-1 ml-3 block font-sans text-base font-medium leading-5">********</span>
           <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalPassword = true, modalPassword.inputOldPassword = '', modalPassword.inputNewPassword = ''"></el-button>
           <div v-if="toggleModalPassword" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
-              <div class=" h-56 w-80 rounded bg-white">
+              <div class=" h-64 w-80 rounded bg-white py-1">
                 <div class=" mt-5 text-center">
                   <span class=" text-base font-bold">Editar Senha</span>
                 </div>
@@ -134,7 +133,7 @@
       <!-- Modal Senha Termina -->
     </div>
     <!-- Footer -->
-    <div class=" absolute left-0 bottom-0 h-14 w-full bg-gray-700">
+    <!-- <div class=" absolute left-0 bottom-0 h-14 w-full bg-gray-700">
       <div class=" mx-8 my-2 flex items-center justify-between">
         <div>
           <i class="el-icon-user mx-5 text-2xl text-white"></i>
@@ -153,7 +152,7 @@
           <span class=" flex text-xs text-white">Suporte</span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -161,8 +160,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'UserProfile',
-  layout: 'empty',
+  name: 'ProfileC',
   data() {
     return {
       user: {
