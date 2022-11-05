@@ -1,14 +1,5 @@
 <template>
   <div class=" h-848 rounded-2xl bg-white shadow">
-    <!-- <div class=" my-2 flex w-full items-center justify-end">
-      <span class=" mr-1 font-sans text-xs">Professor {{ user.name }}</span>
-      <div class=" mr-1 h-8 w-8">
-        <img src="/images/user.png" class=" rounded-full object-cover"/>
-      </div>
-    </div>
-    <div class=" h-5 w-full bg-gray-700 text-center">
-      <span class=" font-sans text-xs font-bold text-white">Meus Dados</span>
-    </div> -->
     <div class=" mx-auto flex items-center justify-center gap-3 pt-7 ">
       <div class="h-20 w-20 ">
         <img src="/images/user.png" class=" rounded-full object-cover"/>
@@ -25,7 +16,7 @@
           <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalName = true, modalName.inputNewName = '',  modalName.inputOldPassword = ''"></el-button>
           <div v-if="toggleModalName" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
-              <div class=" h-64 w-80 rounded bg-white py-1">
+              <div class=" h-48 w-80 rounded bg-white py-1">
                 <div class=" mt-5 text-center">
                   <span class=" text-base font-bold">Editar Nome</span>
                 </div>
@@ -33,11 +24,6 @@
                   <div class=" mx-3 mt-3 mb-2">
                     <el-form-item prop="inputNewName">
                       <el-input v-model="modalName.inputNewName" placeholder="Novo Nome"></el-input>
-                    </el-form-item>
-                  </div>
-                  <div class="mx-3">
-                    <el-form-item prop="inputOldPassword">
-                      <el-input v-model="modalName.inputOldPassword" placeholder="Senha Atual" show-password></el-input>
                     </el-form-item>
                   </div>
                 </el-form>
@@ -62,7 +48,7 @@
           <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalEmail = true, modalEmail.inputNewEmail = '', modalEmail.inputOldPassword = '', modalEmail.inputConfirmEmail = ''"></el-button>
           <div v-if="toggleModalEmail" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
-              <div class=" h-80 w-80 rounded bg-white py-1">
+              <div class=" h-64 w-80 rounded bg-white py-1">
                 <div class=" mt-5 text-center">
                   <span class=" text-base font-bold">Editar Email</span>
                 </div>
@@ -75,11 +61,6 @@
                   <div class=" mx-3 mb-2">
                     <el-form-item prop="inputConfirmEmail">
                       <el-input v-model="modalEmail.inputConfirmEmail" type="email" placeholder="Confirmar E-mail"></el-input>
-                    </el-form-item>
-                  </div>
-                  <div class="mx-3">
-                    <el-form-item prop="inputOldPassword">
-                      <el-input v-model="modalEmail.inputOldPassword" placeholder="Senha Atual" show-password></el-input>
                     </el-form-item>
                   </div>
                 </el-form>
@@ -109,14 +90,14 @@
                   <span class=" text-base font-bold">Editar Senha</span>
                 </div>
                 <el-form ref="modalPasswordForm" :model="modalPassword" :rules="rulesModalPassword">
-                  <div class=" mx-3 mt-3 mb-2">
-                    <el-form-item prop="inputOldPassword">
-                      <el-input v-model="modalPassword.inputOldPassword" placeholder="Senha Atual" show-password></el-input>
-                    </el-form-item>
-                  </div>
-                  <div class="mx-3">
+                  <div class="mx-3 mt-3 mb-2">
                     <el-form-item prop="inputNewPassword">
                       <el-input v-model="modalPassword.inputNewPassword" placeholder="Nova Senha" show-password></el-input>
+                    </el-form-item>
+                  </div>
+                  <div class=" mx-3">
+                    <el-form-item prop="inputOldPassword">
+                      <el-input v-model="modalPassword.inputConfirmPassword" placeholder="Confirmar Senha" show-password></el-input>
                     </el-form-item>
                   </div>
                 </el-form>
@@ -170,16 +151,14 @@ export default {
         id: '',
       },
       modalName: {
-        inputOldPassword: '',
         inputNewName: '',
       },
       modalEmail: {
-        inputOldPassword: '',
         inputNewEmail: '',
         inputConfirmEmail: '',
       },
       modalPassword: {
-        inputOldPassword: '',
+        inputConfirmPassword: '',
         inputNewPassword: '',
       },
       toggleModalPassword: false,
@@ -190,10 +169,6 @@ export default {
         inputNewName: [
           { required: true, message: 'Campo Obrigatório', trigger: 'blur' },
         ],
-        inputOldPassword: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-          { min: 8, message: 'Minímo de 8 caracteres', trigger: 'blur' },
-        ],
       },
 
       rulesModalEmail: {
@@ -203,14 +178,10 @@ export default {
         inputConfirmEmail: [
           { required: true, message: 'Campo Obrigatório', trigger: 'blur' },
         ],
-        inputOldPassword: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-          { min: 8, message: 'Minímo de 8 caracteres', trigger: 'blur' },
-        ],
       },
 
       rulesModalPassword: {
-        inputOldPassword: [
+        inputConfirmPassword: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
           { min: 8, message: 'Minímo de 8 caracteres', trigger: 'blur' },
         ],
