@@ -2,7 +2,7 @@
     <el-card class="box-card">
         <template #header>
             <div class="flex h-full w-full justify-center">
-                <span class="text-center">Bateria Funcional de Rikli e Jones (Bateria de Fullerron/Senior test)</span>
+                <span class="text-center"><strong>Bateria Funcional de Rikli e Jones (Bateria de Fullerron/Senior test)</strong></span>
             </div>
             <div class="px-6 py-3">
                 <div class="mb-3 flex flex-col">
@@ -13,11 +13,12 @@
 
         <div class="px-6 py-3">
             <div class="mb-3 flex flex-col">
-                <span>Idade:</span>
-                <el-input
-                    v-model="input1"
-                    placeholder="Please input">
-                </el-input>
+                <span>
+                    <b>Idade: </b> {{idade}} 
+                </span>
+                <span>
+                    <b>Gênero:</b> {{genero}}
+                </span>
             </div>
         </div>
 
@@ -27,7 +28,7 @@
             :model="bateriaFunc"
             label-position="top"
         >
-        <el-form-item
+        <el-form-item 
         label="1. Sentar e levantar (30 segundos)"
         prop="sitAndDown"
         >
@@ -172,10 +173,8 @@ export default {
             resultTable4: '',
             resultTable5: '',
             resultTable6: '',
-            input1: '',
-            var1: 60,
-            var2: 64,
-            genero: 'homem',
+            genero: 'mulher',
+            idade: 65,
             result: '',
             percent: '',
             classif: '',
@@ -791,19 +790,6 @@ export default {
                     }
                 }
             }
-            if(this.indiceTable1 === 19){
-                this.indiceTable1--; 
-            } else if(this.indiceTable2 === 19){
-                this.indiceTable2--;
-            } else if(this.indiceTable3 === 19){
-                this.indiceTable3--;
-            } else if(this.indiceTable4 === 19){
-                this.indiceTable4--;
-            } else if(this.indiceTable5 === 19){
-                this.indiceTable5--;
-            } else if(this.indiceTable6 === 19){
-                this.indiceTable6--;
-            }
             if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1] < 30){
                 this.resultTable1 = "RUIM"
             } else if(description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1] < 55){
@@ -895,7 +881,7 @@ export default {
             console.log(this.indiceTable5)
             console.log(this.indiceTable6)
             console.log(this.resultTable1)
-            
+            console.log(description.sentarAlcancarHomem.classificacao_percentil[0])
         },
     }
 };
