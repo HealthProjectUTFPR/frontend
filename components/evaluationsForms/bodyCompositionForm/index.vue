@@ -281,16 +281,8 @@ export default {
   name: 'BodyCompositionForm',
   data() {
     return {
-      mockup: {
-        sex: 'Mulher',
-        age: 70,
-        race: 'Branco',
-        height: 192.5,
-      },
       bodyCompositionForm: {
         date: '',
-        age: '',
-        stature: '',
         weight: '',
         waist: '',
         hip: '',
@@ -487,10 +479,16 @@ export default {
   methods: {
     submitForm(formName) {
       this.getAllComputed();
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert(JSON.stringify(this.bodyCompositionForm, null, 2));
-          this.calculated = true;
+          try {
+            await this.$axios.post(`/evaluation/${this.studendId}`, {
+              type: 'bodyComposition',
+              data: this.bodyCompositionForm,
+            });
+          } catch (error) {
+            console.log(error);
+          }
         }
         return false;
       });
