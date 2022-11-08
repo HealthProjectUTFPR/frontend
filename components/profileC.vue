@@ -148,7 +148,6 @@ export default {
         name: '',
         email: '',
         password: '',
-        id: '',
       },
       modalName: {
         inputNewName: '',
@@ -198,7 +197,7 @@ export default {
   methods: {
     async getUser() {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`;
-      const { data } = await axios.get(`http://localhost:3333/users/getMe/${localStorage.getItem('usr-id')}`);
+      const { data } = await axios.get(`http://localhost:3333/users/getMe/${localStorage.getItem('token')}`);
       this.user.name = data.name;
       this.user.email = data.email;
       this.user.id = data.id;
@@ -208,7 +207,7 @@ export default {
       const newName = {
         name: this.modalName.inputNewName,
       };
-      await axios.patch(`http://localhost:3333/users/editMe/${this.user.id}`, newName);
+      await axios.patch(`http://localhost:3333/users/editMe/${localStorage.getItem('token')}`, newName);
       this.user.name = this.modalName.inputNewName;
     },
     submitName() {
@@ -231,13 +230,14 @@ export default {
       this.user.email = this.modalEmail.inputNewEmail;
     },
     submitEmail() {
-      this.$refs.modalEmailForm.validate((valid) => {
-        if (valid && this.inputConfirmEmail === this.inputNewEmail) {
+      this.$refs.modalEmailForm.validate((valid, flag, inputConfirmEmail = this.modalEmail.inputConfirmEmail, inputNewEmail = this.modalEmail.inputNewEmail) => {
+        if (valid && inputConfirmEmail === inputNewEmail) {
+          flag = true;
           this.updateEmail();
         } else {
           this.$notify.error({
             title: 'Erro',
-            message: 'Email ou senha inválidos',
+            message: 'Email inválido',
           });
         }
       });
@@ -249,8 +249,9 @@ export default {
       await axios.patch(`http://localhost:3333/users/editMe/${this.user.id}`, newPassword);
     },
     submitPassword() {
-      this.$refs.modalPasswordForm.validate((valid) => {
-        if (valid) {
+      this.$refs.modalPasswordForm.validate((valid, flag, inputConfirmPassword = this.modalPassword.inputConfirmPassword, inputNewPassword = this.modalPassword.inputNewPassword) => {
+        if (valid && inputConfirmPassword === inputNewPassword) {
+          flag = true;
           this.updatePassword();
         } else {
           this.$notify.error({
