@@ -2,7 +2,7 @@
   <div class="mt-2">
     <span class="demonstration"></span>
     <el-slider
-      v-model="optionsGroups[group]" max="4"
+      v-model="optionsGroups[group]" :max="4"
       :step="1"
       input-size="large"
       input>

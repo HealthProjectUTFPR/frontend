@@ -6,6 +6,24 @@
       </div>
     </template>
 
+    <el-form
+      ref="balanceForm"
+      :rules="rules"
+      :model="balanceForm"
+      label-position="top"
+    >
+    <el-form-item class="ml-7" label="Data" prop="date">
+      <el-date-picker
+      v-model="balanceForm.date"
+      type="date"
+        placeholder="XX/XX/XXXX"
+        size="large"
+        style="width: 23em"
+        format="dd-MM-yyyy"
+        >
+      </el-date-picker>
+    </el-form-item>
+
     <div class="px-6 py-3">
       <div class="mb-3 flex flex-col">
         <span>1. Sentado para em pé</span>
@@ -109,18 +127,20 @@
         <el-button
           type="primary"
           icon="el-icon-success"
-          @click="submitForm()"
+          @click="submitForm('balanceForm')"
         >
           Salvar
         </el-button>
       </div>
     </div>
+  </el-form>
   </el-card>
 </template>
 
 <script>
 import RadioInputGroup from '@/components/evaluationsForms/balanceForm/RadioInputGroup.vue';
 import descriptions from '@/components/evaluationsForms/balanceForm/descriptions';
+import BalanceForm from '@/dto/balanceForm.dto';
 
 export default {
   name: 'BalanceForm',
@@ -133,6 +153,7 @@ export default {
 
   data() {
     return {
+      balanceForm: { date: '' },
       optionsGroups: {
         'group-1': 4,
         'group-2': 4,
@@ -148,6 +169,17 @@ export default {
         'group-12': 4,
         'group-13': 4,
         'group-14': 4,
+      },
+
+      rules: {
+        date: [
+          {
+            type: 'date',
+            required: true,
+            message: 'Por favor, escolha uma data',
+            trigger: 'change',
+          },
+        ],
       },
     };
   },
@@ -165,8 +197,21 @@ export default {
       return { description: descriptions['total-descriptions'][2], type: 'success' };
     },
 
-    submitForm() {
-      console.log('submited');
+    async submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          const data = new BalanceForm(this.balanceForm.date, this.optionsGroups, this.total);
+          try {
+            await this.$axios.post(`/evaluation/${this.studentId}`, {
+              type: 'AEQ',
+              data,
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        return false;
+      });
     },
   },
 };
