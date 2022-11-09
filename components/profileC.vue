@@ -13,7 +13,7 @@
         </div>
         <div class=" mr-3 flex items-center justify-between">
           <span class=" my-1 ml-3 block font-sans text-base font-medium leading-5">{{ user.name }}</span>
-          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalName = true, modalName.inputNewName = '',  modalName.inputOldPassword = ''"></el-button>
+          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalName = true, modalName.inputNewName = ''"></el-button>
           <div v-if="toggleModalName" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
               <div class=" h-48 w-80 rounded bg-white py-1">
@@ -45,7 +45,7 @@
         </div>
         <div class=" mr-3 flex items-center justify-between">
           <span class=" my-1 ml-3 block font-sans text-base font-medium leading-5">{{ user.email }}</span>
-          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalEmail = true, modalEmail.inputNewEmail = '', modalEmail.inputOldPassword = '', modalEmail.inputConfirmEmail = ''"></el-button>
+          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalEmail = true, modalEmail.inputNewEmail = '', modalEmail.inputConfirmEmail = ''"></el-button>
           <div v-if="toggleModalEmail" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
               <div class=" h-64 w-80 rounded bg-white py-1">
@@ -82,7 +82,7 @@
         </div>
         <div class=" mr-3 flex items-center justify-between">
           <span class=" my-1 ml-3 block font-sans text-base font-medium leading-5">********</span>
-          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalPassword = true, modalPassword.inputOldPassword = '', modalPassword.inputNewPassword = ''"></el-button>
+          <el-button type="primary" icon="el-icon-edit-outline" circle size="mini" @click="toggleModalPassword = true, modalPassword.inputConfirmPassword = '', modalPassword.inputNewPassword = ''"></el-button>
           <div v-if="toggleModalPassword" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
               <div class=" h-64 w-80 rounded bg-white py-1">
@@ -96,7 +96,7 @@
                     </el-form-item>
                   </div>
                   <div class=" mx-3">
-                    <el-form-item prop="inputOldPassword">
+                    <el-form-item prop="inputConfirmPassword">
                       <el-input v-model="modalPassword.inputConfirmPassword" placeholder="Confirmar Senha" show-password></el-input>
                     </el-form-item>
                   </div>
