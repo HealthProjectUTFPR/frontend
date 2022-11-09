@@ -113,27 +113,6 @@
       </div>
       <!-- Modal Senha Termina -->
     </div>
-    <!-- Footer -->
-    <!-- <div class=" absolute left-0 bottom-0 h-14 w-full bg-gray-700">
-      <div class=" mx-8 my-2 flex items-center justify-between">
-        <div>
-          <i class="el-icon-user mx-5 text-2xl text-white"></i>
-          <span class=" flex text-xs text-white">Meus Alunos</span>
-        </div>
-        <div>
-          <i class="el-icon-date mx-8 text-2xl text-white"></i>
-          <span class=" flex text-xs text-white">Meu Calendario</span>
-        </div>
-        <div>
-          <i class="el-icon-user mx-5 text-2xl text-white"></i>
-          <span class=" flex text-xs text-white">Meus Dados</span>
-        </div>
-        <div>
-          <i class="el-icon-headset mx-2 text-2xl text-white"></i>
-          <span class=" flex text-xs text-white">Suporte</span>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 <script>
