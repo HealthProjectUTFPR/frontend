@@ -1,6 +1,6 @@
 <template>
     <div class="h-auto w-auto">
-        <div class="image flex justify-center pt-20">
+        <div class="image flex justify-center pt-24">
             <el-avatar :size="180" :src="circleUrl"></el-avatar>
         </div>
         <div class="text-center font-bold text-2xl">
@@ -29,7 +29,7 @@
         <div class="button pt-2 flex justify-center">
             <el-button type="primary" @click="submitForm">Cadastre-se</el-button>
         </div>
-        <div class="signup flex justify-center font-medium">
+        <div class="signup flex justify-center font-medium pt-2">
             <span class="text-sm">Já possui uma conta?
                 <el-link :underline="false" type="primary">
                     <span class="font-medium text-sm" @click="goToLog"> Login </span>
