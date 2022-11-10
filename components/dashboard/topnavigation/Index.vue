@@ -1,12 +1,39 @@
 <template>
   <header
-    class="relative z-10 h-16 w-full items-center bg-white shadow md:h-20 lg:rounded-2xl"
+    class="
+      relative
+      z-10
+      h-16
+      w-full
+      items-center
+      bg-white
+      shadow
+      md:h-20
+      lg:rounded-2xl
+    "
   >
     <div
-      class="flex-center relative mx-auto flex h-full flex-col justify-center px-3"
+      class="
+        flex-center
+        relative
+        mx-auto
+        flex
+        h-full
+        flex-col
+        justify-center
+        px-3
+      "
     >
       <div
-        class="lg:max-w-68 relative flex w-full items-center pl-1 sm:ml-0 sm:pr-2"
+        class="
+          lg:max-w-68
+          relative
+          flex
+          w-full
+          items-center
+          pl-1
+          sm:ml-0 sm:pr-2
+        "
       >
         <div class="relative left-0 flex h-full w-3/4">
           <div class="group relative flex h-full w-12 items-center">
@@ -22,7 +49,21 @@
           </div>
           <div class="group relative flex h-full w-36 items-center lg:w-64">
             <div
-              class="absolute flex h-10 w-auto cursor-pointer items-center justify-center p-3 pr-2 text-sm uppercase text-gray-500 sm:hidden"
+              class="
+                absolute
+                flex
+                h-10
+                w-auto
+                cursor-pointer
+                items-center
+                justify-center
+                p-3
+                pr-2
+                text-sm
+                uppercase
+                text-gray-500
+                sm:hidden
+              "
             >
               <svg
                 fill="none"
@@ -39,7 +80,19 @@
               </svg>
             </div>
             <svg
-              class="pointer-events-none absolute left-0 ml-4 hidden h-4 w-4 fill-current text-gray-500 group-hover:text-gray-400 sm:block"
+              class="
+                pointer-events-none
+                absolute
+                left-0
+                ml-4
+                hidden
+                h-4
+                w-4
+                fill-current
+                text-gray-500
+                group-hover:text-gray-400
+                sm:block
+              "
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >
@@ -49,18 +102,53 @@
             </svg>
             <input
               type="text"
-              class="block w-full rounded-2xl bg-gray-100 py-1.5 pl-10 pr-4 leading-normal text-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500/90"
+              class="
+                block
+                w-full
+                rounded-2xl
+                bg-gray-100
+                py-1.5
+                pl-10
+                pr-4
+                leading-normal
+                text-gray-400
+                focus:border-transparent
+                focus:outline-none
+                focus:ring-2
+                focus:ring-blue-500/90
+              "
               placeholder="Search"
             />
             <div
-              class="absolute right-0 mr-2 hidden h-auto rounded-2xl border border-gray-300 px-2 py-1 text-xs text-gray-400 md:block"
+              class="
+                absolute
+                right-0
+                mr-2
+                hidden
+                h-auto
+                rounded-2xl
+                border border-gray-300
+                px-2
+                py-1
+                text-xs text-gray-400
+                md:block
+              "
             >
               +
             </div>
           </div>
         </div>
         <div
-          class="relative ml-5 flex w-1/4 items-center justify-end p-1 sm:right-auto sm:mr-0"
+          class="
+            relative
+            ml-5
+            flex
+            w-1/4
+            items-center
+            justify-end
+            p-1
+            sm:right-auto sm:mr-0
+          "
         >
           <el-dropdown
             class="relative block"
@@ -93,15 +181,14 @@ export default {
   methods: {
     handleCommand(command) {
       switch (command) {
-        case 'logout': 
-          localStorage.removeItem('token'); 
-          localStorage.removeItem('usr-id'); 
-          this.$router.push('/login'); 
+        case 'logout':
+          localStorage.removeItem('token');
+          this.$router.push('/login');
           break;
-        case 'profile': 
-          this.$router.push('/profile'); 
+        case 'profile':
+          this.$router.push('/profile');
           break;
-         case default:
+        default:
           break;
       }
     },
