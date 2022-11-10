@@ -19,7 +19,7 @@
         placeholder="XX/XX/XXXX"
         size="large"
         style="width: 23em"
-        format="dd-MM-yyyy"
+        format="dd/MM/yyyy"
         >
       </el-date-picker>
     </el-form-item>
@@ -153,6 +153,7 @@ export default {
 
   data() {
     return {
+      studentId: 'f03c0f33-f967-4bef-b425-284335ca2d6c',
       balanceForm: { date: '' },
       optionsGroups: {
         'group-1': 4,
@@ -206,8 +207,17 @@ export default {
               type: 'AEQ',
               data,
             });
+
+            this.$message({
+              message: 'Avaliação de criada com sucesso!',
+              type: 'success',
+            });
+
+            setTimeout(() => {
+              this.$router.push({ path: '/' });
+            }, 2000);
           } catch (error) {
-            console.log(error);
+            this.$message.error({ message: `${error.response.data.message}` });
           }
         }
         return false;

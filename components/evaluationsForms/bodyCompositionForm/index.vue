@@ -20,7 +20,7 @@
             placeholder="XX/XX/XXXX"
             size="large"
             style="width: 100%"
-            format="dd-MM-yyyy"
+            format="dd/MM/yyyy"
           >
           </el-date-picker>
         </el-form-item>
@@ -281,6 +281,13 @@ export default {
   name: 'BodyCompositionForm',
   data() {
     return {
+      studentId: 'f03c0f33-f967-4bef-b425-284335ca2d6c',
+      mockup: {
+        sex: 'Homem',
+        age: 70,
+        race: 'Branco',
+        height: 192,
+      },
       bodyCompositionForm: {
         date: '',
         weight: '',
@@ -482,12 +489,21 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
-            await this.$axios.post(`/evaluation/${this.studendId}`, {
+            await this.$axios.post(`/evaluation/${this.studentId}`, {
               type: 'bodyComposition',
               data: this.bodyCompositionForm,
             });
+
+            this.$message({
+              message: 'Avaliação de criada com sucesso!',
+              type: 'success',
+            });
+
+            setTimeout(() => {
+              this.$router.push({ path: '/' });
+            }, 2000);
           } catch (error) {
-            console.log(error);
+            this.$message.error({ message: `${error.response.data.message}` });
           }
         }
         return false;
