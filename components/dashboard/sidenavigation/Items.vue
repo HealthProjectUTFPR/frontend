@@ -9,9 +9,6 @@
     <sidenav-item title="grafico de monitoramento" to="/prepos/monitoringPrePos">
       <font-awesome-icon icon="list-ul" />
     </sidenav-item>
-    <sidenav-item title="grafico de test" to="/prepos/test">
-      <font-awesome-icon icon="list-ul" />
-    </sidenav-item>
     <sidenav-item title="Categoria" to="/category">
       <font-awesome-icon icon="list-ul" />
     </sidenav-item>
