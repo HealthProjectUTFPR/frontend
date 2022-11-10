@@ -25,6 +25,7 @@
       <el-dialog 
         title="Adicionar novo registro de treino"
         :visible.sync="dialogFormVisible"
+        :fullscreen="window.width < 768 ? true : false"
         center
       >
         <el-form 
@@ -209,7 +210,13 @@
             
             <!-- Tempo total do treino -->
             <el-form-item label="Tempo total do treino(min)">
-              <el-input v-model="form.horarioTreino" autocomplete="off" style="width:240px"></el-input>
+              <el-input 
+                v-model="form.horarioTreino"
+                type="number"
+                min="0"
+                step=".01"
+              >
+              </el-input>
             </el-form-item>
   
             <!-- Observacao -->
