@@ -121,26 +121,24 @@
         </div>
   
         <el-divider content-position="center">Descrição</el-divider>
-          <template>
-            <el-table
-              :data="tableData"
-              border
-              style="width: 100%">
-              <el-table-column
-                prop="number"
-                label="Index AVD"
-                width="180">
-              </el-table-column>
-              <el-table-column
-                prop="name"
-                label="Tipo de Classificação"
-                width="925">
-              </el-table-column>
-            </el-table>
-          </template>
+        <el-alert
+          :title="`${total} PONTOS`"
+          :type="getTotalMsg().type"
+          :description="getTotalMsg().description"
+          show-icon
+          :closable="false">
+        </el-alert>
   
           <div class="mt-10 flex w-full justify-center">
             <el-button
+                v-if="getTotalMsg()===0"
+                disabled
+                type="primary"
+                icon="el-icon-success"
+                >Salvar
+            </el-button>
+            <el-button
+                v-else
                 type="primary"
                 icon="el-icon-success"
                 @click="submitForm()"
@@ -152,6 +150,8 @@
   </template>
   
   <script>
+  import descriptions from '@/components/dashboard/evaluationsForms/avdForms/descriptions';
+
   export default {
     provide() {
     },
@@ -163,35 +163,75 @@
         value4: 0, 
         value5: 0, 
         value6: 0,
-        tableData: [{
-          number: '0',
-          name: 'Independente nas seis funções(banhar-se, vestir-se, alimentação, ir ao banheiro, transferência e continência)',
-        }, {
-          number: '1',
-          name: 'Independente em cinco funções e dependente em uma função'
-        }, {
-          number: '2',
-          name: 'Independente em quatro funções e dependente em duas funções'
-        }, {
-          number: '3',
-          name: 'Independente em três funções e dependente em três funções'
-        }, {
-          number: '4',
-          name: 'Independente em duas funções e dependente em quatro funções'
-        }, {
-          number: '5',
-          name: 'Independente em uma função e dependente em cinco funções'
-        }, {
-          number: '6',
-          name: 'Dependente para todas as funções'
-          }
-        ]
       };
     },
     computed:{
       total(){
         return this.value1 + this.value2 + this.value3 + this.value4 + this.value5 + this.value6
-      }
+      },      
+    },
+    methods: {
+      getTotalMsg() {
+        if(this.value1 === 1 &&  this.value2 === 1 && this.value3 === 1 && this.value4 === 1 && this.value5 === 1 && this.value6 === 1)
+         return { description: descriptions['group-1'][0], type: 'success' };
+        if((this.value1 === 1 && this.value2 === 1 && this.value3 === 1 && this.value4 === 1 && this.value5 === 1 && this.value6 > 1) ||
+        (this.value1 === 1 && this.value2 === 1 && this.value3 === 1 && this.value4 === 1 && this.value5 > 1 && this.value6 === 1)||
+        (this.value1 === 1 && this.value2  === 1 && this.value3 === 1 && this.value4 > 1 && this.value5 === 1 && this.value6 === 1)||
+        (this.value1 === 1 && this.value2 === 1 && this.value3 > 1 && this.value4 === 1 && this.value5 === 1 && this.value6 === 1)||
+        (this.value1 === 1 && this.value2 > 1 && this.value3 === 1 && this.value4 === 1 && this.value5 === 1 && this.value6 === 1)||
+        (this.value1 > 1 &&  this.value2 === 1 && this.value3 === 1 && this.value4 === 1 && this.value5 === 1 && this.value6 === 1))
+         return { description: descriptions['group-2'][0], type: 'success' };
+         if((this.value1 === 1 && this.value2 === 1 && this.value3 === 1 && this.value4 === 1 && this.value5 > 1 && this.value6 > 1) ||
+        (this.value1 === 1 && this.value2 === 1 && this.value3 === 1 && this.value4 > 1 && this.value5 === 1 && this.value6 > 1)||
+        (this.value1 === 1 && this.value2  === 1 && this.value3 === 1 && this.value4 > 1 && this.value5 > 1 && this.value6 === 1)||
+        (this.value1 ===1 && this.value2 === 1 && this.value3 > 1 && this.value4 === 1 && this.value5 === 1 && this.value6 > 1)||
+        (this.value1 ===1 && this.value2  === 1 && this.value3 > 1 && this.value4 ===1 && this.value5 > 1 && this.value6 === 1)||
+        (this.value1 ===1 &&  this.value2 === 1 && this.value3 > 1 && this.value4 > 1 && this.value5 === 1 && this.value6 === 1)||
+        (this.value1 > 1 && this.value2  === 1 && this.value3 === 1 && this.value4 === 1 && this.value5 === 1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  === 1 && this.value3 === 1 && this.value4 === 1 && this.value5 > 1 && this.value6 === 1)||
+        (this.value1 > 1 && this.value2  > 1 && this.value3 === 1 && this.value4 === 1 && this.value5 === 1 && this.value6 ===1))
+         return { description: descriptions['group-3'][0], type: 'success' };
+         if((this.value1 === 1 && this.value2 === 1 && this.value3 === 1 && this.value4 > 1 && this.value5 > 1 && this.value6 > 1) ||
+        (this.value1 === 1 && this.value2 ===1 && this.value3 > 1 && this.value4 ===1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 === 1 && this.value2  ===1 && this.value3 > 1 && this.value4 > 1 && this.value5 ===1 && this.value6 > 1)||
+        (this.value1 ===1 && this.value2 ===1 && this.value3 > 1 && this.value4 > 1 && this.value5 > 1 && this.value6 ===1)||
+        (this.value1 ===1 && this.value2  > 1 && this.value3 ===1 && this.value4 ===1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 ===1 &&  this.value2 > 1 && this.value3 ===1 && this.value4 > 1 && this.value5 ===1 && this.value6 > 1)||
+        (this.value1 ===1 && this.value2  > 1 && this.value3 ===1 && this.value4 > 1 && this.value5 > 1 && this.value6 ===1)||
+        (this.value1 ===1 && this.value2  > 1 && this.value3 > 1 && this.value4 ===1 && this.value5 ===1 && this.value6 > 1)||
+        (this.value1 ===1 && this.value2  > 1 && this.value3 > 1 && this.value4 ===1 && this.value5 ===1 && this.value6 ===1)||
+        (this.value1 > 1 && this.value2  ===1 && this.value3 ===1 && this.value4 ===1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  ===1 && this.value3 ===1 && this.value4 > 1 && this.value5 ===1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  ===1 && this.value3 ===1 && this.value4 > 1 && this.value5 > 1 && this.value6 ===1)||
+        (this.value1 > 1 && this.value2  > 1 && this.value3 ===1 && this.value4 ===1 && this.value5 ===1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  > 1 && this.value3 ===1 && this.value4 ===1 && this.value5 > 1 && this.value6 ===1))
+         return { description: descriptions['group-4'][0], type: 'success' };
+         if((this.value1 ===1 && this.value2 ===1 && this.value3 > 1 && this.value4 > 1 && this.value5 > 1 && this.value6 > 1) ||
+        (this.value1 === 1 && this.value2 > 1 && this.value3 ===1 && this.value4 > 1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 === 1 && this.value2  > 1 && this.value3 > 1 && this.value4 ===1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 ===1 && this.value2 > 1 && this.value3 > 1 && this.value4 > 1 && this.value5 ===1 && this.value6 > 1)||
+        (this.value1 ===1 && this.value2  > 1 && this.value3 > 1 && this.value4 > 1 && this.value5 > 1 && this.value6 ===1)||
+        (this.value1 > 1 &&  this.value2 ===1 && this.value3 ===1 && this.value4 > 1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  ===1 && this.value3 > 1 && this.value4 ===1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  ===1 && this.value3 > 1 && this.value4 > 1 && this.value5 ===1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  ===1 && this.value3 > 1 && this.value4 > 1 && this.value5 > 1 && this.value6 ===1)||
+        (this.value1 > 1 && this.value2  > 1 && this.value3 ===1 && this.value4 ===1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  > 1 && this.value3 ===1 && this.value4 > 1 && this.value5 ===1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  > 1 && this.value3 ===1 && this.value4 > 1 && this.value5 > 1 && this.value6 ===1)||
+        (this.value1 > 1 && this.value2  > 1 && this.value3 > 1 && this.value4 ===1 && this.value5 ===1 && this.value6 ===1)||
+        (this.value1 > 1 && this.value2  > 1 && this.value3 > 1 && this.value4 ===1 && this.value5 > 1 && this.value6 ===1))
+         return { description: descriptions['group-5'][0], type: 'success' };
+         if((this.value1 === 1 && this.value2 > 1 && this.value3 > 1 && this.value4 > 1 && this.value5 > 1 && this.value6 > 1) ||
+        (this.value1 >  1 && this.value2 === 1 && this.value3 > 1 && this.value4 > 1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 >  1 && this.value2  > 1 && this.value3 === 1 && this.value4 > 1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2 > 1 && this.value3 > 1 && this.value4 === 1 && this.value5 > 1 && this.value6 > 1)||
+        (this.value1 > 1 && this.value2  > 1 && this.value3 > 1 && this.value4 > 1 && this.value5 === 1 && this.value6 > 1)||
+        (this.value1 > 1 &&  this.value2 > 1 && this.value3 > 1 && this.value4 > 1 && this.value5 > 1 && this.value6  === 1))
+         return { description: descriptions['group-6'][0], type: 'success' };
+         if((this.value1 > 1 && this.value2 > 1 && this.value3 > 1 && this.value4 > 1 && this.value5 > 1 && this.value6 > 1))
+          return { description: descriptions['total-descriptions'][0], type: 'success' };
+        return 0;
+      },
     }
 };
   </script>
