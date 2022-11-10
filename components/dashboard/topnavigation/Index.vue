@@ -1,125 +1,82 @@
 <template>
-  <header class="
-      bg-white
-      h-16
-      items-center
-      relative
-      shadow
-      w-full
-      z-10
-      md:h-20
-      lg:rounded-2xl
-    ">
-    <div class="
-        flex flex-center flex-col
-        h-full
-        justify-center
-        mx-auto
-        px-3
-        relative
-      ">
-      <div class="
-          flex
-          items-center
-          pl-1
-          relative
-          w-full
-          sm:pr-2 sm:ml-0
-          lg:max-w-68
-        ">
-        <div class="flex h-full left-0 relative w-3/4">
-          <div class="group flex items-center h-full relative w-12">
-            <button type="button" aria-expanded="false" aria-label="Toggle sidenav"
-              class="text-4xl text-gray-500 focus:outline-none" @click="toggle">
+  <header
+    class="relative z-10 h-16 w-full items-center bg-white shadow md:h-20 lg:rounded-2xl"
+  >
+    <div
+      class="flex-center relative mx-auto flex h-full flex-col justify-center px-3"
+    >
+      <div
+        class="lg:max-w-68 relative flex w-full items-center pl-1 sm:ml-0 sm:pr-2"
+      >
+        <div class="relative left-0 flex h-full w-3/4">
+          <div class="group relative flex h-full w-12 items-center">
+            <button
+              type="button"
+              aria-expanded="false"
+              aria-label="Toggle sidenav"
+              class="text-4xl text-gray-500 focus:outline-none"
+              @click="toggle"
+            >
               &#8801;
             </button>
           </div>
-          <div class="flex group h-full items-center relative w-36 lg:w-64">
-            <div class="
-                absolute
-                block
-                cursor-pointer
-                flex
-                h-10
-                items-center
-                justify-center
-                p-3
-                pr-2
-                text-gray-500 text-sm
-                uppercase
-                w-auto
-                sm:hidden
-              ">
-              <svg fill="none" class="h-5 relative w-5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                stroke="currentColor" viewBox="0 0 24 24">
-                <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div class="group relative flex h-full w-36 items-center lg:w-64">
+            <div
+              class="absolute flex h-10 w-auto cursor-pointer items-center justify-center p-3 pr-2 text-sm uppercase text-gray-500 sm:hidden"
+            >
+              <svg
+                fill="none"
+                class="relative h-5 w-5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
             </div>
-            <svg class="
-                absolute
-                fill-current
-                h-4
-                hidden
-                left-0
-                ml-4
-                pointer-events-none
-                text-gray-500
-                w-4
-                group-hover:text-gray-400
-                sm:block
-              " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <svg
+              class="pointer-events-none absolute left-0 ml-4 hidden h-4 w-4 fill-current text-gray-500 group-hover:text-gray-400 sm:block"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
               <path
-                d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
+                d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"
+              />
             </svg>
-            <input type="text" class="
-                bg-gray-100
-                block
-                leading-normal
-                pl-10
-                py-1.5
-                pr-4
-                ring-opacity-90
-                rounded-2xl
-                text-gray-400
-                w-full
-                focus:border-transparent
-                focus:outline-none
-                focus:ring-2
-                focus:ring-blue-500
-              " placeholder="Search" />
-            <div class="
-                absolute
-                border border-gray-300
-                h-auto
-                hidden
-                mr-2
-                px-2
-                py-1
-                right-0
-                rounded-2xl
-                text-gray-400 text-xs
-                md:block
-              ">
+            <input
+              type="text"
+              class="block w-full rounded-2xl bg-gray-100 py-1.5 pl-10 pr-4 leading-normal text-gray-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500/90"
+              placeholder="Search"
+            />
+            <div
+              class="absolute right-0 mr-2 hidden h-auto rounded-2xl border border-gray-300 px-2 py-1 text-xs text-gray-400 md:block"
+            >
               +
             </div>
           </div>
         </div>
-        <div class="
-            flex
-            items-center
-            justify-end
-            ml-5
-            p-1
-            relative
-            w-1/4
-            sm:mr-0 sm:right-auto
-          ">
-          <el-dropdown class="block relative" trigger="click" @command="handleCommand">
-            <img src="/images/user.png" class="h-10 mx-auto object-cover rounded-full w-10" />
+        <div
+          class="relative ml-5 flex w-1/4 items-center justify-end p-1 sm:right-auto sm:mr-0"
+        >
+          <el-dropdown
+            class="relative block"
+            trigger="click"
+            @command="handleCommand"
+          >
+            <img
+              src="/images/user.png"
+              class="mx-auto h-10 w-10 rounded-full object-cover"
+            />
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item command="profile">Perfil</el-dropdown-item>
-                <el-dropdown-item command="logout" divided>Logout</el-dropdown-item>
+                <el-dropdown-item command="logout" divided
+                  >Logout</el-dropdown-item
+                >
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -136,10 +93,17 @@ export default {
   methods: {
     handleCommand(command) {
       switch (command) {
-        case 'logout': localStorage.removeItem('token'); this.$router.push('/'); break;
-        case 'profile': this.$router.push('/profile'); break;
+        case 'logout':
+          localStorage.removeItem('token');
+          this.$router.push('/');
+          break;
+        case 'profile':
+          this.$router.push('/profile');
+          break;
+        default:
+          break;
       }
-    }
+    },
   },
-}
+};
 </script>
