@@ -1,6 +1,6 @@
 const dados = {
  sentarLevantarHomem : {
-    classificacao_percentil: [1, 95, 90 ,85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5],
+    classificacao_percentil: [95, 90 ,85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10, 5],
     sessentaAsessentaequatro: [23, 22, 21, 20, 19, 19, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 12, 11, 9],
     sessentaecincoAsessentaenove: [23, 21, 20, 19, 18, 18, 17, 16, 16, 15, 15, 14, 13, 13, 12, 11, 11, 9, 8],
     setentaAsetentaequatro: [21, 20, 19, 18, 17, 17, 16, 16, 15, 14, 14, 13, 13, 12, 12, 11, 10, 9, 8],
