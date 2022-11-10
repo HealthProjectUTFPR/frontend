@@ -1,5 +1,3 @@
-
-
 <template>
   
   <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
@@ -193,6 +191,7 @@
   </div>
 
 </template>
+
 
 <script>
   import moment from 'moment';
