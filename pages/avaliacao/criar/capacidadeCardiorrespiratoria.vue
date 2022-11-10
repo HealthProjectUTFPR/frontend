@@ -1,14 +1,14 @@
 <template>
   <div>
-    <!-- <FormCardiorespiratoryCapacity /> -->
+    <FormCardiorespiratoryCapacity />
   </div>
 </template>
 
 <script>
-// import FormCardiorespiratoryCapacity from '@/components/evaluationForms/cardiorespiratoryCapacity/index.vue';
+import FormCardiorespiratoryCapacity from '@/components/evaluationsForms/cardiorespiratoryCapacity/index.vue';
 
 export default {
   name: 'CardiorespiratoryCapacityEvaluation',
-  // components: { FormCardiorespiratoryCapacity },
+  components: { FormCardiorespiratoryCapacity },
 };
 </script>
