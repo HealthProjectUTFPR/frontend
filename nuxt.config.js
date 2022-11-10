@@ -53,7 +53,6 @@ export default {
         Vary: '*',
       },
     },
-    extend(config, ctx) {},
   },
 
   // Server Configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-server

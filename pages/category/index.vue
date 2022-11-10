@@ -142,7 +142,7 @@ export default {
           try {
             await this.$axios.patch(
               `/category/update/${this.form.id}`,
-              this.form
+              this.form,
             );
             this.$notify.success({
               title: 'Sucesso',
