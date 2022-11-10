@@ -264,9 +264,16 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert(JSON.stringify(this.cardiorespiratoryCapacityForm));
+          try {
+            await this.$axios.post(`/evaluation/${this.studendId}`, {
+              type: 'cardiorespiratoryCapacity',
+              data: this.cardiorespiratoryCapacityForm,
+            });
+          } catch (error) {
+            console.log(error);
+          }
         }
         return false;
       });

@@ -1,15 +1,15 @@
 <template>
   <div>
-    <!-- <FormCreateSarcopenia /> -->
+    <FormCreateSarcopenia />
   </div>
 </template>
 
 <script>
-// import FormCreateSarcopenia from '@/components/evaluationsForms/sarcopenia/index.vue';
+import FormCreateSarcopenia from '@/components/evaluationsForms/sarcopenia/index.vue';
 
 export default {
-  // name: 'SarcopeniaForm',
-  // components: { FormCreateSarcopenia },
+  name: 'SarcopeniaForm',
+  components: { FormCreateSarcopenia },
 };
 </script>
 
