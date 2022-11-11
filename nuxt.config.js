@@ -53,6 +53,11 @@ export default {
         Vary: '*',
       },
     },
+    postcss: {
+      plugins: {
+        'postcss-custom-properties': false,
+      },
+    },
   },
 
   // Server Configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-server
