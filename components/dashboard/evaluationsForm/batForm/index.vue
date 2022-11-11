@@ -126,12 +126,12 @@
             <el-table-column
                 prop="result"
                 label="Resultado"
-                width="180">
+                width="100">
             </el-table-column>
             <el-table-column
                 prop="percent"
                 label="Percentil"
-                width="180">
+                width="100">
             </el-table-column>
             <el-table-column
                 prop="classif"
@@ -852,12 +852,12 @@ export default {
                 this.tableData.push({ result: this.bateriaFunc.reachTheBack, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable5], classif: this.resultTable5});
                 this.tableData.push({ result: this.bateriaFunc.tug, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable6], classif: this.resultTable6});
             } else {
-                this.tableData.push({ result: this.bateriaFunc.sitAndDown, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1], classif: this.resultTable1});
-                this.tableData.push({ result: this.bateriaFunc.elbowFlexion, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable2], classif: this.resultTable2});
-                this.tableData.push({ result: this.bateriaFunc.marchWouldPark, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable3], classif: this.resultTable3});
-                this.tableData.push({ result: this.bateriaFunc.sitAndReachYourFeet, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable4], classif: this.resultTable4});
-                this.tableData.push({ result: this.bateriaFunc.reachTheBack, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable5], classif: this.resultTable5});
-                this.tableData.push({ result: this.bateriaFunc.tug, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable6], classif: this.resultTable6});
+                this.tableData.push({ result: this.bateriaFunc.sitAndDown, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable1], classif: this.resultTable1});
+                this.tableData.push({ result: this.bateriaFunc.elbowFlexion, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable2], classif: this.resultTable2});
+                this.tableData.push({ result: this.bateriaFunc.marchWouldPark, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable3], classif: this.resultTable3});
+                this.tableData.push({ result: this.bateriaFunc.sitAndReachYourFeet, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable4], classif: this.resultTable4});
+                this.tableData.push({ result: this.bateriaFunc.reachTheBack, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable5], classif: this.resultTable5});
+                this.tableData.push({ result: this.bateriaFunc.tug, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable6], classif: this.resultTable6});
             }
             
             this.bateriaFunc.sitAndDown = "";
@@ -869,17 +869,17 @@ export default {
 
         },
         submitForm() {
-            console.log()
-            console.log('submited');
-            console.log(this.indiceTable1)
-            console.log(this.indiceTable2)
-            console.log(this.indiceTable3)
-            console.log(this.indiceTable4)
-            console.log(this.indiceTable5)
-            console.log(this.indiceTable6)
-            console.log(this.resultTable1)
-            console.log(this.genero)
-            console.log(this.idade)
+            const data = {
+                "sitAndDown": {result: this.bateriaFunc.sitAndDown, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable1], classif: this.resultTable1},
+                "elbowFlexion": {result: this.bateriaFunc.elbowFlexion, percent: description.sentarLevantarHomem.classificacao_percentil[this.indiceTable2], classif: this.resultTable2},
+                "marchWouldPark": { result: this.bateriaFunc.marchWouldPark, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable3], classif: this.resultTable3},
+                "sitAndReachYourFeet": { result: this.bateriaFunc.sitAndReachYourFeet, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable4], classif: this.resultTable4},
+                "reachTheBack": { result: this.bateriaFunc.reachTheBack, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable5], classif: this.resultTable5},
+                "tug": { result: this.bateriaFunc.tug, percent: description.sentarLevantarMulher.classificacao_percentil[this.indiceTable6], classif: this.resultTable6}
+            }
+
+            console.log(data)
+            
         },
     }
 };
