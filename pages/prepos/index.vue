@@ -84,7 +84,7 @@
         
       <el-table-column label="DATA">
         <template #default="props">
-          <h3>{{ moment(props.row.date).format("DD/MM/YYYY HH:mm") }}</h3>
+          <h3>{{ moment(props.row.date).format("DD/MM/YYYY") }}</h3>
           
         </template> 
       </el-table-column>
@@ -191,7 +191,6 @@
   </div>
 
 </template>
-
 
 <script>
   import moment from 'moment';

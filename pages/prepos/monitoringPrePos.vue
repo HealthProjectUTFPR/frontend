@@ -1,28 +1,32 @@
 <template v-slot:activator="{ on }">  
       
       
-  <div class="demo-date-picker">
-    <span class="demonstration">Default</span>
-    <div class="block">
-      <el-date-picker
-      v-model="value1"
-      type="date"
-      placeholder="Pick a day"
-      size="size"
-      />
-    </div>
+  <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
+    
+    <div class="date-picker">
 
-    <span class="demonstration">Default</span>
-    <div class="block">
-      <el-date-picker
-      v-model="value2"
-      type="date"
-      placeholder="Pick a day"
-      size="size"
-      />
+      <div class="date1">
+        <el-date-picker
+        v-model="value1"
+        type="date"
+        placeholder="Pick a day"
+        size="size"
+        />
+      </div>
+      
+      <div class="date2">
+        <el-date-picker
+        v-model="value2"
+        type="date"
+        placeholder="Pick a day"
+        size="size"
+        />
+      </div>
     </div>
     
-    <apexchart ref="chart" type="line" height="350" :options="chartOptions" :series="series"></apexchart>
+    <div class = "hide">
+      <apexchart ref="chart" type="line" height="350" :options="chartOptions" :series="series"></apexchart>
+    </div>
   </div>
  
     
@@ -37,7 +41,9 @@
   export default {
     name: 'GraficoLinha',
     data() {
+
       return{
+        
         items: ['item'],
         value1:null,
         value2:null,
@@ -136,32 +142,6 @@
         
       
       },
-    items: {
-      
-      handler(val) {
-
-        val.forEach((item) => {
-
-          if(new Date(item.date).valueOf() <= new Date(this.value1).valueOf() ){
-            
-            this.series[0].data.push({
-              x: moment(new Date(item.horarioPre).valueOf()).format("DD/MM HH:mm"),
-              y: item.padPre
-            })
-            this.series[1].data.push({
-              x: moment(new Date(item.horarioPre).valueOf()).format("DD/MM HH:mm"),
-              y: item.pasPre
-            })
-            this.series[2].data.push({
-              x: moment(new Date(item.horarioPre).valueOf()).format("DD/MM HH:mm"),
-              y: item.glicemiaPre
-            })
-            this.$refs.chart.updateSeries(this.series);
-          }
-        })
-      },
-      deep: true
-    }
 
   },
   
@@ -174,18 +154,24 @@
       moment,
       defineDate(item){
         this.series[0].data.push({
-          x: moment(new Date(item.date).valueOf()).format("DD/MM HH:mm"),
+          x: moment(new Date(item.date)).format("DD/MM HH:mm"),
           y: item.padPre
         })
+
         this.series[1].data.push({
-          x: moment(new Date(item.date).valueOf()).format("DD/MM HH:mm"),
+          x: moment(new Date(item.date)).format("DD/MM HH:mm"),
           y: item.pasPre
         })
+        
         this.series[2].data.push({
-          x: moment(new Date(item.date).valueOf()).format("DD/MM HH:mm"),
+          x: moment(new Date(item.date)).format("DD/MM HH:mm"),
           y: item.glicemiaPre
         })
+
         this.$refs.chart.updateSeries(this.series);
+        
+        
+        
       },
 
       async fetchData() {
@@ -218,5 +204,48 @@
 
 
 <style scoped>
+
+
+.date-picker {
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+  flex-wrap: wrap;
+  flex: 1; 
+  width: 100%;
+  
+  
+}
+.demo-date-picker .block {
+  padding: 30px 0;
+  text-align: center;
+  border-right: solid 1px var(--el-border-color);
+  flex: 1;
+}
+.demo-date-picker .block:last-child {
+  border-right: none;
+}
+.demo-date-picker .demonstration {
+  display: block;
+  color: var(--el-text-color-secondary);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.date1{
+  margin: 5px;
+  float: right;
+  flex: 1;
+  
+}
+.date2{
+  margin: 5px;
+  float: left;
+  flex: 1;
+  
+}
+
+
+
 
 </style>
