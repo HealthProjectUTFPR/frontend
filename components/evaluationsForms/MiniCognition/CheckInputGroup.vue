@@ -4,8 +4,8 @@
         <div class="px-2">
             <el-switch
                 v-model="checkedGroups[checked]"
-                active-text="Sim"
-                inactive-text="Não">
+                active-text="Conseguiu"
+                inactive-text="Não Conseguiu">
             </el-switch>
         </div>
     </div>
