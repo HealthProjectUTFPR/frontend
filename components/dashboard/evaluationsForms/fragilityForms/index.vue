@@ -1,137 +1,251 @@
 <template>
     <el-card class="box-card">
-      <template #header>
-        <div class="flex h-full w-full justify-center">
-          <span class="text-center font-extrabold uppercase">Avaliação de Fragilidade</span>
-        </div>
-      </template>
-  
-      <div class="px-6 py-3">
-        <div class="mp-3 flex flex-col">
+        <template #header>
+            <div class="flex h-full w-full justify-center">
+                <span class="text-center font-extrabold uppercase">Avaliação de Fragilidade</span>
+            </div>
+        </template>
+        <el-form
+        ref="FragilityForm"
+        :rules="rules"
+        :model="fragilityForm"
+        label-position="top">
+            <div class="px-6 py-3">
+                <div class="mp-3 flex flex-col">
+                    <el-row :gutter="24">
+                        <el-col :span="8">
+                            <div class="grid-content bg-purple">
+                                <el-form-item
+                                label="Estatura"
+                                prop="number">
+                                    <el-input
+                                    disabled
+                                    v-model.number="fragilityForm.estatura"
+                                    placeholder="Estatura"
+                                    type="number"
+                                    ></el-input>
+                                </el-form-item>
+                            </div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="grid-content bg-purple">
+                                <el-form-item
+                                label="Peso (kg)"
+                                prop="weight"
+                                >
+                                    <el-input
+                                    disabled
+                                    v-model.number="fragilityForm.peso"
+                                    placeholder="Peso (kg)"
+                                    type="number"
+                                    ></el-input>
+                                </el-form-item>
+                            </div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="grid-content bg-purple">
+                                <el-form-item
+                                label="IMC"
+                                prop="number"
+                                >
+                                    <el-input
+                                    disabled
+                                    v-model.number="fragilityForm.imc"
+                                    placeholder="IMC"
+                                    type="number"
+                                    >
+                                    </el-input>
+                                </el-form-item>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
+            </div>
+            <div class="mb-3 flex flex-col">
+                <el-form-item
+                label="1. Nos últimos 12 meses o Sr(a) tem diminuído de peso sem fazer nenhuma dieta? Quantos KGs?"
+                prop="number"
+                >
+                    <el-input
+                    v-model.number="fragilityForm.pergunta1"
+                    placeholder="please input"
+                    >
+                    </el-input>
+                </el-form-item>
+            </div>
+    
+            <div class="mb-3 flex flex-col">
+            <el-form-item
+                label="2. Com que frequência, na última semana, o Sr(a) sentiu que tudo que fez exigiu um grande esforço?"
+                prop="number"
+                >
+                    <el-input
+                    v-model.number="fragilityForm.pergunta2"
+                    placeholder="please input" 
+                    >
+                    </el-input>
+                </el-form-item>
+            </div>
+    
+            <div class="mb-3 flex flex-col">
+            <el-form-item
+                label="3. Com que frequência, na última semana, o Sr(a) sentiu que não conseguia levar adiante as suas coisas?"
+                prop="number"
+                >
+                    <el-input
+                    v-model.number="fragilityForm.pergunta3"
+                    placeholder="please input" 
+                    >
+                    </el-input>
+                </el-form-item>
+            </div>
+    
+            <div class="mb-3 flex flex-col">
+                <el-form-item
+                label="4. Força de preensão"
+                prop="number"
+                >
+                    <el-input
+                    v-model.number="fragilityForm.pergunta4"
+                    placeholder="please input"   
+                    >
+                    </el-input>
+                </el-form-item>
+            </div>
+    
+            <div class="mb-3 flex flex-col">
+                <el-form-item
+                label="5. Teste de caminhada habitual(4,5 metros) Tempo"
+                prop="number"
+                >
+                    <el-input
+                    v-model.number="fragilityForm.pergunta5"
+                    placeholder="please input"   
+                    >
+                    </el-input>
+                </el-form-item>
+            </div>
+    
+            <div class="mb-3 flex flex-col">
+            <el-form-item
+                label="6. IPAQ(autorrelato de caminhada, atividades moderadas e atividades vigorosas) Kcal"
+                prop="number"
+                >
+                    <el-input
+                    v-model.number="fragilityForm.pergunta6"
+                    placeholder="please input"   
+                    >
+                    </el-input>
+                </el-form-item>
+            </div>
+
+        <div class="mb-3 flex-col justify-center">
             <el-row :gutter="20">
-                <el-col :span="8"><div class="grid-content bg-purple">
-                    <div><b><span>Estatura</span></b></div>
-                    <b-col sm>
-                        <el-input class="input" placeholder="Please input" v-model="input20"></el-input>
-                    </b-col>
+                <el-col :span="8">
+                    <b><span>Caminhada</span></b>
+                    <div class="grid-content bg-purple">
+                    <el-form-item
+                    label="Dias por Semana"
+                    prop="number"
+                    >
+                        <el-input
+                        v-model.number="fragilityForm.caminhada_dps"
+                        placeholder="please input"   
+                        >
+                        </el-input>
+                    </el-form-item>
                     </div>
+                    <div class="grid-content bg-purple">
+                    <el-form-item
+                    label="Minutos por Dia"
+                    prop="number"
+                    >
+                        <el-input
+                        v-model.number="fragilityForm.caminhada_mpd"
+                        placeholder="please input"   
+                        >
+                        </el-input>
+                    </el-form-item>
+                    <div class="mb-3 flex flex-col">
+                        <span>METs: {{mets1}}</span>
+                    </div>    
+                    </div>          
                 </el-col>
-                <el-col :span="8"><div class="grid-content bg-purple">
-                    <div><b><span>Peso(KG)</span></b></div>
-                    <b-col sm>
-                        <el-input class="input" placeholder="Please input" v-model="input21"></el-input>
-                    </b-col></div></el-col>
-                <el-col :span="6"><div class="grid-content bg-purple">
-                    <div><b><span>IMC</span></b></div>
-                    <b-col sm>
-                        <el-input class="input" placeholder="Please input" v-model="input22"></el-input>
-                    </b-col></div></el-col>
+                <el-col :span="8">
+                    <b><span>Atividade Moderada</span></b>
+                    <div class="grid-content bg-purple">
+                    <el-form-item
+                    label="Dias por Semana"
+                    prop="number"
+                    >
+                        <el-input
+                        v-model.number="fragilityForm.atvModerada_dps"
+                        placeholder="please input"   
+                        >
+                        </el-input>
+                    </el-form-item>
+                    </div>
+                    <div class="grid-content bg-purple">
+                    <el-form-item
+                    label="Minutos por Dia"
+                    prop="number"
+                    >
+                        <el-input
+                        v-model.number="fragilityForm.atvModerada_mpd"
+                        placeholder="please input"   
+                        >
+                        </el-input>
+                    </el-form-item>
+                    <div class="mb-3 flex flex-col">
+                        <span>METs: {{mets2}}</span>
+                    </div>    
+                    </div>           
+                </el-col>
+                <el-col :span="8">
+                    <b><span>Atividade Vigorosa</span></b>
+                    <div class="grid-content bg-purple">
+                    <el-form-item
+                    label="Dias por Semana"
+                    prop="number"
+                    >
+                        <el-input
+                        v-model.number="fragilityForm.atvVigorosa_dps"
+                        placeholder="please input"   
+                        >
+                        </el-input>
+                    </el-form-item>
+                    </div>
+                    <div class="grid-content bg-purple">
+                    <el-form-item
+                    label="Minutos por Dia"
+                    prop="number"
+                    >
+                        <el-input
+                        v-model.number="fragilityForm.atvVigorosa_mpd"
+                        placeholder="please input"   
+                        >
+                        </el-input>
+                    </el-form-item>   
+                    </div>
+                    <div class="mb-3 flex flex-col">
+                        <span>METs: {{mets3}}</span>
+                    </div>             
+                </el-col>
             </el-row>
         </div>
-
-        <b><span>Gênero:</span></b>
-        <div class="mb-3 flex flex-row">
-            <template>
-                <el-radio v-model="radio" label="1">Masculino</el-radio>
-                <el-radio v-model="radio" label="2">Feminino</el-radio>
-            </template>
-        </div>
         <div class="mb-3 flex flex-col">
-            <b><span>1. Nos últimos 12 meses o Sr(a) tem diminuído de peso sem fazer nenhuma dieta? Quantos KGs?</span></b>
-            <el-input placeholder="Please input" v-model="input1"></el-input>
-        </div>
-  
-        <div class="mb-3 flex flex-col">
-          <b><span>2. Com que frequência, na última semana, o Sr(a) sentiu que tudo que fez exigiu um grande esforço?</span></b>
-          <el-input placeholder="Please input" v-model="input2"></el-input>
-        </div>
-  
-        <div class="mb-3 flex flex-col">
-          <b><span>3. Com que frequência, na última semana, o Sr(a) sentiu que não conseguia levar adiante as suas coisas?</span></b>
-          <el-input placeholder="Please input" v-model="input3"></el-input>
-        </div>
-  
-        <div class="mb-3 flex flex-col">
-            <b><span>4. Força de preensão</span></b>
-            <el-input placeholder="Please input" v-model="input4"></el-input>
-        </div>
-  
-        <div class="mb-3 flex flex-col">
-            <b><span>5. Teste de caminhada habitual(4,5 metros) Tempo</span></b>
-            <el-input placeholder="Please input" v-model="input5"></el-input>
-        </div>
-  
-        <div class="mb-3 flex flex-col">
-          <b><span>6. IPAQ(autorrelato de caminhada, atividades moderadas e atividades vigorosas) Kcal</span></b>
-          <el-input placeholder="Please input" v-model="input6"></el-input>
-        </div>
-
-        <div class="mb-3 flex flex-row">
-            <b-row>
-                <div><b><span>Caminhada</span></b></div>
-                <b-col sm>
-                    <span>Dias por Semana</span>
-                    <el-input class="input" placeholder="Please input" v-model="input7"></el-input>
-                </b-col>
-                <b-col sm>
-                    <span>Minutos por Dia</span>
-                    <el-input class="input" placeholder="Please input" v-model="input8"></el-input>                </b-col>
-                <div class="mb-3 flex flex-col">
-                    <span>METs:</span>
-                </div>
-            </b-row>
-
-            <b-row>
-                <div><b><span>Atividade Moderada</span></b></div>
-                <b-col sm>
-                    <span>Dias por Semana</span>
-                    <el-input class="input" placeholder="Please input" v-model="input9"></el-input>                </b-col>
-                <b-col sm>
-                    <span>Minutos por Dia</span>
-                    <el-input class="input" placeholder="Please input" v-model="input10"></el-input>                </b-col>
-                <div class="mb-3 flex flex-col">
-                    <span>METs:</span>
-                </div>
-            </b-row>
-
-            <b-row>
-                <div><b><span>Atividade Vigorosa</span></b></div>
-                <b-col sm>
-                    <span>Dias por Semana</span>
-                    <el-input class="input" placeholder="Please input" v-model="input11"></el-input>
-                </b-col>
-                <b-col sm>
-                    <span>Minutos por Dia</span>
-                    <el-input class="input" placeholder="Please input" v-model="input12"></el-input>
-                </b-col>
-                <div class="mb-3 flex flex-col">
-                    <span>METs:</span>
-                </div>
-            </b-row>
-        </div>
-        <div class="mb-3 flex flex-col">
-            <span>METs Total:</span>
-            <span>KCAL:</span>
+            <span>METs Total: {{metsTotal}}</span>
+            <span>KCAL: {{kcal}}</span>
         </div>
 
         <el-divider content-position="center">Descrição</el-divider>
-            <template>
-                <el-table
-                :data="tableData"
-                border
-                style="width: 100%">
-                <el-table-column
-                    prop="variables"
-                    label="Variáveis"
-                    width="300">
-                </el-table-column>
-                <el-table-column
-                    prop="name"
-                    label="Tipo de Classificação"
-                    width="808">
-                </el-table-column>
-            </el-table>
-          </template>
+            <el-alert
+            :title="`Mets Total:${metsTotal}`"
+            :type="type"
+            :description="description"
+            show-icon
+            :closable="false">
+            </el-alert>
             <div class="mt-10 flex w-full justify-center">
             <el-button
                 type="primary"
@@ -140,7 +254,7 @@
                 >Salvar
             </el-button>
         </div>
-      </div>
+    </el-form>
     </el-card>
   </template>
   
@@ -157,40 +271,23 @@
     },
     data() {
         return {
-            radio:0,
-            tableData: [{
-            variables: 'Perda de Peso',
-            name: '> 4,5kg nos últimos 12 meses sem fazer dieta',
-            }, {
-            variables: 'Fadiga Referida',
-            name: '(a)"Com que frequência, na última semana, o Sr sentiuque tudo que fez exigiu um grande esforço?"; (b)"Com que frequência, na última semana, o Sr sentiu que não conseguia levar adiante as suas atividade?" Se o idoso responder 2 ou mais dias na semana, em qualquer uma das perguntas, ele é considerado como sim'
-            }, {
-            variables: 'Menor Força de Preensão Manual',
-            name: 'Homem:Força < 29Kg para IMC < 24Kg/m2; Força < 30Kg para IMC < 24,1 - 26Kg/m2; Força < 30Kg para IMC < 26,1 - 28Kg/m2; Força < 32Kg para IMC < 28Kg/m2; Mulher:Força < 17Kg para IMC < 23Kg/m2; Força < 17,3Kg para IMC < 25,1 - 26Kg/m2; Força < 18Kg para IMC < 26,1 - 29Kg/m2; Força < 21Kg para IMC < 29Kg/m2;'
-            }, {
-            variables: 'Baixa Velocidade de Caminhada',
-            name: 'Homens: > 7,0s para estatura < 1,73m; > 6,0 s para estatura > 1,73 m; Homens: > 7,0s para estatura < 1,59m; > 6,0 s para estatura > 1,59 m; '
-            }, {
-            variables: 'Baixo Nível de Atividade Física',
-            name: 'Homens: < 383kcal; Mulheres: < 270kcal'
-            }
-            ],
-            input1:"",
-            input2:"",
-            input3:"",
-            input4:"",
-            input5:"",
-            input6:"",
-            input7:"",
-            input8:"",
-            input9:"",
-            input10:"",
-            input11:"",
-            input12:"",
-            input20:"",
-            input21:"",
-            input22:""
-
+            fragilityForm: {
+            estatura: '',
+            peso: '',
+            imc: '',
+            pergunta1: '',
+            pergunta2: '',
+            pergunta3: '',
+            pergunta4   : '',
+            pergunta5: '',
+            pergunta6: '',
+            caminhada_dps: '',
+            caminhada_mpd: '',
+            atvModerada_dps: '',
+            atvModerada_mpd: '',
+            atvVigorosa_dps: '',
+            atvVigorosa_mpd: '',
+            },
         };
     },
     computed:{
@@ -198,17 +295,40 @@
             return this.radio
         },
         mets1(){
-            return (this.input7 * this.input8 * 3,3)
+            if(this.fragilityForm.caminhada_dps !== "" && this.fragilityForm.caminhada_mpd !== "")
+                return (this.fragilityForm.caminhada_dps * this.fragilityForm.caminhada_mpd * 3.3)
+            else    
+                return ""
         },
         mets2(){
-            return (this.input9 * this.input10 * 3,3)
+            if(this.fragilityForm.atvModerada_dps !== "" && this.fragilityForm.atvModerada_mpd !== "")
+                return (this.fragilityForm.atvModerada_dps * this.fragilityForm.atvModerada_mpd * 3.3)
+            else    
+                return ""
         },
         mets3(){
-            return (this.input11 * this.input12 * 3,3)
+            if(this.fragilityForm.atvVigorosa_dps !== "" && this.fragilityForm.atvVigorosa_mpd !== "")
+                return (this.fragilityForm.atvVigorosa_dps * this.fragilityForm.atvVigorosa_mpd * 3.3)
+            else    
+                return ""
         },
         metsTotal(){
-            return (this.input7 * this.input8 * 3,3) + (this.input9 * this.input10 * 3,3) + (this.input11 * this.input12 * 3,3)
-        }
+            if(this.fragilityForm.caminhada_dps !== "" || this.fragilityForm.caminhada_mpd !== "" || 
+            this.fragilityForm.atvModerada_dps !== "" || this.fragilityForm.atvModerada_mpd !== "" || 
+            this.fragilityForm.atvVigorosa_dps !== "" || this.fragilityForm.atvVigorosa_mpd !== "")
+                return ((this.fragilityForm.caminhada_dps * this.fragilityForm.caminhada_mpd * 3.3) + 
+                (this.fragilityForm.atvModerada_dps * this.fragilityForm.atvModerada_mpd * 3.3) + 
+                (this.fragilityForm.atvVigorosa_dps * this.fragilityForm.atvVigorosa_mpd * 3.3))
+            else    
+                return ""
+        },
+        kcal(){
+            if(this.fragilityForm.peso!=="")
+            return this.fragilityForm.peso * (this.fragilityForm.caminhada_dps * this.fragilityForm.caminhada_mpd * 3.3) + 
+                (this.fragilityForm.atvModerada_dps * this.fragilityForm.atvModerada_mpd * 3.3) + 
+                (this.fragilityForm.atvVigorosa_dps * this.fragilityForm.atvVigorosa_mpd * 3.3)
+            else return ""
+        },
     }
 };
   </script>
