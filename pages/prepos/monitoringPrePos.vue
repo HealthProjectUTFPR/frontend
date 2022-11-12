@@ -22,6 +22,17 @@
         size="size"
         />
       </div>
+
+      <el-select v-model="value_pre" placeholder="Select">
+        <el-option
+          v-for="intems in prePoso"
+          :key="intems.value"
+          :label="intems.label"
+          :value="intems.value"
+        />
+      </el-select>
+
+
     </div>
     
     <div class = "hide">
@@ -43,7 +54,17 @@
     data() {
 
       return{
-        
+        value_pre: "",
+        prePoso : [
+          {
+            value: 'Pré',
+            label: 'Pré',
+          },
+          {
+            value: 'Pós',
+            label: 'Pós',
+          },
+        ],
         items: ['item'],
         value1:null,
         value2:null,
