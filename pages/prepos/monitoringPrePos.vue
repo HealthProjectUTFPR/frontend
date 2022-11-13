@@ -23,7 +23,7 @@
         />
       </div>
 
-      <el-select v-model="value_pre" placeholder="Select">
+      <el-select  v-model="value_pre"  class="choose" placeholder="Select">
         <el-option
           v-for="intems in prePoso"
           :key="intems.value"
@@ -31,7 +31,8 @@
           :value="intems.value"
         />
       </el-select>
-
+      
+      <el-button type="primary" round>Primary</el-button>
 
     </div>
     
@@ -226,7 +227,16 @@
 
 <style scoped>
 
-
+.choose{
+  margin: 5px;
+  float: left;
+  flex: 1;
+}
+.button{
+  margin: 5px;
+  float: left;
+  flex: 1;
+}
 .date-picker {
   display: flex;
   flex-direction: row;
