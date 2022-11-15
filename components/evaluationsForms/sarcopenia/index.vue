@@ -75,9 +75,9 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item label="Forca de preensão manual" prop="handgripStrength">
+        <el-form-item label="Forca de preensão manual" prop="handGripStrength">
           <el-input
-            v-model.number="sarcopeniaForm.handgripStrength"
+            v-model.number="sarcopeniaForm.handGripStrength"
             placeholder="Forca de preensão manual"
             type="number"
             min="0"
@@ -146,6 +146,7 @@ import calculateEstimatedMuscleMass from '@/helpers/evaluations/sarcopenia/calcu
 import calculateIndexOfMeasuredMuscleMassPerStature from '@/helpers/evaluations/sarcopenia/calculateIndexOfMeasuredMuscleMassPerStature';
 import calculateIndexOfEstimatedMuscleMassPerStature from '@/helpers/evaluations/sarcopenia/calculateIndexOfEstimatedMuscleMassPerStature';
 import classifyResult from '@/helpers/evaluations/sarcopenia/classifyResult';
+import SarcopeniaForm from '@/dto/sarcopeniaFrom.dto';
 
 moment.locale('pt');
 
@@ -153,6 +154,7 @@ export default {
   name: 'ExampleForm',
   data() {
     return {
+      studentId: '0050e6a1-b79f-45c0-9590-8e1db94905ef',
       mockup: {
         sex: 'Homem',
         age: 70,
@@ -173,9 +175,10 @@ export default {
         measuredMuscleMass: '',
         estimatedMuscleMass: '',
         walkingSpeed: '',
-        handgripStrength: '',
+        handGripStrength: '',
         calfCircumference: '',
         muscleMassIndex: '',
+        result: '',
       },
       rules: {
         date: [
@@ -223,7 +226,7 @@ export default {
             trigger: 'blur',
           },
         ],
-        handgripStrength: [
+        handGripStrength: [
           {
             required: true,
             message: 'Por favor, informe uma força de preensão manual',
@@ -319,6 +322,7 @@ export default {
     },
     sarcopeniaForm: {
       handler() {
+        // console.log('aaaaa');
         this.calculateResult();
       },
       deep: true,
@@ -351,34 +355,22 @@ export default {
       });
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    async submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          const {
-            date,
-            weight,
-            measuredMuscleMass,
-            estimatedMuscleMass,
-            walkingSpeed,
-            handgripStrength,
-            calfCircumference,
-            muscleMassIndex,
-          } = this.sarcopeniaForm;
-
-          const parsedDate = moment(date);
-
-          alert(
-            JSON.stringify({
-              weight,
-              measuredMuscleMass,
-              estimatedMuscleMass,
-              walkingSpeed,
-              handgripStrength,
-              calfCircumference,
-              muscleMassIndex,
-              parsedDate,
-            }),
+          const data = new SarcopeniaForm(
+            this.sarcopeniaForm,
+            this.hasSarcopenia,
           );
+
+          try {
+            await this.$axios.post(`/evaluation/${this.studentId}`, {
+              type: 'sarcopenia',
+              data,
+            });
+          } catch (error) {
+            console.log(error);
+          }
         }
         return false;
       });
@@ -400,29 +392,32 @@ export default {
       }
     },
     calculateResult() {
-      const isAllFieldsFilled = Object.values(this.sarcopeniaForm).every(
-        (field) => !!field,
-      );
+      const { result: _, ...rest } = this.sarcopeniaForm;
+      const isAllFieldsFilled = Object.values(rest).every((field) => !!field);
 
-      const { walkingSpeed, handgripStrength, muscleMassIndex } =
+      const { walkingSpeed, handGripStrength, muscleMassIndex } =
         this.sarcopeniaForm;
       const { sex } = this.mockup;
+      console.log(isAllFieldsFilled);
 
       if (isAllFieldsFilled) {
         const result = classifyResult({
           sex,
           walkingSpeed,
-          handgripStrength,
+          handGripStrength,
           muscleMassIndex,
         });
 
         const { title, description, type, hasSarcopenia } = result;
+
+        console.log(result);
 
         this.elAlertState = {
           type,
           description,
           title,
         };
+        this.sarcopeniaForm.result = title;
         this.calculated = true;
         this.hasSarcopenia = hasSarcopenia;
       }

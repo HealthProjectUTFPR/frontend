@@ -116,6 +116,7 @@ export default {
   name: 'CardiorespiratoryCapacityForm',
   data() {
     return {
+      studentId: '0050e6a1-b79f-45c0-9590-8e1db94905ef',
       mockup: {
         sex: 'Homem',
         age: 70,
@@ -267,7 +268,7 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
-            await this.$axios.post(`/evaluation/${this.studendId}`, {
+            await this.$axios.post(`/evaluation/${this.studentId}`, {
               type: 'cardiorespiratoryCapacity',
               data: this.cardiorespiratoryCapacityForm,
             });
