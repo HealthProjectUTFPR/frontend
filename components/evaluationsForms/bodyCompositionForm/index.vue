@@ -281,7 +281,6 @@ export default {
   name: 'BodyCompositionForm',
   data() {
     return {
-      studentId: 'f03c0f33-f967-4bef-b425-284335ca2d6c',
       mockup: {
         sex: 'Homem',
         age: 70,
@@ -501,7 +500,7 @@ export default {
 
             setTimeout(() => {
               this.$router.push({ path: '/' });
-            }, 2000);
+            }, 500);
           } catch (error) {
             this.$message.error({ message: `${error.response.data.message}` });
           }

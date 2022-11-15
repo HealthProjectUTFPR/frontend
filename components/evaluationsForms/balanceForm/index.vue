@@ -25,89 +25,62 @@
     </el-form-item>
 
     <div class="px-6 py-3">
-      <div class="mb-3 flex flex-col">
-        <span>1. Sentado para em pé</span>
 
-        <RadioInputGroup group="group-1" />
-      </div>
+      <el-form-item label="1. Sentado para em pé">
+        <RadioInputGroup class="-mt-5" group="group-1" />
+      </el-form-item>
 
-      <div class="mb-3 flex flex-col">
-        <span>2. Em pé sem apoio</span>
+      <el-form-item label="2. Em pé sem apoio">
+        <RadioInputGroup class="-mt-5" group="group-2" />
+      </el-form-item>
 
-        <RadioInputGroup group="group-2" />
-      </div>
+      <el-form-item label="3. Sentado sem apoio">
+        <RadioInputGroup class="-mt-5" group="group-3" />
+      </el-form-item>
 
-      <div class="mb-3 flex flex-col">
-        <span>3. Sentado sem apoio</span>
+      <el-form-item label="4. Em pé para sentado">
+        <RadioInputGroup class="-mt-5" group="group-4" />
+      </el-form-item>
 
-        <RadioInputGroup group="group-3" />
-      </div>
+      <el-form-item label="5. Transferências">
+        <RadioInputGroup class="-mt-5" group="group-5" />
+      </el-form-item>
 
-      <div class="mb-3 flex flex-col">
-        <span>4. Em pé para sentado</span>
+      <el-form-item label="6. Em pé com os olhos fechados">
+        <RadioInputGroup class="-mt-5" group="group-6" />
+      </el-form-item>
 
-        <RadioInputGroup group="group-4" />
-      </div>
+      <el-form-item label="7. Em pé com os pés juntos">
+        <RadioInputGroup class="-mt-5" group="group-7" />
+      </el-form-item>
 
-      <div class="mb-3 flex flex-col">
-        <span>5. Transferências</span>
+      <el-form-item label="8. Em pé para sentado">
+        <RadioInputGroup class="-mt-5" group="group-8" />
+      </el-form-item>
 
-        <RadioInputGroup group="group-5" />
-      </div>
+      <el-form-item label="9. Apanhar objeto do chão">
+        <RadioInputGroup class="-mt-5" group="group-9" />
+      </el-form-item>
 
-      <div class="mb-3 flex flex-col">
-        <span>6. Em pé com os olhos fechados</span>
+      <el-form-item label="10. Virando-se para olhar para trás">
+        <RadioInputGroup class="-mt-5" group="group-10" />
+      </el-form-item>
 
-        <RadioInputGroup group="group-6" />
-      </div>
+      <el-form-item label="11. Girando 360°">
+        <RadioInputGroup class="-mt-5" group="group-11" />
+      </el-form-item>
 
-      <div class="mb-3 flex flex-col">
-        <span>7. Em pé com os pés juntos</span>
+      <el-form-item label="12. Colocar os pés alternadamente sobre um banco">
+        <RadioInputGroup class="-mt-5" group="group-12" />
+      </el-form-item>
 
-        <RadioInputGroup group="group-7" />
-      </div>
+      <el-form-item label="13. Em pé com um pé em frente ao outro">
+        <RadioInputGroup class="-mt-5" group="group-13" />
+      </el-form-item>
 
-      <div class="mb-3 flex flex-col">
-        <span>8. Reclinar a frente com os braços estendidos</span>
-
-        <RadioInputGroup group="group-8" />
-      </div>
-
-      <div class="mb-3 flex flex-col">
-        <span>9. Apanhar objeto do chão</span>
-
-        <RadioInputGroup group="group-9" />
-      </div>
-
-      <div class="mb-3 flex flex-col">
-        <span>10. Virando-se para olhar para trás</span>
-
-        <RadioInputGroup group="group-10" />
-      </div>
-
-      <div class="mb-3 flex flex-col">
-        <span>11. Girando 360°</span>
-
-        <RadioInputGroup group="group-11" />
-      </div>
-
-      <div class="mb-3 flex flex-col">
-        <span>12. Colocar os pés alternadamente sobre um banco</span>
-
-        <RadioInputGroup group="group-12" />
-      </div>
-
-      <div class="mb-3 flex flex-col">
-        <span>13. Em pé com um pé em frente ao outro</span>
-
-        <RadioInputGroup group="group-13" />
-      </div>
-
-      <div class="mb-3 flex flex-col">
-        <span>14. Em pé apoiado em um dos pés</span>
-
-        <RadioInputGroup group="group-14" />
-      </div>
+      <el-form-item label="14. Em pé apoiado em um dos pés">
+        <RadioInputGroup class="-mt-5" group="group-14" />
+      </el-form-item>
 
       <div>
         <strong class="mr-2">TOTAL:</strong>
@@ -153,7 +126,6 @@ export default {
 
   data() {
     return {
-      studentId: 'f03c0f33-f967-4bef-b425-284335ca2d6c',
       balanceForm: { date: '' },
       optionsGroups: {
         'group-1': 4,
@@ -215,7 +187,7 @@ export default {
 
             setTimeout(() => {
               this.$router.push({ path: '/' });
-            }, 2000);
+            }, 500);
           } catch (error) {
             this.$message.error({ message: `${error.response.data.message}` });
           }
