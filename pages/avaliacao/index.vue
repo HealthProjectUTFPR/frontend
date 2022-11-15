@@ -54,6 +54,7 @@
                   icon="el-icon-edit"
                   circle
                   class="m-0"
+                  @click="handleEdit(scope.row)"
                 ></el-button>
               </el-tooltip>
 
@@ -97,7 +98,7 @@
           Independência nas Atividades Diárias
         </el-button>
 
-        <el-button @click="outerVisible = true">
+        <el-button @click="$router.push('/avaliacao/criar/equilibrio')">
           Avaliação de Equilíbrio
         </el-button>
 
@@ -117,7 +118,7 @@
           Capacidade Cardiorrespiratória
         </el-button>
 
-        <el-button @click="outerVisible = true">
+        <el-button @click="$router.push('/avaliacao/criar/composicaoCorporal')">
           Composição Corporal
         </el-button>
       </div>
@@ -157,6 +158,9 @@
 </template>
 
 <script>
+import getEditRouter from '@/helpers/getEditRouter';
+import formatDate from '@/helpers/formatDate';
+
 export default {
   name: 'EvaluationIndex',
   components: {},
@@ -166,18 +170,7 @@ export default {
         width: 0,
         height: 0,
       },
-      tableData: [
-        {
-          data: '12/10/2022',
-          avaliacao: 'Composição Corporal',
-          resultado: 'Com Sarcopenia',
-        },
-        {
-          data: '12/01/2022',
-          avaliacao: 'Equilíbrio',
-          resultado: 'Sem Sarcopenia',
-        },
-      ],
+      tableData: [],
       outerVisible: false,
       openDeleteModal: false,
       evaluationToBeDeleted: {},
@@ -204,7 +197,15 @@ export default {
       return values.map((item) => ({ text: item, value: item }));
     },
   },
-  mounted() {
+  async mounted() {
+    const { data: list } = await this.$axios.get('/evaluation', { params: { studentId: this.studentId, page: 1, limit: 20, orderBy: 'updatedAt' } });
+    this.tableData = list.data.map((it) => ({
+      avaliacao: it.name,
+      data: formatDate(it.date),
+      resultado: it.result,
+      to: getEditRouter(it.name),
+    }));
+
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
   },
@@ -220,9 +221,6 @@ export default {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
     },
-    goToSarcopenia() {
-      this.$router.push('/evaluation/create/sarcopenia');
-    },
     handleOpenModalDelete(index, row) {
       this.openDeleteModal = true;
       this.evaluationToBeDeleted = {
@@ -230,8 +228,8 @@ export default {
         row,
       };
     },
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleEdit(row) {
+      this.$router.push(`${row.to}/id`);
     },
     handleDelete() {
       console.log(this.evaluationToBeDeleted);

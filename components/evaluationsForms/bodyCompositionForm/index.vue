@@ -500,7 +500,7 @@ export default {
 
             setTimeout(() => {
               this.$router.push({ path: '/' });
-            }, 2000);
+            }, 500);
           } catch (error) {
             this.$message.error({ message: `${error.response.data.message}` });
           }
