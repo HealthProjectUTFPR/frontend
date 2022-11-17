@@ -9,7 +9,7 @@
         <el-date-picker
         v-model="value1"
         type="date"
-        placeholder="Pick a day"
+        placeholder="do dia"
         size="size"
         />
       </div>
@@ -18,12 +18,12 @@
         <el-date-picker
         v-model="value2"
         type="date"
-        placeholder="Pick a day"
+        placeholder="até o dia"
         size="size"
         />
       </div>
 
-      <el-select  v-model="value_pre"  class="choose" placeholder="Select">
+      <el-select v-model="valuePrePos"  class="choose" placeholder="Selecionar" >
         <el-option
           v-for="intems in prePoso"
           :key="intems.value"
@@ -32,7 +32,7 @@
         />
       </el-select>
       
-      <el-button type="primary" round>Primary</el-button>
+      <el-button  type="primary" round class="button"  @click="() => graficoPrePos()" >Buscar</el-button>
 
     </div>
     
@@ -52,10 +52,11 @@
 
   export default {
     name: 'GraficoLinha',
+
     data() {
 
       return{
-        value_pre: "",
+        valuePrePos: "",
         prePoso : [
           {
             value: 'Pré',
@@ -105,6 +106,10 @@
           {
             name: "GLICEMIA",
             data: []
+          },
+          {
+            name: "PSE",
+            data: []
           }
         ],
         chartOptions: {
@@ -121,12 +126,25 @@
           stroke: {
             curve: 'straight'
           },
+          tooltip: {
+            custom: ({seriesIndex, dataPointIndex, w}) => {
+              
+              return (
+                `<div class="arrow_box">
+                  <span> test  ${ w.globals.initialSeries[seriesIndex].name} : </span>
+                  ${w.globals.initialSeries[seriesIndex].data[dataPointIndex].y} 
+                
+                </div>`
+              );
+            }
+          },
           title: {
-            text: 'Grafico Monitoramento',
+            text: '',
             align: 'center'
           },
           legend: {
             position: 'top',
+           
             onItemClick: {
               toggleDataSeries: true
             },
@@ -148,24 +166,6 @@
       }
     },
     
-    watch: {
-      
-      value2() {
-        
-
-        this.items.forEach((item)=>{
-          
-          if(new Date(item.date).valueOf() >= new Date(this.value1).valueOf() &&  new Date(item.date).valueOf() <= new Date(this.value2).valueOf() ){
-              
-              this.defineDate(item)
-          }
-
-        })
-        
-      
-      },
-
-  },
   
     async mounted() {
       
@@ -174,26 +174,114 @@
   
     methods: {
       moment,
-      defineDate(item){
+      clearseries(){
+
+        this.series[0].data.splice(0,this.series[0].data.length)
+        this.series[1].data.splice(0,this.series[1].data.length)
+        this.series[2].data.splice(0,this.series[2].data.length)
+        this.series[3].data.splice(0,this.series[3].data.length)
+        
+      },
+
+      defineDatePre(item){
+
         this.series[0].data.push({
-          x: moment(new Date(item.date)).format("DD/MM HH:mm"),
-          y: item.padPre
+          x: moment(new Date(item.date)).format("DD/MM/YYYY"),
+          y: item.padPre,
+          z: new Date(item.date)
         })
 
         this.series[1].data.push({
-          x: moment(new Date(item.date)).format("DD/MM HH:mm"),
-          y: item.pasPre
+          x: moment(new Date(item.date)).format("DD/MM/YYYY"),
+          y: item.pasPre,
+          z: new Date(item.date)
         })
         
         this.series[2].data.push({
-          x: moment(new Date(item.date)).format("DD/MM HH:mm"),
-          y: item.glicemiaPre
+          x: moment(new Date(item.date)).format("DD/MM/YYYY"),
+          y: item.glicemiaPre,
+          z: new Date(item.date)
         })
 
+        this.series[3].data.push({
+          x: moment(new Date(item.date)).format("DD/MM/YYYY"),
+          y: item.pseEPre,
+          
+        })
+
+        this.series.forEach((s)=>{
+
+          s.data.sort((a,b) => a.z - b.z)
+
+        })
+
+
         this.$refs.chart.updateSeries(this.series);
+        this.$refs.chart.updateOptions({
+          
+            title: {
+              text: 'Grafico Monitoramento Pré',
+              align: 'center' 
+            }
+          }
+        )     
+        
+      },
+
+      defineDatePos(item){
+
+        this.series[0].data.push({
+          x: new Date(item.date),
+          y: item.padPos
+        })
+
+        this.series[1].data.push({
+          x: new Date(item.date),
+          y: item.pasPos
+        })
+        
+        this.series[2].data.push({
+          x: new Date(item.date),
+          y: item.glicemiaPos
+        })
+
+        this.series[3].data.push({
+          x: new Date(item.date),
+          y: item.pseEPos
+        })
+
+        
+        this.$refs.chart.updateSeries(this.series);
+        this.$refs.chart.updateOptions({
+          
+          title: {
+            text: 'Grafico Monitoramento Pós',
+            align: 'center' 
+          }
+        }
+      )
         
         
         
+      },
+
+      graficoPrePos () {
+        this.clearseries()
+        this.items.forEach((item)=>{
+          
+          if(new Date(item.date).valueOf() >= new Date(this.value1).valueOf() &&  new Date(item.date).valueOf() <= new Date(this.value2).valueOf() ){
+              if (this.valuePrePos === "Pré"){
+
+                this.defineDatePre(item)
+              }
+              if (this.valuePrePos === "Pós"){
+                
+                this.defineDatePos(item)
+              }
+          }
+
+        })
+
       },
 
       async fetchData() {
@@ -202,6 +290,7 @@
         try {
           const { data } = await this.$axios.get("/prepos/get");
           this.items = data;
+          
           
         } catch (e) {
           this.$notify.error({
@@ -227,16 +316,6 @@
 
 <style scoped>
 
-.choose{
-  margin: 5px;
-  float: left;
-  flex: 1;
-}
-.button{
-  margin: 5px;
-  float: left;
-  flex: 1;
-}
 .date-picker {
   display: flex;
   flex-direction: row;
@@ -275,8 +354,59 @@
   flex: 1;
   
 }
+.choose{
+  margin: 5px;
+  float: left;
+  flex: 1;
+}
+.button{
+  margin: 5px;
+  float: left;
+  flex: 1;
+}
 
 
+.arrow_box {
+  position: relative;
+  background: #555;
+  height: 15px;
+  border: 2px solid #000000;
+}
+.arrow_box:after, .arrow_box:before {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.arrow_box:after {
+  border-color: rgba(85, 85, 85, 0);
+  border-right-color: #555;
+  border-width: 10px;
+  margin-top: -10px;
+}
+.arrow_box:before {
+  border-color: rgba(0, 0, 0, 0);
+  border-right-color: #000000;
+  border-width: 13px;
+  margin-top: -13px;
+}
+
+#chart .apexcharts-tooltip {
+  color: #fff;
+  transform: translateX(10px) translateY(10px);
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
+#chart .apexcharts-tooltip span {
+  padding: 5px 10px;
+  display: inline-block;
+}
 
 
 </style>
