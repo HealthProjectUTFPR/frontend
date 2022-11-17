@@ -233,7 +233,7 @@
         <div class="mb-5 flex flex-col">
           <span>Peça ao idoso que repita a frase:</span>
           <CheckInputGroup
-            checked="checked8"
+            checked="checked8_1"
             text="1. 'NEM AQUI, NEM ALI, NEM LÁ'"
           />
         </div>
@@ -279,7 +279,7 @@
         <div class="mb-5 flex flex-col">
           <span>Escreva em um papel: "FECHE OS OLHOS!"</span>
           <CheckInputGroup
-            checked="checked10"
+            checked="checked10_1"
             text="1. Peça ao idoso que leia o comando e execute."
           />
         </div>
@@ -291,7 +291,7 @@
         </div>
         <div class="mb-5 flex flex-col">
           <CheckInputGroup
-            checked="checked11"
+            checked="checked11_1"
             text="1. Peça à pessoa que escreva uma frase completa."
           />
         </div>
@@ -304,7 +304,7 @@
         <div class="mb-5 flex flex-col">
           <img src="/images/MC12.jpg" width="200" />
           <CheckInputGroup
-            checked="checked12"
+            checked="checked12_1"
             text="1. Peça à pessoa que copie o desenho de cima."
           />
         </div>
@@ -381,13 +381,13 @@ export default {
         checked6_3: false,
         checked7_1: false,
         checked7_2: false,
-        checked8: false,
+        checked8_1: false,
         checked9_2: false,
         checked9_1: false,
         checked9_3: false,
-        checked10: false,
-        checked11: false,
-        checked12: false,
+        checked10_1: false,
+        checked11_1: false,
+        checked12_1: false,
       },
       descriptions: {},
       studentId: 'fd6cea79-4250-493a-8b2f-7b92feeff077',
@@ -417,9 +417,10 @@ export default {
       this.result = 'Não possui declínio cognitivo.';
       return { description: this.result, type: 'success' };
     },
+
     async submitForm() {
       const evaluation = {
-        scholarity: this.scholarity,
+        scholarity: Number(this.scholarity),
         ...this.checkedGroups,
         result: this.result,
       };
@@ -434,6 +435,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      this.$router.go();
     },
   },
 };
