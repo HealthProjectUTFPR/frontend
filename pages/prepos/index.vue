@@ -497,7 +497,6 @@
   }
 </script>
   
-
 <style>
 
   h1{
@@ -629,7 +628,7 @@
   
   }
 
-</style>
+
   </script>
   
   <style>
@@ -658,4 +657,4 @@
     min-height: 36px;
   }
 
-  </style>
+</style>
