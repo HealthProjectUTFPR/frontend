@@ -628,10 +628,6 @@
   
   }
 
-
-  </script>
-  
-  <style>
   .el-button {
     margin: 4px 0;
   }
