@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
+  <div class="w-full rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-700">
     <el-table v-loading="loading" :data="tableData">
       <el-table-column label="Nome" prop="name" />
       <el-table-column align="right">
@@ -9,9 +9,15 @@
           </el-button>
         </template>
         <template slot-scope="scope">
-          <el-button size="mini" @click="getEntity(scope.row)">Editar</el-button>
-          <el-popconfirm title="Tem certeza de que deseja excluir este item?" confirm-button-text='OK'
-            cancel-button-text='Cancelar' @confirm="handleDelete(scope.$index, scope.row)">
+          <el-button size="mini" @click="getEntity(scope.row)"
+            >Editar</el-button
+          >
+          <el-popconfirm
+            title="Tem certeza de que deseja excluir este item?"
+            confirm-button-text="OK"
+            cancel-button-text="Cancelar"
+            @confirm="handleDelete(scope.$index, scope.row)"
+          >
             <el-button slot="reference" size="mini" type="danger">
               Deletar
             </el-button>
@@ -20,7 +26,10 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog :title="`${form.id ? 'Editar' : 'Adicionar nova'} categoria`" :visible.sync="dialogFormVisible">
+    <el-dialog
+      :title="`${form.id ? 'Editar' : 'Adicionar nova'} categoria`"
+      :visible.sync="dialogFormVisible"
+    >
       <el-form ref="ruleForm" :model="form" :rules="rules">
         <el-form-item label="Nome da categoria" prop="name">
           <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -35,8 +44,8 @@
 </template>
 
 <script>
-
 export default {
+  name: 'CategoryPage',
   data() {
     return {
       tableData: [],
@@ -47,11 +56,20 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: 'O campo nome é obrigatório!', trigger: 'blur' },
-          { min: 3, max: 70, message: 'O nome deve ser de no mínimo 3 carácteres e no máximo 70', trigger: 'blur' }
+          {
+            required: true,
+            message: 'O campo nome é obrigatório!',
+            trigger: 'blur',
+          },
+          {
+            min: 3,
+            max: 70,
+            message: 'O nome deve ser de no mínimo 3 carácteres e no máximo 70',
+            trigger: 'blur',
+          },
         ],
       },
-    }
+    };
   },
 
   mounted() {
@@ -62,12 +80,12 @@ export default {
     async fetchData() {
       this.loading = true;
       try {
-        const { data } = await this.$axios.get("/category/get");
+        const { data } = await this.$axios.get('/category/get');
         this.tableData = data;
       } catch (e) {
         this.$notify.error({
           title: 'Erro',
-          message: 'Não foi possível carregar'
+          message: 'Não foi possível carregar',
         });
       } finally {
         this.loading = false;
@@ -76,12 +94,12 @@ export default {
 
     getEntity(row) {
       this.form = { ...row };
-      this.dialogFormVisible = true
+      this.dialogFormVisible = true;
     },
 
     addNewEntity() {
       this.resetForm();
-      this.dialogFormVisible = true
+      this.dialogFormVisible = true;
     },
 
     handleConfirm() {
@@ -96,24 +114,23 @@ export default {
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           try {
-            await this.$axios.post("/category/create", this.form);
+            await this.$axios.post('/category/create', this.form);
             this.$notify.success({
               title: 'Sucesso',
-              message: 'Categoria criada com sucesso!'
+              message: 'Categoria criada com sucesso!',
             });
             this.dialogFormVisible = false;
             this.fetchData();
           } catch (e) {
             this.$notify.error({
               title: 'Erro',
-              message: 'Não foi possível criar a categoria'
+              message: 'Não foi possível criar a categoria',
             });
           }
-        }
-        else {
+        } else {
           this.$notify.error({
             title: 'Erro',
-            message: 'Preencha os campos corretamente'
+            message: 'Preencha os campos corretamente',
           });
         }
       });
@@ -123,10 +140,13 @@ export default {
       this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           try {
-            await this.$axios.patch(`/category/update/${this.form.id}`, this.form);
+            await this.$axios.patch(
+              `/category/update/${this.form.id}`,
+              this.form,
+            );
             this.$notify.success({
               title: 'Sucesso',
-              message: 'Categoria atualizada com sucesso!'
+              message: 'Categoria atualizada com sucesso!',
             });
             this.resetForm();
             this.dialogFormVisible = false;
@@ -134,14 +154,13 @@ export default {
           } catch (e) {
             this.$notify.error({
               title: 'Erro',
-              message: 'Não foi possível atualizar'
+              message: 'Não foi possível atualizar',
             });
           }
-        }
-        else {
+        } else {
           this.$notify.error({
             title: 'Erro',
-            message: 'Preencha os campos corretamente'
+            message: 'Preencha os campos corretamente',
           });
         }
       });
@@ -152,13 +171,13 @@ export default {
         await this.$axios.delete(`/category/delete/${row.id}`);
         this.$notify.success({
           title: 'Sucesso',
-          message: 'Deletado com sucesso'
+          message: 'Deletado com sucesso',
         });
         this.tableData.splice(index, 1);
       } catch (e) {
         this.$notify.error({
           title: 'Erro',
-          message: 'Não foi possível deletar'
+          message: 'Não foi possível deletar',
         });
       }
     },
@@ -166,8 +185,8 @@ export default {
     resetForm() {
       this.form = {
         name: '',
-      }
-    }
+      };
+    },
   },
-}
+};
 </script>
