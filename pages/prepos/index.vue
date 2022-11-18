@@ -1,4 +1,5 @@
 <template>
+<template>
   
   <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
     
@@ -99,123 +100,240 @@
     
     </el-table>
 
-    <!-- Modal -->
-      <el-dialog :title="`${form.id ? 'Editar' : 'Adicionar novo'} registro`" :visible.sync="dialogFormVisible">
-        <el-form ref="ruleForm" :model="form" :rules="rules">
-          
-          <!-- Nome do registro -->
-          <el-form-item label="Nome do treino" prop="name">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-
-          <el-form-item>
+<!-- Adicao de um novo treino -->
+<el-dialog 
+        title="Adicionar novo registro de treino"
+        :visible.sync="dialogFormVisible"
+        :fullscreen="window.width < 768 ? true : false"
+        center
+      >
+        <el-form 
+          ref="ruleForm"
+          :model="form" 
+          :rules="rules">          
+          <div>            
+            <!-- Data -->
+            <el-form-item label="Data" prop="date" required> 
             <el-col>
               <el-date-picker
-                v-model="form.date1"
+                v-model="form.date"
                 type="date"
-                placeholder="Data inicial"
+                placeholder="DD/MM/AAAA"
+                size="large"
+                style="width: 100%"
+                format="dd/MM/yyyy"
               />
-            </el-col>
-          </el-form-item>
-          
-          <!-- Pre treino -->
-          <el-form-item> Pré Treino </el-form-item>
+            </el-form-item>
+            
+            <!-- Pre treino -->
+            <el-form-item> 
+              <el-divider content-position="left">Dados Pré Treino</el-divider>
 
-          <!-- Data e Hora -->
-          <el-form-item>
-            <el-col>
-              <el-time-picker 
-                v-model="form.date2"
-                placeholder="Horário"
-              />
-            </el-col>
-          </el-form-item>
+              <!-- Hora pre treino -->
+              <el-form-item label="Hora pré treino" prop="date">
+                <el-time-picker
+                  v-model.number="form.horarioPre"
+                  placeholder="HH:MM:SS"
+                  type="date"
+                  format="HH:mm:ss"
+                  style="width: 100%"
+                  :default-time="defaultTime"
+                />
+              </el-form-item>
 
-          <!-- Informacoes do exame -->
-          <el-form-item>
-            <el-col>
-              <el-input v-model="form.pasPre" placeholder="PAS(mmHg)" autocomplete="off" style="width:auto"></el-input>
-              <el-input v-model="form.padPre" placeholder="PAD(mmHg)" autocomplete="off" style="width:auto"></el-input>
-              <el-input v-model="form.pseEPre" placeholder="PSE-s" autocomplete="off" style="width:auto"></el-input>
-            </el-col>
-            <el-col>
-              <el-input v-model="form.glicemiaPre" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:auto"></el-input>
-              <el-input v-model="form.horarioPre" placeholder="Inicio do treino(min)" autocomplete="off" style="width:auto"></el-input>
-            </el-col>
-          </el-form-item>
+              <!-- Informacoes do exame -->
+              <el-form-item label="PAS(mmHg)" prop="pasPre">
+                <el-row class="row" justify="space-evenly">
+                  <el-col class="col-md-6 mb-3">
+                    <el-input v-model="form.pasPre" 
+                      placeholder="PAS(mmHg)" 
+                      type="number"
+                      min="0"
+                    >
+                    </el-input>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            
+              <el-form-item label="PAD(mmHg)" prop="padPre">
+                <el-row class="row-bg" justify="space-evenly">
+                  <el-col class="col-md-6 mb-3">
+                    <el-input v-model="form.padPre" 
+                      placeholder="PAD(mmHg)" 
+                      type="number"
+                      min="0"
+                      step=".01"
+                    >
+                    </el-input>
+                  </el-col>
+                </el-row>
+              </el-form-item>
 
-          <!-- Pos treino -->
-          <el-form-item> Pós Treino </el-form-item>
+              <el-form-item label="PES" prop="pseEPre">
+                <el-row class="row-bg" justify="space-evenly">
+                  <el-col class="col-md-6 mb-3">
+                    <el-input v-model="form.pseEPre" 
+                      placeholder="PSE-s" 
+                      type="number"
+                      min="0"
+                    >
+                    </el-input>
+                  </el-col>
+                </el-row>
+              </el-form-item>
 
-          <!-- Data e Hora -->
-          <el-form-item>
-            <el-col>
-              <el-time-picker 
-                v-model="form.date3"
-                placeholder="Horário"
-              />
-            </el-col>
-          </el-form-item>
+              <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPre">
+                <el-row class="row-bg" justify="space-evenly">
+                  <el-col class="col-md-6 mb-3">
+                    <el-input v-model="form.glicemiaPre" 
+                      placeholder="Glicemia(mg/dL)" 
+                      type="number"
+                      min="0"
+                    >
+                    </el-input>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </el-form-item>
+  
+            <!-- Pos treino -->
+            <el-form-item>
+              <el-divider content-position="left">Dados Pós Treino</el-divider>
+              
+              <!-- Hora pos treino -->
+              <el-form-item label="Hora pós treino" prop="date">
+                <el-time-picker
+                  v-model.number="form.horarioPos"
+                  placeholder="HH:MM:SS"
+                  type="date"
+                  format="HH:mm:ss"
+                  style="width: 100%"
+                />
+              </el-form-item>
 
-          <!-- Informacoes do exame -->
-          <el-form-item>
-            <el-col>
-              <el-input v-model="form.pasPos" placeholder="PAS(mmHg)" autocomplete="off" style="width:auto"></el-input>
-              <el-input v-model="form.padPos" placeholder="PAD(mmHg)" autocomplete="off" style="width:auto"></el-input>
-              <el-input v-model="form.pseEPos" placeholder="PSE-s" autocomplete="off" style="width:auto"></el-input>
-            </el-col>
-            <el-col>
-              <el-input v-model="form.glicemiaPos" placeholder="Glicemia(mg/dL)" autocomplete="off" style="width:auto"></el-input>
-              <el-input v-model="form.horarioPos" placeholder="Inicio do treino(min)" autocomplete="off" style="width:auto"></el-input>
-            </el-col>
-          </el-form-item>
-          
-          <!-- Tempo total do treino -->
-          <el-form-item label="Tempo total do treino(min)">
-            <el-input v-model="form.horarioTreino" autocomplete="off" style="width:240px"></el-input>
-          </el-form-item>
+              <!-- Informacoes do exame -->
+              <el-form-item label="PAS(mmHg)" prop="pasPos">
+                <el-row class="row" justify="space-evenly">
+                  <el-col class="col-md-6 mb-3">
+                    <el-input v-model="form.pasPos" 
+                      placeholder="PAS(mmHg)" 
+                      type="number"
+                      min="0"
+                    >
+                    </el-input>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            
+              <el-form-item label="PAD(mmHg)" prop="padPos">
+                <el-row class="row-bg" justify="space-evenly">
+                  <el-col class="col-md-6 mb-3">
+                    <el-input v-model="form.padPos" 
+                      placeholder="PAD(mmHg)" 
+                      type="number"
+                      min="0"
+                    >
+                    </el-input>
+                  </el-col>
+                </el-row>
+              </el-form-item>
 
-          <!-- Observacao -->
-          <el-form-item>
-            <el-input v-model="form.desc" type="textarea" placeholder="Observação" />
-          </el-form-item>
+              <el-form-item label="PES" prop="pseEPos">
+                <el-row class="row-bg" justify="space-evenly">
+                  <el-col class="col-md-6 mb-3">
+                    <el-input v-model="form.pseEPos" 
+                      placeholder="PSE-s" 
+                      type="number"
+                      min="0"
+                    >
+                    </el-input>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+
+              <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPos">
+                <el-row class="row-bg" justify="space-evenly">
+                  <el-col class="col-md-6 mb-3">
+                    <el-input v-model="form.glicemiaPos" 
+                      placeholder="Glicemia(mg/dL)" 
+                      type="number"
+                      min="0"
+                    >
+                    </el-input>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </el-form-item>
+            
+            <!-- Tempo total do treino -->
+            <el-form-item label="Tempo total do treino(min)">
+              <el-input 
+                v-model="form.horarioTreino"
+                placeholder="Tempo total do treino"
+                type="number"
+                min="0"
+              >
+              </el-input>
+            </el-form-item>
+  
+            <!-- Observacao -->
+            <el-form-item>
+              <el-divider content-position="left">Observação</el-divider>
+              <el-input v-model="form.observacao" type="textarea" placeholder="Observação" />
+            </el-form-item>
+          </div>
         </el-form>
         
+        <!-- Botoes no fim do modal -->
+        <div class="mt-10 flex w-full justify-center">
+          <el-button 
+            icon="el-icon-error" 
+            @click="dialogFormVisible = false"
+            >
+              Cancelar
+            </el-button>
+          <el-button 
+            type="primary" 
+            icon="el-icon-success" 
+            @click="handleConfirm()"
+          >
+            Confirmar
+          </el-button>
+        </div>
         <span slot="footer" class="dialog-footer">
-          <el-button type="danger" plain @click="dialogFormVisible = false">Cancelar</el-button>
-          <el-button type="success" plain @click="handleConfirm()">Confirmar</el-button>
         </span>
       </el-dialog>
-
-
-  </div>
-
-</template>
-
-<script>
-  import moment from 'moment';
-
+    </div>
+  </template>
+  
+  <script>
+  
   export default {
+    components: {},
     data() {
       return {
+        window: {
+          width: 768,
+          height: 768,
+        },
         tableData: [],
         loading: false,
         dialogFormVisible: false,
         form: {
-          date: "date",
-          horarioPos : "date",
-          horarioPre : "date",
-          pasPre : "number",
-          pasPos : "number",
+          name: '',
+          date: "Date",
+          horarioPre: "Date",
+          pasPre: "number",
           padPre: "number",
-          padPos: "number",
+          pseEPre: "number",
           glicemiaPre: "number",
+          horarioPos: "Date",
+          pasPos: "number",
+          padPos: "number",
+          pseEPos: "number",
           glicemiaPos: "number",
           horarioTreino: "number",
-          pseEPre: "number",
-          pseEPos: "number",
-          observacao: "string",
-          student: [],
+          observacao: "string"
         },
         rules: {
           date: [
@@ -225,9 +343,13 @@
         },
       }
     },
-  
+
     mounted() {
-      this.fetchData();
+      window.addEventListener('resize', this.handleResize);
+    },
+
+    destroyed() {
+      window.removeEventListener('resize', this.handleResize);
     },
   
     methods: {
@@ -258,6 +380,16 @@
         this.resetForm();
         this.dialogFormVisible = true
       },
+
+      filterHandler(value, row, column) {
+        const { property } = column;
+        return row[property] === value;
+      },
+
+      handleResize() {
+        this.window.width = window.innerWidth;
+        this.window.height = window.innerHeight;
+      },
   
       handleConfirm() {
         if (this.form.id) {
@@ -271,13 +403,30 @@
         this.$refs.ruleForm.validate(async (valid) => {
           if (valid) {
             try {
-              await this.$axios.post("/prepos/create", this.form);
+              await this.$axios.post("/prepos/create", 
+              {
+                date: this.form.date,
+                horarioPre: this.form.horarioPre,
+                horarioPos: this.form.horarioPos,
+                pasPre: Number(this.form.pasPre),
+                pasPos: Number(this.form.pasPos),
+                padPre: Number(this.form.padPre),
+                padPos: Number(this.form.padPos),
+                glicemiaPre: Number(this.form.glicemiaPre),
+                glicemiaPos: Number(this.form.glicemiaPos),
+                pseEPre: Number(this.form.pseEPre),
+                pseEPos: Number(this.form.pseEPos),
+                horarioTreino: Number(this.form.horarioTreino),
+                observacao: this.form.observacao 
+              }
+              );
               this.$notify.success({
                 title: 'Sucesso',
                 message: 'monitoramento criada com sucesso!'
               });
               this.dialogFormVisible = false;
               this.fetchData();
+            
             } catch (e) {
               this.$notify.error({
                 title: 'Erro',
@@ -336,147 +485,12 @@
             message: 'Não foi possível deletar'
           });
         }
-      },
-  
+      },  
       resetForm() {
         this.form = {
-          name: '',
         }
       }
     },
   }
 </script>
   
-
-<style>
-
-  h1{
-    font-size: 25px;
-    font-weight: bold;
-  }
-
-  p{
-    color: rgba(44, 54, 50, 0.767);
-  }
-
-
-  h2{
-    font-size: 17px;
-    font-weight: bold;
-    
-  }
-  
-  h3{
-    font-size: 20px;
-    
-  }
-
-  @media only screen and (max-device-width: 507px) {
-    h3{
-      font-size: 17px;
-      
-    }
-  }
-
-  @media only screen and (max-device-width: 432px) {
-    h3{
-      font-size: 15px;
-      
-    }
-  }
-
-  @media only screen and (max-device-width: 395px) {
-    h3{
-      font-size: 13px;
-      
-    }
-  }
-  
-  @media only screen and (max-device-width: 375px) {
-    h3{
-      font-size: 20px;
-    }
-  }
-
-  @media only screen and (max-device-width: 361px) {
-    h3{
-      font-size: 18px;
-
-    }
-  }
-  @media only screen and (max-device-width: 338px) {
-    h3{
-      font-size: 16px;
-
-    }
-  }
-  .text_box{
-    margin-left: 10%;
-    margin-right: 5%;
-    clear: both;
-    width: 80%;
-    font-size: larger;
-    display: flex;
-    text-align: justify;
-    justify-content: center;
-    align-items: center;
-
-  }
-
-  .pre_pos_div{
-    margin: 5px;
-    float: left;
-    display: flex;
-    flex: 1;
-    flex-direction:row;
-    text-align: center;
-    
-
-  }
-
-  .edit_delet{
-    text-align: center;
-    flex: 1;
-  }
-
-  .pos_style{
-    margin: 5px;
-    float: right;
-
-    flex: 1;
-    text-align: center;
-    
-
-  }
-
-  .pre_style{
-    
-    margin: 5px;
-    float: left;
-    flex: 1;
-    text-align: center;
-    
-    
-
-  }
-
-  .info_gerais{
-    margin: 5px;
-    width: 160px;
-    flex: 1;
-    flex-direction:row;
-    text-align: center;
-    
-  }
-  .wrap {
-	  flex-wrap: wrap;
-  }
-
-  .container {
-  
-    margin: 0 auto;
-    display: flex;
-  
-  }
-
-</style>
