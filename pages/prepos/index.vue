@@ -1,5 +1,4 @@
 <template>
-<template>
   
   <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
     
@@ -100,8 +99,8 @@
     
     </el-table>
 
-<!-- Adicao de um novo treino -->
-<el-dialog 
+  <!-- Adicao de um novo treino -->
+  <el-dialog 
         title="Adicionar novo registro de treino"
         :visible.sync="dialogFormVisible"
         :fullscreen="window.width < 768 ? true : false"
@@ -113,8 +112,8 @@
           :rules="rules">          
           <div>            
             <!-- Data -->
-            <el-form-item label="Data" prop="date" required> 
-            <el-col>
+            <el-form-item label="Data" prop="date" required>  
+
               <el-date-picker
                 v-model="form.date"
                 type="date"
@@ -303,11 +302,15 @@
         <span slot="footer" class="dialog-footer">
         </span>
       </el-dialog>
-    </div>
-  </template>
-  
-  <script>
-  
+
+
+  </div>
+
+</template>
+
+<script>
+  import moment from 'moment';
+
   export default {
     components: {},
     data() {
@@ -320,20 +323,20 @@
         loading: false,
         dialogFormVisible: false,
         form: {
-          name: '',
-          date: "Date",
-          horarioPre: "Date",
-          pasPre: "number",
+          date: "date",
+          horarioPos : "date",
+          horarioPre : "date",
+          pasPre : "number",
+          pasPos : "number",
           padPre: "number",
-          pseEPre: "number",
-          glicemiaPre: "number",
-          horarioPos: "Date",
-          pasPos: "number",
           padPos: "number",
-          pseEPos: "number",
+          glicemiaPre: "number",
           glicemiaPos: "number",
           horarioTreino: "number",
-          observacao: "string"
+          pseEPre: "number",
+          pseEPos: "number",
+          observacao: "string",
+          student: [],
         },
         rules: {
           date: [
@@ -494,3 +497,165 @@
   }
 </script>
   
+
+<style>
+
+  h1{
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  p{
+    color: rgba(44, 54, 50, 0.767);
+  }
+
+
+  h2{
+    font-size: 17px;
+    font-weight: bold;
+    
+  }
+  
+  h3{
+    font-size: 20px;
+    
+  }
+
+  @media only screen and (max-device-width: 507px) {
+    h3{
+      font-size: 17px;
+      
+    }
+  }
+
+  @media only screen and (max-device-width: 432px) {
+    h3{
+      font-size: 15px;
+      
+    }
+  }
+
+  @media only screen and (max-device-width: 395px) {
+    h3{
+      font-size: 13px;
+      
+    }
+  }
+  
+  @media only screen and (max-device-width: 375px) {
+    h3{
+      font-size: 20px;
+    }
+  }
+
+  @media only screen and (max-device-width: 361px) {
+    h3{
+      font-size: 18px;
+
+    }
+  }
+  @media only screen and (max-device-width: 338px) {
+    h3{
+      font-size: 16px;
+
+    }
+  }
+  .text_box{
+    margin-left: 10%;
+    margin-right: 5%;
+    clear: both;
+    width: 80%;
+    font-size: larger;
+    display: flex;
+    text-align: justify;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .pre_pos_div{
+    margin: 5px;
+    float: left;
+    display: flex;
+    flex: 1;
+    flex-direction:row;
+    text-align: center;
+    
+
+  }
+
+  .edit_delet{
+    text-align: center;
+    flex: 1;
+  }
+
+  .pos_style{
+    margin: 5px;
+    float: right;
+
+    flex: 1;
+    text-align: center;
+    
+
+  }
+
+  .pre_style{
+    
+    margin: 5px;
+    float: left;
+    flex: 1;
+    text-align: center;
+    
+    
+
+  }
+
+  .info_gerais{
+    margin: 5px;
+    width: 160px;
+    flex: 1;
+    flex-direction:row;
+    text-align: center;
+    
+  }
+  .wrap {
+	  flex-wrap: wrap;
+  }
+
+  .container {
+  
+    margin: 0 auto;
+    display: flex;
+  
+  }
+
+</style>
+  </script>
+  
+  <style>
+  .el-button {
+    margin: 4px 0;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .el-button {
+      margin: 0 4px;
+    }
+  }
+
+  .el-row {
+    margin-bottom: 20px;
+  }
+  .el-row:last-child {
+    margin-bottom: 0;
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+
+  </style>
