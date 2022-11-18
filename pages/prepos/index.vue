@@ -7,7 +7,7 @@
       <el-table-column type="expand">
         
         <template #default="props" >
-
+          
           <!-- Pre e Pos-->
           
           <section class="container wrap">
@@ -215,6 +215,7 @@
           pseEPre: "number",
           pseEPos: "number",
           observacao: "string",
+          student: [],
         },
         rules: {
           date: [
@@ -234,9 +235,10 @@
       async fetchData() {
         this.loading = true;
         try {
-          const { data } = await this.$axios.get("/prepos/get");
-          this.tableData = data;
+          const { data } = await this.$axios.get("/prepos/list");
+          this.tableData = data.data;
           
+                  
         } catch (e) {
           this.$notify.error({
             title: 'Erro',
@@ -272,14 +274,14 @@
               await this.$axios.post("/prepos/create", this.form);
               this.$notify.success({
                 title: 'Sucesso',
-                message: 'Categoria criada com sucesso!'
+                message: 'monitoramento criada com sucesso!'
               });
               this.dialogFormVisible = false;
               this.fetchData();
             } catch (e) {
               this.$notify.error({
                 title: 'Erro',
-                message: 'Não foi possível criar a categoria'
+                message: 'Não foi possível criar o monitoramento'
               });
             }
           }

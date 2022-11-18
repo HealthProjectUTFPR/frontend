@@ -1,8 +1,8 @@
 <template v-slot:activator="{ on }">  
-      
+  
       
   <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
-    
+      
     <div class="date-picker">
 
       <div class="date1">
@@ -57,6 +57,7 @@
 
       return{
         valuePrePos: "",
+        aluno: [],
         prePoso : [
           {
             value: 'Pré',
@@ -231,23 +232,27 @@
       defineDatePos(item){
 
         this.series[0].data.push({
-          x: new Date(item.date),
-          y: item.padPos
+          x: moment(new Date(item.date)).format("DD/MM/YYYY"),
+          y: item.padPos,
+          z: new Date(item.date)
         })
 
         this.series[1].data.push({
-          x: new Date(item.date),
-          y: item.pasPos
+          x: moment(new Date(item.date)).format("DD/MM/YYYY"),
+          y: item.pasPos,
+          z: new Date(item.date)
         })
         
         this.series[2].data.push({
-          x: new Date(item.date),
-          y: item.glicemiaPos
+          x: moment(new Date(item.date)).format("DD/MM/YYYY"),
+          y: item.glicemiaPos,
+          z: new Date(item.date)
         })
 
         this.series[3].data.push({
-          x: new Date(item.date),
-          y: item.pseEPos
+          x: moment(new Date(item.date)).format("DD/MM/YYYY"),
+          y: item.pseEPos,
+          z: new Date(item.date)
         })
 
         
@@ -273,13 +278,14 @@
               if (this.valuePrePos === "Pré"){
 
                 this.defineDatePre(item)
+                
               }
               if (this.valuePrePos === "Pós"){
                 
                 this.defineDatePos(item)
               }
           }
-
+          console.log(this.series)
         })
 
       },
@@ -288,10 +294,14 @@
         
         this.loading = true;
         try {
-          const { data } = await this.$axios.get("/prepos/get");
-          this.items = data;
+          const { data } = await this.$axios.get("/prepos/student/f979657c-5ccd-45be-8d09-9f5cda785516");
+          this.items = data.data;
+          console.log(this.items)
           
-          
+          const {alun} = await this.$axios.get("/student/index")
+          console.log(alun)
+          this.aluno = alun
+          console.log(this.tes)
         } catch (e) {
           this.$notify.error({
             title: 'Erro',
