@@ -1,12 +1,14 @@
 <template>
+
   <div>
+    <NavBar />
     <div class=" my-2 flex w-full items-center justify-end">
       <span class=" mr-1 font-sans text-xs">Aluno </span>
       <div class=" mr-1 h-8 w-8">
         <img src="/images/user.png" class=" rounded-full object-cover"/>
       </div>
     </div>
-    <div class=" h-5 w-full bg-gray-700 text-center">
+    <div class=" h-7 w-full bg-gray-700 text-center">
       <span class=" font-sans text-xs font-bold text-white">Informações do Aluno</span>
     </div>
     <div class="mt-5 flex items-center justify-center gap-3">
@@ -18,6 +20,7 @@
       <span class="font-sans text-sm font-bold leading-5 pr-6 pb-6"></span>
     </div>
     <div class=" mx-auto mt-16 h-57 w-7/12 shadow-2xl md: w-7/12 lg:7/12">
+
       <div class=" mb-10 h-7 w-full bg-gray-700">
           <div class="mb-2 flex flex-row">
               <div class="w-2/4">
@@ -25,7 +28,7 @@
                       <span class="font-sans text-xs font-bold text-white">Data de nascimento</span>
                   </div>
                     <div class=" mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">03/12/1940</span> 
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">03/12/1940</span> 
                   </div>
               </div>
               <div class="w-2/4">
@@ -33,7 +36,7 @@
                       <span class="font-sans text-xs font-bold text-white">Endereço</span>
                   </div>
                     <div class=" mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">Av. Carlos Gomes, 755, apto 604</span> 
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">Av. Carlos Gomes, 755, apto 604</span> 
                   </div>
               </div>
           </div>
@@ -45,50 +48,50 @@
                   <div class="text-center">
                       <span class=" font-sans text-xs font-bold text-white">Contato</span>
                   </div>
-                    <div class=" mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">(44) 00000-0000</span> 
+                    <div class="w-ful mr-3 flex items-center justify-between">
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">(44) 00000-0000</span> 
                   </div>
               </div>
-              <div class="w-2/4">
+              <div style="width: 50%">
                   <div class="text-center">
                       <span class="font-sans text-xs font-bold text-white">Contato de emergência</span>
                   </div>
-                    <div class=" mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">(51) 99275-4561 Márcia (filha)</span> 
+                    <div class="w-full mr-3 flex items-center justify-between">
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">(51) 99275-4561 Márcia (filha)</span> 
                   </div>
               </div>
           </div>
       </div>
 
-      <div class=" mb-10 h-5 w-full bg-gray-700">
+      <div class=" mb-10 h-7 w-full bg-gray-700">
           <div class="mb-2 flex flex-row">
               <div class="w-2/4">
                   <div class="text-center">
                       <span class=" font-sans text-xs font-bold text-white">Peso</span>
                   </div>
-                    <div class=" mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">53 Kg</span> 
+                    <div class="mr-3 flex items-center justify-between">
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">53 Kg</span> 
                   </div>
               </div>
               <div style="width: 50%">
                   <div class="text-center">
                       <span class=" font-sans text-xs font-bold text-white">Estatura</span>
                   </div>
-                    <div class="w-full mr-3 flex items-center justify-between text-center">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">1,62m</span> 
+                    <div class="mr-3 flex items-center justify-between">
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">1,62m</span> 
                   </div>
               </div>
           </div>
       </div>
 
-      <div class=" mb-10 h-5 w-full bg-gray-700">
+      <div class=" mb-10 h-7 w-full bg-gray-700">
           <div class="mb-2 flex flex-row">
             <div class="w-2/4">
                   <div class="text-center">
                       <span class=" font-sans text-xs font-bold text-white">Raça</span>
                   </div>
-                    <div class=" mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">Negra</span> 
+                    <div class="mr-3 flex items-center justify-between">
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">Negra</span> 
                   </div>
               </div>
               <div class="w-2/4">
@@ -96,20 +99,20 @@
                       <span class=" font-sans text-xs font-bold text-white">Sexo</span>
                   </div>
                     <div class=" mr-3 flex items-center justify-between">
-                      <span class=" w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">Masculino</span> 
+                      <span class=" w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">Masculino</span> 
                   </div>
               </div>
           </div>
       </div>
 
-      <div class=" mb-10 h-5 w-full bg-gray-700">
+      <div class=" mb-10 h-7 w-full bg-gray-700">
           <div class="mb-2 flex flex-row">
             <div class="w-2/4">
                   <div class="text-center">
                       <span class=" font-sans text-xs font-bold text-white">IMC</span>
                   </div>
                     <div class=" mr-3 flex items-center justify-between">
-                      <span class=" w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">20,2 Kg/m^2</span> 
+                      <span class=" w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">20,2 Kg/m²</span> 
                   </div>
               </div>
               <div class="w-2/4">
@@ -117,29 +120,27 @@
                       <span class=" font-sans text-xs font-bold text-white">Plano de saúde</span>
                   </div>
                     <div class=" mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-5 text-center">Unimed</span> 
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">Unimed</span> 
                   </div>
               </div>
           </div>
       </div>
 
-      <div class=" mb-10 h-5 w-full bg-gray-700">
+      <div class=" mb-10 h-7 w-full bg-gray-700">
           <div class="mb-2 flex flex-row">
             <div class="w-full">
                   <div class="text-center">
                       <span class=" font-sans text-xs font-bold text-white">Observações</span>
                   </div>
                     <div class=" mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-5">Descrição...</span> 
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8">Descrição...</span> 
                   </div>
               </div>
           </div>
       </div>
 
       
-      <div class="flex justify-end pr-2 pb-2">
-  
-          
+        <div class="flex justify-end pr-2 pb-2">
           <el-button type="primary" icon="el-icon-edit-outline" circle size="medium" @click="toggleModalPassword = true, modalPassword.inputOldPassword = '', modalPassword.inputNewPassword = ''"></el-button>
           <div v-if="toggleModalPassword" class="absolute inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden">
             <div class=" relative m-auto">
@@ -179,13 +180,13 @@
                     </el-form-item>
                   </div>
                   <div class="mx-3">
-                    <el-form-item prop="ethnicity">
-                      <el-input v-model="modalPassword.ethnicity" placeholder="Raça"></el-input>
+                    <el-form-item prop="breed">
+                      <el-input v-model="modalPassword.breed" placeholder="Raça"></el-input>
                     </el-form-item>
                   </div>
                   <div class="mx-3">
-                    <el-form-item prop="gender">
-                      <el-input v-model="modalPassword.gender" placeholder="Sexo"></el-input>
+                    <el-form-item prop="sex">
+                      <el-input v-model="modalPassword.sex" placeholder="Sexo"></el-input>
                     </el-form-item>
                   </div>
                   <div class="mx-3">
@@ -199,8 +200,8 @@
                     </el-form-item>
                   </div>
                   <div class="mx-3">
-                    <el-form-item prop="observation">
-                      <el-input v-model="modalPassword.observation" placeholder="Observações"></el-input>
+                    <el-form-item prop="note">
+                      <el-input v-model="modalPassword.note" placeholder="Observações"></el-input>
                     </el-form-item>
                   </div>
                 </el-form>
@@ -212,46 +213,41 @@
             </div>
           </div>
           <div v-if="toggleModalPassword" class=" absolute inset-0 z-40 bg-black opacity-25"></div>
-
-      </div>
+        </div>
+        
+        <div class="flex justify-end right-20 bottom-28 absolute">
+          <el-button
+            type="primary"
+            size="medium"
+            icon="el-icon-s-order"
+            circle
+            @click="toggleModalCreate = true"
+          ></el-button>
+        </div>
               
 
       
-
+        
       
 
      </div>
-   
-    <div class=" absolute left-0 bottom-0 h-14 w-full bg-gray-700">
-      <div class=" mx-8 my-2 flex items-center justify-between">
-        <div>
-          <i class="el-icon-user mx-5 text-2xl text-white"></i>
-          <span class=" flex text-xs text-white">Meus Alunos</span>
-        </div>
-        <div>
-          <i class="el-icon-date mx-8 text-2xl text-white"></i>
-          <span class=" flex text-xs text-white">Meu Calendario</span>
-        </div>
-        <div>
-          <i class="el-icon-user mx-5 text-2xl text-white"></i>
-          <span class=" flex text-xs text-white">Meus Dados</span>
-        </div>
-        <div>
-          <i class="el-icon-headset mx-2 text-2xl text-white"></i>
-          <span class=" flex text-xs text-white">Suporte</span>
-        </div>
-      </div> 
-    </div> 
+
   </div>  
 </template>
 
 <script>
 
 // import axios from 'axios';
+import NavBar from '@/components/bottomNav/index.vue';
 
 export default {
   name: 'UserProfile',
   layout: 'empty',
+
+  components: {
+    NavBar,
+  },
+  
   data() {
     return {
       user: {
@@ -267,11 +263,11 @@ export default {
         emergencyContact: '',
         weight: '',
         statute: '',
-        ethnicity: '',
-        gender: '',
+        breed: '',
+        sex: '',
         healthPlan: '',
         imc: '',
-        observation: '',
+        note: '',
       },
       toggleModalPassword: false,
 
@@ -295,10 +291,10 @@ export default {
         stature: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
         ],
-        ethnicity: [
+        breed: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
         ],
-        gender: [
+        sex: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
         ],
         healthPlan: [
@@ -307,13 +303,13 @@ export default {
         imc: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
         ],
-        observation: [
+        note: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
         ],
       },
     };
   },
-  // async created() {
+  // async created() { const imc = (weight, height) => (weight / (height / 100) ** 2);
   //   this.getUser();
   // },
   // methods: {
