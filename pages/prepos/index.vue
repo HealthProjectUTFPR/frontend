@@ -320,6 +320,7 @@
           height: 768,
         },
         tableData: [],
+        defaultTime: "", 
         loading: false,
         dialogFormVisible: false,
         form: {
@@ -340,8 +341,7 @@
         },
         rules: {
           date: [
-            { required: true, message: 'O campo nome é obrigatório!', trigger: 'blur' },
-            { min: 3, max: 70, message: 'O nome deve ser de no mínimo 3 carácteres e no máximo 70', trigger: 'blur' }
+          
           ],
         },
       }
@@ -360,7 +360,10 @@
       async fetchData() {
         this.loading = true;
         try {
+          console.log("AAAAAAAAA")
           const { data } = await this.$axios.get("/prepos/list");
+          console.log("AAAAAAAAA")
+          console.log(data)
           this.tableData = data.data;
           
                   
@@ -420,7 +423,8 @@
                 pseEPre: Number(this.form.pseEPre),
                 pseEPos: Number(this.form.pseEPos),
                 horarioTreino: Number(this.form.horarioTreino),
-                observacao: this.form.observacao 
+                observacao: this.form.observacao,
+                studentId: "9e8f2113-0651-4da4-ba26-1f93fe78071a"
               }
               );
               this.$notify.success({
