@@ -237,6 +237,7 @@
           height: 768,
         },
         tableData: [],
+        defaultTime: "",
         loading: false,
         dialogFormVisible: false,
         form: {
@@ -255,10 +256,7 @@
           observacao: "string"
         },
         rules: {
-          name: [
-            { required: true, message: 'O campo nome é obrigatório!', trigger: 'blur' },
-            { min: 3, max: 70, message: 'O nome deve ser de no mínimo 3 carácteres e no máximo 70', trigger: 'blur' }
-          ],
+
         },
       }
     },
@@ -275,7 +273,7 @@
       async fetchData() {
         this.loading = true;
         try {
-          const { data } = await this.$axios.get("/prepos/get");
+          const { data } = await this.$axios.get("/prepos/list");
           this.tableData = data;
         } catch (e) {
           this.$notify.error({
@@ -333,7 +331,8 @@
                 pseEPre: Number(this.form.pseEPre),
                 pseEPos: Number(this.form.pseEPos),
                 horarioTreino: Number(this.form.horarioTreino),
-                observacao: this.form.observacao 
+                observacao: this.form.observacao,
+                studentId: "9e8f2113-0651-4da4-ba26-1f93fe78071a"
               }
               );
               this.$notify.success({
