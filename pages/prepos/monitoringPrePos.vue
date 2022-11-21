@@ -88,13 +88,6 @@
           pseEPos: "number",
           observacao: "string",
         },
-        rules: {
-          date: [
-            { required: true, message: 'O campo nome é obrigatório!', trigger: 'blur' },
-            { min: 3, max: 70, message: 'O nome deve ser de no mínimo 3 carácteres e no máximo 70', trigger: 'blur' }
-          ],
-        },
-
         series: [
           {
             name: "PAD",
