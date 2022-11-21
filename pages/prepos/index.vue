@@ -320,6 +320,7 @@
           height: 768,
         },
         tableData: [],
+        alunos: [],
         defaultTime: "", 
         loading: false,
         dialogFormVisible: false,
@@ -349,6 +350,7 @@
 
     mounted() {
       window.addEventListener('resize', this.handleResize);
+      this.getStudents();
       this.fetchData();
     },
 
@@ -358,12 +360,17 @@
   
     methods: {
       moment,
+      async getStudents() {
+        axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
+          'token'
+        )}`;
+        const { data } = await axios.get('http://localhost:3333/student/index');
+        this.alunos = data;
+      },
       async fetchData() {
         this.loading = true;
         try {
-          console.log("AAAAAAAAA")
           const { data } = await this.$axios.get("/prepos/list");
-          console.log("AAAAAAAAA")
           console.log(data)
           this.tableData = data.data;
           
