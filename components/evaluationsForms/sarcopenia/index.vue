@@ -154,12 +154,12 @@ export default {
   name: 'ExampleForm',
   data() {
     return {
-      studentId: '0050e6a1-b79f-45c0-9590-8e1db94905ef',
+      studentId: 'f3a67f48-b5ef-43d0-b71c-14760090f9b9',
       mockup: {
         sex: 'Homem',
-        age: 70,
+        age: 42,
         race: 'Branco',
-        height: 1.92,
+        height: 1.925,
       },
       elAlertState: {
         title: '',

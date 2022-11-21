@@ -1,15 +1,19 @@
-function verifySarcopeniaOfMan({ walkingSpeed, handgripStrength, muscleMassIndex }) {
+function verifySarcopeniaOfMan({
+  walkingSpeed,
+  handGripStrength,
+  muscleMassIndex,
+}) {
   let hasSarcopenia = false;
   let title = 'Sem sarcopenia';
   let description =
     'De acordo com os dados informados, o paciente não sofre de Sarcopenia.';
   let type = 'success';
 
-  if (walkingSpeed > 0.8 && handgripStrength > 30) {
+  if (walkingSpeed > 0.8 && handGripStrength > 30) {
     hasSarcopenia = false;
   } else if (
     walkingSpeed > 0.8 &&
-    handgripStrength <= 30 &&
+    handGripStrength <= 30 &&
     muscleMassIndex > 8.9
   ) {
     hasSarcopenia = false;
@@ -27,18 +31,22 @@ function verifySarcopeniaOfMan({ walkingSpeed, handgripStrength, muscleMassIndex
   return { title, description, type, hasSarcopenia };
 }
 
-function verifySarcopeniaOfWoman({ walkingSpeed, handgripStrength, muscleMassIndex }) {
+function verifySarcopeniaOfWoman({
+  walkingSpeed,
+  handGripStrength,
+  muscleMassIndex,
+}) {
   let hasSarcopenia = false;
   let title = 'Sem sarcopenia';
   let description =
     'De acordo com os dados informados, o paciente não sofre de Sarcopenia.';
   let type = 'success';
 
-  if (walkingSpeed > 0.8 && handgripStrength > 20) {
+  if (walkingSpeed > 0.8 && handGripStrength > 20) {
     hasSarcopenia = false;
   } else if (
     walkingSpeed > 0.8 &&
-    handgripStrength <= 20 &&
+    handGripStrength <= 20 &&
     muscleMassIndex > 6.37
   ) {
     hasSarcopenia = false;
@@ -56,12 +64,28 @@ function verifySarcopeniaOfWoman({ walkingSpeed, handgripStrength, muscleMassInd
   return { title, description, type, hasSarcopenia };
 }
 
-function classifyResult({ walkingSpeed, handgripStrength, muscleMassIndex, sex }) {
+function classifyResult({
+  walkingSpeed,
+  handGripStrength,
+  muscleMassIndex,
+  sex,
+}) {
   let result;
+  console.log(walkingSpeed, handGripStrength, muscleMassIndex, sex);
   if (sex === 'Homem') {
-    result = verifySarcopeniaOfMan({ walkingSpeed, handgripStrength, muscleMassIndex, sex });
+    result = verifySarcopeniaOfMan({
+      walkingSpeed,
+      handGripStrength,
+      muscleMassIndex,
+      sex,
+    });
   } else {
-    result = verifySarcopeniaOfWoman({ walkingSpeed, handgripStrength, muscleMassIndex, sex });
+    result = verifySarcopeniaOfWoman({
+      walkingSpeed,
+      handGripStrength,
+      muscleMassIndex,
+      sex,
+    });
   }
 
   const { title, description, type, hasSarcopenia } = result;
