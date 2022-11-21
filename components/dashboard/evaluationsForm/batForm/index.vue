@@ -34,6 +34,17 @@
       :model="bateriaFunc"
       label-position="top"
     >
+        <el-form-item label="Data" prop="date">
+          <el-date-picker
+            v-model="bateriaFunc.date"
+            type="date"
+            placeholder="XX/XX/XXXX"
+            size="large"
+            style="width: 100%"
+            format="dd/MM/yyyy"
+          >
+          </el-date-picker>
+      </el-form-item>
       <el-form-item
         label="1. Sentar e levantar (30 segundos)"
         prop="sitAndDown"
@@ -163,7 +174,58 @@ export default {
         reachTheBack: '',
         tug: '',
       },
-      rules: {},
+      rules: {
+        date: [
+          {
+            type: 'date',
+            required: true,
+            message: 'Por favor, escolha uma data',
+            trigger: 'change',
+          },
+        ],
+        sitAndDown: [
+          {
+            type: 'number',
+            message: 'Por favor, insira um valor',
+            trigger: 'blur',
+          },
+        ],
+        elbowFlexion: [
+          {
+            type: 'number',
+            message: 'Por favor, insira um valor',
+            trigger: 'blur',
+          },
+        ],
+        marchWouldPark: [
+          {
+            type: 'number',
+            message: 'Por favor, insira um valor',
+            trigger: 'blur',
+          },
+        ],
+        sitAndReachYourFeet: [
+          {
+            type: 'number',
+            message: 'Por favor, insira um valor',
+            trigger: 'blur',
+          },
+        ],
+        reachTheBack: [
+          {
+            type: 'number',
+            message: 'Por favor, insira um valor',
+            trigger: 'blur',
+          },
+        ],
+        tug: [
+          {
+            type: 'number',
+            message: 'Por favor, insira um valor',
+            trigger: 'blur',
+          },
+        ],
+      },
     }
   },
   methods: {
@@ -1031,6 +1093,12 @@ export default {
       this.bateriaFunc.tug = ''
     },
     submitForm() {
+      if(this.resultTable1 === '' || this.resultTable2 === '' || 
+         this.resultTable3 === '' || this.resultTable4 === '' || 
+         this.resultTable5 === '' || this.resultTable6 === ''){
+        console.log('erro 2')
+        return
+      }
       const data = {
         sitAndDown: {
           result: this.bateriaFunc.sitAndDown,
