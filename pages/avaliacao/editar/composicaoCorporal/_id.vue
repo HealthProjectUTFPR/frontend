@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BodyComposition data-to-edit />
+    <BodyComposition edit />
   </div>
 </template>
 
@@ -10,9 +10,6 @@ import BodyComposition from '@/components/evaluationsForms/bodyCompositionForm/i
 export default {
   name: 'BodyCompositionEdit',
   components: { BodyComposition },
-  mounted() {
-    console.log(this.$route.params.id);
-  },
 };
 </script>
 

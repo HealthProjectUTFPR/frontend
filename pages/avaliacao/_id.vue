@@ -200,6 +200,7 @@ export default {
   async mounted() {
     const { data: list } = await this.$axios.get('/evaluation', { params: { studentId: this.studentId, page: 1, limit: 20, orderBy: 'updatedAt' } });
     this.tableData = list.data.map((it) => ({
+      id: it.id,
       avaliacao: it.name,
       data: formatDate(it.date),
       resultado: it.result,
@@ -229,7 +230,7 @@ export default {
       };
     },
     handleEdit(row) {
-      this.$router.push(`${row.to}/id`);
+      this.$router.push(`${row.to}/${row.id}`);
     },
     handleDelete() {
       console.log(this.evaluationToBeDeleted);

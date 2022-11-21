@@ -279,8 +279,15 @@ import bodyFatFunc from '../../../helpers/evaluations/bodyComposition/bodyFat/in
 
 export default {
   name: 'BodyCompositionForm',
+  props: {
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
+      evaluationId: '',
       mockup: {
         sex: 'Homem',
         age: 70,
@@ -482,21 +489,50 @@ export default {
     },
   },
 
+  async mounted() {
+    if (this.$props.edit) {
+      this.evaluationId = this.$route.params.id;
+      const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'bodyComposition' } });
+      setTimeout(() => {
+        this.bodyCompositionForm.biceps = data.biceps;
+        this.bodyCompositionForm.weight = data.weight;
+        this.bodyCompositionForm.hip = data.hip;
+        this.bodyCompositionForm.triceps = data.triceps;
+        this.bodyCompositionForm.waist = data.waist;
+        this.bodyCompositionForm.suprailiac = data.suprailiac;
+        this.bodyCompositionForm.scapula = data.scapula;
+      }, 100);
+    }
+  },
+
   methods: {
     submitForm(formName) {
       this.getAllComputed();
+
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
-            await this.$axios.post(`/evaluation/${this.studentId}`, {
-              type: 'bodyComposition',
-              data: this.bodyCompositionForm,
-            });
+            if (this.$props.edit) {
+              await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
+                type: 'bodyComposition',
+                data: this.bodyCompositionForm,
+              });
 
-            this.$message({
-              message: 'Avaliação de criada com sucesso!',
-              type: 'success',
-            });
+              this.$message({
+                message: 'Avaliação de atualizada com sucesso!',
+                type: 'success',
+              });
+            } else {
+              await this.$axios.post(`/evaluation/${this.studentId}`, {
+                type: 'bodyComposition',
+                data: this.bodyCompositionForm,
+              });
+
+              this.$message({
+                message: 'Avaliação de criada com sucesso!',
+                type: 'success',
+              });
+            }
 
             setTimeout(() => {
               this.$router.push({ path: '/' });
