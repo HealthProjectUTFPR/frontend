@@ -50,10 +50,14 @@ export default {
     devMiddleware: {
       headers: {
         'Cache-Control': 'no-store',
-        Vary: '*'
-      }
+        Vary: '*',
+      },
     },
-    extend(config, ctx) {}
+    postcss: {
+      plugins: {
+        'postcss-custom-properties': false,
+      },
+    },
   },
 
   // Server Configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-server
@@ -63,13 +67,13 @@ export default {
 
   // Axios Configuration: https://axios.nuxtjs.org/options
   axios: {
-    baseURL: process.env.API_BASE_URL
+    baseURL: process.env.API_BASE_URL,
   },
 
   // Font Awesome Configuration: https://github.com/nuxt-community/fontawesome-module
   fontawesome: {
     icons: {
-      solid: true
-    }
-  }
-}
+      solid: true,
+    },
+  },
+};
