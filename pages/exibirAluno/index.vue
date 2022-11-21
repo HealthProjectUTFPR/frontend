@@ -67,10 +67,10 @@
           <div class="mb-2 flex flex-row">
               <div class="w-2/4">
                   <div class="text-center">
-                      <span class=" font-sans text-xs font-bold text-white">Peso</span>
+                      <span class=" font-sans text-xs font-bold text-white">Plano de Saúde</span>
                   </div>
                     <div class="mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">53 Kg</span> 
+                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">Unimed</span> 
                   </div>
               </div>
               <div style="width: 50%">
@@ -100,27 +100,6 @@
                   </div>
                     <div class=" mr-3 flex items-center justify-between">
                       <span class=" w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">Masculino</span> 
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <div class=" mb-10 h-7 w-full bg-gray-700">
-          <div class="mb-2 flex flex-row">
-            <div class="w-2/4">
-                  <div class="text-center">
-                      <span class=" font-sans text-xs font-bold text-white">IMC</span>
-                  </div>
-                    <div class=" mr-3 flex items-center justify-between">
-                      <span class=" w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">20,2 Kg/m²</span> 
-                  </div>
-              </div>
-              <div class="w-2/4">
-                  <div class="text-center">
-                      <span class=" font-sans text-xs font-bold text-white">Plano de saúde</span>
-                  </div>
-                    <div class=" mr-3 flex items-center justify-between">
-                      <span class="w-full my-1 ml-3 block font-sans text-xs font-medium leading-8 text-center">Unimed</span> 
                   </div>
               </div>
           </div>
@@ -261,12 +240,10 @@ export default {
         address: '',
         contact: '',
         emergencyContact: '',
-        weight: '',
         statute: '',
         breed: '',
         sex: '',
         healthPlan: '',
-        imc: '',
         note: '',
       },
       toggleModalPassword: false,
@@ -285,9 +262,6 @@ export default {
         emergencyContact: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
         ],
-        weight: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
         stature: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
         ],
@@ -300,16 +274,13 @@ export default {
         healthPlan: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
         ],
-        imc: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
         note: [
           { required: true, message: 'Campo obrigatório', trigger: 'blur' },
         ],
       },
     };
   },
-  // async created() { const imc = (weight, height) => (weight / (height / 100) ** 2);
+  // async created() { const imc = (weight, height) => (weight / (height / 100) ** 2);g
   //   this.getUser();
   // },
   // methods: {
