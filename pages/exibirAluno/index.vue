@@ -149,11 +149,6 @@
                     </el-form-item>
                   </div>
                   <div class="mx-3">
-                    <el-form-item prop="weight">
-                      <el-input v-model="modalPassword.weight" placeholder="Peso"></el-input>
-                    </el-form-item>
-                  </div>
-                  <div class="mx-3">
                     <el-form-item prop="stature">
                       <el-input v-model="modalPassword.stature" placeholder="Estatura"></el-input>
                     </el-form-item>
@@ -166,11 +161,6 @@
                   <div class="mx-3">
                     <el-form-item prop="sex">
                       <el-input v-model="modalPassword.sex" placeholder="Sexo"></el-input>
-                    </el-form-item>
-                  </div>
-                  <div class="mx-3">
-                    <el-form-item prop="imc">
-                      <el-input v-model="modalPassword.imc" placeholder="IMC"></el-input>
                     </el-form-item>
                   </div>
                   <div class="mx-3">
