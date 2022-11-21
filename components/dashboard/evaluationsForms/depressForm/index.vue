@@ -11,13 +11,24 @@
             :rules="rules"
             :model="depressionForm"
             label-position="top"
-            >
+        >
+        <el-form-item class="ml-7" label="Data" prop="date">
+            <el-date-picker
+                v-model="depressionForm.date"
+                type="date"
+                placeholder="XX/XX/XXXX"
+                size="large"
+                style="width: 23em"
+                format="dd/MM/yyyy"
+                >
+            </el-date-picker>
+        </el-form-item>
             <el-form-item
             label="1. Você está basicamente satisfeito com sua vida ?"
-            prop="value1"
+            prop="campo1"
             >
                 <el-switch 
-                v-model.number="depressionForm.value1"
+                v-model.number="depressionForm.campo1"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -26,10 +37,10 @@
 
             <el-form-item
             label="2. Você deixou muitos de seus interesses e atividades ?"
-            prop="value2"
+            prop="campo2"
             >
                 <el-switch 
-                v-model.number="depressionForm.value2"
+                v-model.number="depressionForm.campo2"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -38,10 +49,10 @@
 
             <el-form-item
             label="3. Você sente que sua vida está vazia ?"
-            prop="value3"
+            prop="campo3"
             >
                 <el-switch 
-                v-model.number="depressionForm.value3"
+                v-model.number="depressionForm.campo3"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -50,10 +61,10 @@
 
             <el-form-item
             label="4. Você se aborrece com frequência ?"
-            prop="value4"
+            prop="campo4"
             >
                 <el-switch 
-                v-model.number="depressionForm.value4"
+                v-model.number="depressionForm.campo4"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -62,10 +73,10 @@
 
             <el-form-item
             label="5. Você se sente de bom humor a maior parte do tempo ?"
-            prop="value5"
+            prop="campo5"
             >
                 <el-switch 
-                v-model.number="depressionForm.value5"
+                v-model.number="depressionForm.campo5"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -74,10 +85,10 @@
 
             <el-form-item
             label="6. Você tem medo que algum mal vá lhe acontecer ?"
-            prop="value6"
+            prop="campo6"
             >
                 <el-switch 
-                v-model.number="depressionForm.value6"
+                v-model.number="depressionForm.campo6"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -86,10 +97,10 @@
 
             <el-form-item
             label="7. Você se sente feliz a maior parte do tempo ?"
-            prop="value7"
+            prop="campo7"
             >
                 <el-switch 
-                v-model.number="depressionForm.value7"
+                v-model.number="depressionForm.campo7"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -98,10 +109,10 @@
 
             <el-form-item
             label="8. Você sente que sua situação não tem saída ?"
-            prop="value8"
+            prop="campo8"
             >
                 <el-switch 
-                v-model.number="depressionForm.value8"
+                v-model.number="depressionForm.campo8"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -110,10 +121,10 @@
 
             <el-form-item
             label="9. Você prefere ficar em casa a sair e fazer coisas novas ?"
-            prop="value9"
+            prop="campo9"
             >
                 <el-switch 
-                v-model.number="depressionForm.value9"
+                v-model.number="depressionForm.campo9"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -122,10 +133,10 @@
 
             <el-form-item
             label="10. Vocês sente com mais problema de memória do que a maioria ?"
-            prop="value10"
+            prop="campo10"
             >
                 <el-switch 
-                v-model.number="depressionForm.value10"
+                v-model.number="depressionForm.campo10"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -134,10 +145,10 @@
 
             <el-form-item
             label="11. Você acha maravilhoso estar vivo ?"
-            prop="value11"
+            prop="campo11"
             >
                 <el-switch 
-                v-model.number="depressionForm.value11"
+                v-model.number="depressionForm.campo11"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -146,10 +157,10 @@
 
             <el-form-item
             label="12. Você se sente inútil nas atuais circunstâncias ?"
-            prop="value12"
+            prop="campo12"
             >
                 <el-switch 
-                v-model.number="depressionForm.value12"
+                v-model.number="depressionForm.campo12"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -158,10 +169,10 @@
 
             <el-form-item
             label="13. Você se sente cheio de energia ?"
-            prop="value13"
+            prop="campo13"
             >
                 <el-switch 
-                v-model.number="depressionForm.value13"
+                v-model.number="depressionForm.campo13"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -170,10 +181,10 @@
 
             <el-form-item
             label="14. Você acha que sua situação é sem esperanças ?"
-            prop="value14"
+            prop="campo14"
             >
                 <el-switch 
-                v-model.number="depressionForm.value14"
+                v-model.number="depressionForm.campo14"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -182,10 +193,10 @@
 
             <el-form-item
             label="15. Você sente que a maioria das pessoas está melhor que você ?"
-            prop="value15"
+            prop="campo15"
             >
                 <el-switch 
-                v-model.number="depressionForm.value15"
+                v-model.number="depressionForm.campo15"
                 active-text="Sim"
                 inactive-text="Não"
                 type="bool"
@@ -232,41 +243,48 @@ export default {
     name: 'DepressForm',
     data() {
       return {
-        data: '2022-11-10T03:00:00.000Z',
         studentId: '5fb3a2c2-42e8-4fe6-b721-14c654339f05',
         depressionForm: {
-            value1: false,
-            value2: false,
-            value3: false,
-            value4: false,
-            value5: false,
-            value6: false,
-            value7: false,
-            value8: false,
-            value9: false,
-            value10: false,
-            value11: false,
-            value12: false,
-            value13: false,
-            value14: false,
-            value15: false,
+            date: '',
+            campo1: false,
+            campo2: false,
+            campo3: false,
+            campo4: false,
+            campo5: false,
+            campo6: false,
+            campo7: false,
+            campo8: false,
+            campo9: false,
+            campo10: false,
+            campo11: false,
+            campo12: false,
+            campo13: false,
+            campo14: false,
+            campo15: false,
         },
         result: 0,
         description: {
 
         },
         rules: {
-
+            date: [
+          {
+            type: 'date',
+            required: true,
+            message: 'Por favor, escolha uma data',
+            trigger: 'change',
+          },
+        ],
         }
       }
     },
     computed: {
         total(){
-            return this.depressionForm.value1 + this.depressionForm.value2 +  this.depressionForm.value3 + 
-            this.depressionForm.value4 + this.depressionForm.value5 +  this.depressionForm.value6 +
-            this.depressionForm.value7 + this.depressionForm.value8 +  this.depressionForm.value9 +
-            this.depressionForm.value10 + this.depressionForm.value11 +  this.depressionForm.value12 +
-            this.depressionForm.value13 + this.depressionForm.value14 +  this.depressionForm.value15;
+            return this.depressionForm.campo1 + this.depressionForm.campo2 +  this.depressionForm.campo3 + 
+            this.depressionForm.campo4 + this.depressionForm.campo5 +  this.depressionForm.campo6 +
+            this.depressionForm.campo7 + this.depressionForm.campo8 +  this.depressionForm.campo9 +
+            this.depressionForm.campo10 + this.depressionForm.campo11 +  this.depressionForm.campo12 +
+            this.depressionForm.campo13 + this.depressionForm.campo14 +  this.depressionForm.campo15;
         }
     },
     methods: {
@@ -279,7 +297,6 @@ export default {
             this.calc();
             const evaluation = {
                 ...this.depressionForm,
-                data: this.data,
                 result: this.result,
             };
             try {
