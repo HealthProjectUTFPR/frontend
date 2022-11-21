@@ -11,6 +11,7 @@
           <img
             src="/images/user.png"
             class="h-20 w-20 object-cover rounded-full"
+            @click="handleStudent()"
           />
         </el-col>
         <el-col :span="18" class="flex p-4 flex-col">
@@ -332,6 +333,9 @@ export default {
           message: 'Não foi possível adicionar',
         });
       }
+    },
+    async handleStudent() {
+      this.$router.push('/exibirAluno');
     },
   },
 };
