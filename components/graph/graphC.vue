@@ -8,10 +8,10 @@
       start-placeholder="Data Inicial"
       end-placeholder="Data Final">
       </el-date-picker>
-      <el-button type="primary">Gerar Relátorio PDF</el-button>
+      <el-button type="primary" @click="downloadPDF()">Gerar Relátorio PDF</el-button>
     </div>
     <div class="grid grid-cols-1 mt-5 gap-x-8 gap-y-8 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
-      <div class=" text-center">
+      <div id="bar" class=" text-center">
         <span>Av1</span>
         <Bar
           :chart-options="chartOptions"
@@ -19,7 +19,7 @@
           
         />
       </div>
-      <div class=" text-center">
+      <div id="bar2" class=" text-center">
         <span>Av2</span>
         <Bar
           :chart-options="chartOptions"
@@ -27,7 +27,7 @@
           
         />
       </div>
-      <div class=" text-center">
+      <div id="bar3" class=" text-center">
         <span>Av3</span>
         <Bar
           :chart-options="chartOptions"
@@ -35,7 +35,7 @@
           
         />
       </div>
-      <div class=" text-center">
+      <div id="bar4" class=" text-center">
         <span>Av4</span>
         <Bar
           :chart-options="chartOptions"
@@ -43,7 +43,7 @@
           
         />
       </div>
-      <div class=" text-center">
+      <div id="bar5" class=" text-center">
         <span>Av5</span>
         <Bar
           :chart-options="chartOptions"
@@ -51,28 +51,28 @@
           
         />
       </div>
-      <div class=" text-center">
+      <div id="bar6" class=" text-center">
         <span>Av6</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData6"
         />
       </div>
-      <div class=" text-center">
+      <div id="bar7" class=" text-center">
         <span>Av7</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData7"
         />
       </div>
-      <div class=" text-center">
+      <div id="bar8" class=" text-center">
         <span>Av8</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData8"
         />
       </div>
-      <div class=" text-center">
+      <div id="bar9" class=" text-center">
         <span>Av9</span>
         <Bar
           :chart-options="chartOptions"
@@ -86,6 +86,7 @@
 <script>
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import Exporter from "vue-chartjs-exporter";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -215,6 +216,21 @@ export default {
           }]
         },
         value1: '',
+    }
+  },
+  methods: {
+    downloadPDF() {
+      const bar = document.getElementById("bar");
+      const bar2 = document.getElementById("bar2");
+      const bar3 = document.getElementById("bar3");
+      const bar4 = document.getElementById("bar4");
+      const bar5 = document.getElementById("bar5");
+      const bar6 = document.getElementById("bar6");
+      const bar7 = document.getElementById("bar7");
+      const bar8 = document.getElementById("bar8");
+      const bar9 = document.getElementById("bar9");
+      const exp = new Exporter([bar, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9]);
+      exp.export_pdf().then((pdf) => pdf.save("charts.pdf")); // returns a jsPDF doc object which you can do whatever you wish with.
     }
   }
 }
