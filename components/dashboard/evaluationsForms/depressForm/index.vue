@@ -232,23 +232,26 @@ export default {
     name: 'DepressForm',
     data() {
       return {
+        data: '2022-11-10T03:00:00.000Z',
+        studentId: '5fb3a2c2-42e8-4fe6-b721-14c654339f05',
         depressionForm: {
-            value1: 0,
-            value2: 0,
-            value3: 0,
-            value4: 0,
-            value5: 0,
-            value6: 0,
-            value7: 0,
-            value8: 0,
-            value9: 0,
-            value10: 0,
-            value11: 0,
-            value12: 0,
-            value13: 0,
-            value14: 0,
-            value15: 0,
+            value1: false,
+            value2: false,
+            value3: false,
+            value4: false,
+            value5: false,
+            value6: false,
+            value7: false,
+            value8: false,
+            value9: false,
+            value10: false,
+            value11: false,
+            value12: false,
+            value13: false,
+            value14: false,
+            value15: false,
         },
+        result: 0,
         description: {
 
         },
@@ -267,11 +270,31 @@ export default {
         }
     },
     methods: {
-        submitForm() {
-            console.log('submited');
-            console.log(this.depressionForm.value1);
+        calc(){
+            for(const key in this.depressionForm){
+                this.result += this.depressionForm[key]
+            }
+        },
+        async submitForm() {
+            this.calc();
+            const evaluation = {
+                ...this.depressionForm,
+                data: this.data,
+                result: this.result,
+            };
+            try {
+                await this.$axios.post(
+                    `/evaluation/${this.studentId}`,
+                    {
+                        type: "Depression",
+                        data: evaluation,
+                    },
+                );
+            } catch (error){
+                console.log(error);
+            }
+            this.$router.go();
         }
     },
-    
 };
 </script>
