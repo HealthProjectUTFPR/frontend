@@ -58,7 +58,7 @@
                   text-center
                 "
                 >{{
-                  moment(String(studentEdit.birthDate)).format('DD/MM/YYYY')
+                  moment(String(student.birthDate)).format('DD/MM/YYYY')
                 }}</span
               >
             </div>
@@ -82,7 +82,7 @@
                   leading-8
                   text-center
                 "
-                >{{ studentEdit.address }}</span
+                >{{ student.address }}</span
               >
             </div>
           </div>
@@ -110,7 +110,7 @@
                   leading-8
                   text-center
                 "
-                >{{ studentEdit.contact }}</span
+                >{{ student.contact }}</span
               >
             </div>
           </div>
@@ -133,7 +133,7 @@
                   leading-8
                   text-center
                 "
-                >{{ studentEdit.emergencyContact }}</span
+                >{{ student.emergencyContact }}</span
               >
             </div>
           </div>
@@ -161,7 +161,7 @@
                   leading-8
                   text-center
                 "
-                >{{ studentEdit.healthPlan }}</span
+                >{{ student.healthPlan }}</span
               >
             </div>
           </div>
@@ -184,7 +184,7 @@
                   leading-8
                   text-center
                 "
-                >{{ studentEdit.stature }}</span
+                >{{ student.stature }}</span
               >
             </div>
           </div>
@@ -210,7 +210,7 @@
                   leading-8
                   text-center
                 "
-                >{{ studentEdit.breed }}</span
+                >{{ student.breed }}</span
               >
             </div>
           </div>
@@ -231,7 +231,7 @@
                   leading-8
                   text-center
                 "
-                >{{ studentEdit.sex }}</span
+                >{{ student.sex }}</span
               >
             </div>
           </div>
@@ -258,7 +258,7 @@
                   font-medium
                   leading-8
                 "
-                >{{ studentEdit.note }}</span
+                >{{ student.note }}</span
               >
             </div>
           </div>
@@ -453,7 +453,7 @@ export default {
     },
     async handleEdit() {
       try {
-        const { data } = await axios.patch(
+        await axios.patch(
           `http://localhost:3333/student/update/${this.student.id}`,
           this.studentEdit
         );
@@ -461,7 +461,7 @@ export default {
           title: 'Sucesso',
           message: 'Categoria atualizada com sucesso!',
         });
-        this.resetForm(data);
+        this.resetForm();
         this.toggleModalEdit = false;
       } catch (e) {
         this.$notify.error({
@@ -470,15 +470,11 @@ export default {
         });
       }
     },
-    resetForm(student) {
-      this.componentKey += 1;
-      this.studentEdit = student;
-      this.studentEdit.birthDate = moment(String(student.birthDate)).format(
-        'DD/MM/YYYY'
-      );
+    resetForm() {
+      this.getStudent(this.student.id);
     },
     async handleCancel() {
-      this.componentKey += 1;
+      this.getStudent(this.student.id);
       this.studentEdit = this.student;
       this.studentEdit.birthDate = moment(
         String(this.student.birthDate)
