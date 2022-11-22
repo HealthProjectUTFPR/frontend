@@ -267,14 +267,10 @@
           icon="el-icon-edit-outline"
           circle
           size="medium"
-          @click="
-            (toggleModalPassword = true),
-              (modalPassword.inputOldPassword = ''),
-              (modalPassword.inputNewPassword = '')
-          "
+          @click="toggleModalEdit = true"
         ></el-button>
         <div
-          v-if="toggleModalPassword"
+          v-if="toggleModalEdit"
           class="
             absolute
             inset-0
@@ -290,15 +286,12 @@
               <div class="mt-5 text-center">
                 <span class="text-base font-bold">Editar Dados</span>
               </div>
-              <el-form
-                ref="modalPasswordForm"
-                :model="modalPassword"
-                :rules="rulesModalPassword"
-              >
+              <el-form ref="modalEditForm" :model="studentEdit">
                 <div class="mx-3 mt-3 mb-2">
                   <el-form-item prop="birthDate">
                     <el-input
-                      v-model="modalPassword.birthDate"
+                      v-model="studentEdit.birthDate"
+                      value="10/08/2003"
                       placeholder="Data de nascimento"
                     ></el-input>
                   </el-form-item>
@@ -306,7 +299,7 @@
                 <div class="mx-3 mt-3 mb-2">
                   <el-form-item prop="address">
                     <el-input
-                      v-model="modalPassword.address"
+                      v-model="studentEdit.address"
                       placeholder="Endereço"
                     ></el-input>
                   </el-form-item>
@@ -314,7 +307,7 @@
                 <div class="mx-3">
                   <el-form-item prop="contact">
                     <el-input
-                      v-model="modalPassword.contact"
+                      v-model="studentEdit.contact"
                       placeholder="Contato"
                     ></el-input>
                   </el-form-item>
@@ -322,7 +315,7 @@
                 <div class="mx-3">
                   <el-form-item prop="emergency contact">
                     <el-input
-                      v-model="modalPassword.emergencyContact"
+                      v-model="studentEdit.emergencyContact"
                       placeholder="Contato de emergência"
                     ></el-input>
                   </el-form-item>
@@ -330,7 +323,7 @@
                 <div class="mx-3">
                   <el-form-item prop="stature">
                     <el-input
-                      v-model="modalPassword.stature"
+                      v-model="studentEdit.stature"
                       placeholder="Estatura"
                     ></el-input>
                   </el-form-item>
@@ -338,7 +331,7 @@
                 <div class="mx-3">
                   <el-form-item prop="breed">
                     <el-input
-                      v-model="modalPassword.breed"
+                      v-model="studentEdit.breed"
                       placeholder="Raça"
                     ></el-input>
                   </el-form-item>
@@ -346,7 +339,7 @@
                 <div class="mx-3">
                   <el-form-item prop="sex">
                     <el-input
-                      v-model="modalPassword.sex"
+                      v-model="studentEdit.sex"
                       placeholder="Sexo"
                     ></el-input>
                   </el-form-item>
@@ -354,7 +347,7 @@
                 <div class="mx-3">
                   <el-form-item prop="healthPlan">
                     <el-input
-                      v-model="modalPassword.healthPlan"
+                      v-model="studentEdit.healthPlan"
                       placeholder="Plano de saúde"
                     ></el-input>
                   </el-form-item>
@@ -362,19 +355,17 @@
                 <div class="mx-3">
                   <el-form-item prop="note">
                     <el-input
-                      v-model="modalPassword.note"
+                      v-model="studentEdit.note"
                       placeholder="Observações"
                     ></el-input>
                   </el-form-item>
                 </div>
               </el-form>
               <div class="mx-3 mt-11 flex justify-between">
-                <el-button type="danger" @click="toggleModalPassword = false"
+                <el-button type="danger" @click="toggleModalEdit = false"
                   >Cancelar</el-button
                 >
-                <el-button
-                  type="success"
-                  @click="(toggleModalPassword = false), submitPassword()"
+                <el-button type="success" @click="handleEdit()"
                   >Confirmar</el-button
                 >
               </div>
@@ -382,7 +373,7 @@
           </div>
         </div>
         <div
-          v-if="toggleModalPassword"
+          v-if="toggleModalEdit"
           class="absolute inset-0 z-40 bg-black opacity-25"
         ></div>
       </div>
@@ -417,7 +408,7 @@ export default {
     return {
       moment,
       student: {},
-      modalPassword: {
+      studentEdit: {
         birthDate: '',
         address: '',
         contact: '',
@@ -428,37 +419,37 @@ export default {
         healthPlan: '',
         note: '',
       },
-      toggleModalPassword: false,
+      toggleModalEdit: false,
 
-      rulesModalPassword: {
-        birthDate: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
-        address: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
-        contact: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
-        emergencyContact: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
-        stature: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
-        breed: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
-        sex: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
-        healthPlan: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
-        note: [
-          { required: true, message: 'Campo obrigatório', trigger: 'blur' },
-        ],
-      },
+      // rules: {
+      //   birthDate: [
+      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
+      //   ],
+      //   address: [
+      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
+      //   ],
+      //   contact: [
+      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
+      //   ],
+      //   emergencyContact: [
+      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
+      //   ],
+      //   stature: [
+      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
+      //   ],
+      //   breed: [
+      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
+      //   ],
+      //   sex: [
+      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
+      //   ],
+      //   healthPlan: [
+      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
+      //   ],
+      //   note: [
+      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
+      //   ],
+      // },
     };
   },
   async created() {
@@ -474,64 +465,48 @@ export default {
         `http://localhost:3333/student/show/${this.student.id}`
       );
       this.student = data;
-      console.log(this.student.name);
     },
-    //   async updateName() {
-    //     const newName = {
-    //       name: this.modalName.inputNewName,
-    //     };
-    //     await axios.patch(`http://localhost:3333/users/editMe/${this.user.id}`, newName);
-    //     this.user.name = this.modalName.inputNewName;
-    //   },
-    //   submitName() {
-    //     this.$refs.modalNameForm.validate((valid) => {
-    //       if (valid) {
-    //         this.updateName();
-    //       } else {
-    //         this.$notify.error({
-    //           title: 'Erro',
-    //           message: 'Nome ou senha inválidos',
-    //         });
-    //       }
-    //     });
-    //   },
-    //   async updateEmail() {
-    //     const newEmail = {
-    //       email: this.modalEmail.inputNewEmail,
-    //     };
-    //     await axios.patch(`http://localhost:3333/users/editMe/${this.user.id}`, newEmail);
-    //     this.user.email = this.modalEmail.inputNewEmail;
-    //   },
-    //   submitEmail() {
-    //     this.$refs.modalEmailForm.validate((valid) => {
-    //       if (valid && this.inputConfirmEmail === this.inputNewEmail) {
-    //         this.updateEmail();
-    //       } else {
-    //         this.$notify.error({
-    //           title: 'Erro',
-    //           message: 'Email ou senha inválidos',
-    //         });
-    //       }
-    //     });
-    //   },
-    //   async updatePassword() {
-    //     const newPassword = {
-    //       password: this.modalPassword.inputNewPassword,
-    //     };
-    //     await axios.patch(`http://localhost:3333/users/editMe/${this.user.id}`, newPassword);
-    //   },
-    //   submitPassword() {
-    //     this.$refs.modalPasswordForm.validate((valid) => {
-    //       if (valid) {
-    //         this.updatePassword();
-    //       } else {
-    //         this.$notify.error({
-    //           title: 'Erro',
-    //           message: 'Senha inválida',
-    //         });
-    //       }
-    //     });
-    //   },
+    async handleEdit() {
+      // this.$refs[formName].validate(async (valid) => {
+      //   if (valid) {
+      try {
+        const edit = await axios.patch(
+          `http://localhost:3333/student/update/${this.student.id}`,
+          this.studentEdit
+        );
+        this.$notify.success({
+          title: 'Sucesso',
+          message: 'Categoria atualizada com sucesso!',
+        });
+        this.resetForm(edit);
+        this.toggleModalEdit = false;
+      } catch (e) {
+        this.$notify.error({
+          title: 'Erro',
+          message: 'Não foi possível atualizar',
+        });
+      }
+      // } else {
+      //   this.$notify.error({
+      //     title: 'Erro',
+      //     message: 'Preencha os campos corretamente',
+      //   });
+      // }
+      // });
+    },
+    resetForm(edit) {
+      this.studentEdit = {
+        birthDate: edit.birthDate,
+        address: edit.address,
+        contact: edit.contact,
+        emergencyContact: edit.emergencyContact,
+        stature: edit.stature,
+        breed: edit.breed,
+        sex: edit.sex,
+        healthPlan: edit.healthPlan,
+        note: edit.note,
+      };
+    },
   },
 };
 </script>

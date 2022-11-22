@@ -5,9 +5,9 @@
       <el-col
         v-for="aluno in alunos"
         :key="aluno.id"
-        class="mt-2 mb-2 items-center border-b-2 border-solid p-2 flex"
+        class="my-2 items-center border-b-2 border-solid p-2 flex"
       >
-        <el-col :span="4" class="flex item-center justify-center">
+        <el-col :span="4" class="item-center flex justify-center">
           <img
             src="/images/user.png"
             class="h-20 w-20 object-cover rounded-full"
