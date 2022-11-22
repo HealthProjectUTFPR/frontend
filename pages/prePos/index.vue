@@ -310,7 +310,6 @@
 
 <script>
   import moment from 'moment';
-
   export default {
     components: {},
     data() {
@@ -361,17 +360,14 @@
     methods: {
       moment,
       async getStudents() {
-        axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-          'token'
-        )}`;
-        const { data } = await axios.get('http://localhost:3333/student/index');
+        const { data } = await this.$axios.get('http://localhost:3333/student/index');
         this.alunos = data;
+        console.log(this.alunos)
       },
       async fetchData() {
         this.loading = true;
         try {
           const { data } = await this.$axios.get("/prepos/list");
-          console.log(data)
           this.tableData = data.data;
           
                   
