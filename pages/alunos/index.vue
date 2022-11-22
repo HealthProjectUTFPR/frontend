@@ -1,6 +1,9 @@
 <template>
   <div class="grid">
     <NavBar />
+    <div class="h-7 w-full bg-gray-700 text-center">
+      <span class="font-sans text-xs font-bold text-white">Alunos</span>
+    </div>
     <el-row justify="space-between" class="p-2">
       <el-col
         v-for="aluno in alunos"

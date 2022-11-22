@@ -1,13 +1,6 @@
 <template>
   <div>
     <NavBar />
-
-    <div class="my-2 flex w-full items-center justify-end">
-      <span class="mr-1 font-sans text-xs">Aluno </span>
-      <div class="mr-1 h-8 w-8">
-        <img src="/images/user.png" class="rounded-full object-cover" />
-      </div>
-    </div>
     <div class="h-7 w-full bg-gray-700 text-center">
       <span class="font-sans text-xs font-bold text-white"
         >Informações do Aluno</span
@@ -397,15 +390,12 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import NavBar from '../../../components/bottomNav/index.vue';
+import NavBar from '@/components/bottomNav/index.vue';
 
 export default {
-  name: 'UserProfile',
-
   components: {
     NavBar,
   },
-  layout: 'empty',
 
   data() {
     return {
