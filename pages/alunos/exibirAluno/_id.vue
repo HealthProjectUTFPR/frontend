@@ -414,6 +414,71 @@ export default {
         note: '',
       },
       toggleModalEdit: false,
+      rulesModalCreate: {
+        birthDate: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        address: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        contact: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        emergencyContact: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        stature: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        breed: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        sex: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        healthPlan: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        note: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+      },
     };
   },
   async created() {
@@ -442,23 +507,27 @@ export default {
       this.student = data;
     },
     async handleEdit() {
-      try {
-        await axios.patch(
-          `http://localhost:3333/student/update/${this.student.id}`,
-          this.studentEdit
-        );
-        this.$notify.success({
-          title: 'Sucesso',
-          message: 'Categoria atualizada com sucesso!',
-        });
-        this.resetForm();
-        this.toggleModalEdit = false;
-      } catch (e) {
-        this.$notify.error({
-          title: 'Erro',
-          message: 'Não foi possível atualizar',
-        });
-      }
+      this.$refs.modalEditForm.validate(async (valid) => {
+        if (valid) {
+          try {
+            await axios.patch(
+              `http://localhost:3333/student/update/${this.student.id}`,
+              this.studentEdit
+            );
+            this.$notify.success({
+              title: 'Sucesso',
+              message: 'Categoria atualizada com sucesso!',
+            });
+            this.resetForm();
+            this.toggleModalEdit = false;
+          } catch (e) {
+            this.$notify.error({
+              title: 'Erro',
+              message: 'Não foi possível atualizar',
+            });
+          }
+        }
+      });
     },
     resetForm() {
       this.getStudent(this.student.id);

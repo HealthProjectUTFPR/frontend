@@ -1,10 +1,10 @@
 <template>
-  <div class="grid">
+  <div class="grid h-60">
     <NavBar />
     <div class="h-7 w-full bg-gray-700 text-center">
       <span class="font-sans text-xs font-bold text-white">Alunos</span>
     </div>
-    <el-row justify="space-between" class="p-2">
+    <el-row justify="space-between" class="p-2 pb-28">
       <el-col
         v-for="aluno in alunos"
         :key="aluno.id"
@@ -150,7 +150,9 @@
             </div>
           </el-form>
           <div class="mx-3 mt-11 flex justify-between">
-            <el-button type="danger" @click="toggleModalCreate = false"
+            <el-button
+              type="danger"
+              @click="(toggleModalCreate = false), resetForm()"
               >Cancelar</el-button
             >
             <el-button
@@ -222,13 +224,6 @@ export default {
           },
         ],
         emergencyContact: [
-          {
-            required: true,
-            message: 'Campo obrigatório',
-            trigger: 'blur',
-          },
-        ],
-        weight: [
           {
             required: true,
             message: 'Campo obrigatório',
@@ -311,22 +306,39 @@ export default {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
         'token'
       )}`;
-      try {
-        await axios.post(
-          'http://localhost:3333/student/create',
-          this.modalCreate
-        );
-        this.$forceUpdate();
-        this.$notify.success({
-          title: 'Sucesso',
-          message: 'Adicionado com sucesso',
-        });
-      } catch (e) {
-        this.$notify.error({
-          title: 'Erro',
-          message: 'Não foi possível adicionar',
-        });
-      }
+      this.$refs.modalCreateForm.validate(async (valid) => {
+        if (valid) {
+          try {
+            await axios.post(
+              'http://localhost:3333/student/create',
+              this.modalCreate
+            );
+            this.$notify.success({
+              title: 'Sucesso',
+              message: 'Adicionado com sucesso',
+            });
+            this.getStudents();
+            this.resetForm();
+          } catch (e) {
+            this.$notify.error({
+              title: 'Erro',
+              message: 'Não foi possível adicionar',
+            });
+          }
+        }
+      });
+    },
+    resetForm() {
+      this.modalCreate.name = '';
+      this.modalCreate.birthDate = '';
+      this.modalCreate.address = '';
+      this.modalCreate.contact = '';
+      this.modalCreate.emergencyContact = '';
+      this.modalCreate.stature = '';
+      this.modalCreate.breed = '';
+      this.modalCreate.sex = '';
+      this.modalCreate.healthPlan = '';
+      this.modalCreate.note = '';
     },
   },
 };

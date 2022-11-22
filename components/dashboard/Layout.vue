@@ -8,11 +8,13 @@
         :class="state.open ? 'lg:w-full' : 'lg:pl-4 lg:w-99'"
       >
         <TopNavigation />
+
         <main
           class="h-screen overflow-auto px-2 pb-36 pt-8 md:pb-8 md:pt-4 lg:pt-0"
         >
           <slot />
         </main>
+        <BottomNavigation />
       </div>
     </div>
   </div>
@@ -22,10 +24,16 @@
 import Overlay from './provider/Overlay.vue';
 import TopNavigation from './topnavigation/Index.vue';
 import SideNavigation from './sidenavigation/Index.vue';
+import BottomNavigation from '../bottomNav/index.vue';
 
 export default {
   name: 'DashboardLayout',
-  components: { Overlay, SideNavigation, TopNavigation },
+  components: {
+    Overlay,
+    SideNavigation,
+    TopNavigation,
+    BottomNavigation,
+  },
   inject: ['state'],
 };
 </script>
