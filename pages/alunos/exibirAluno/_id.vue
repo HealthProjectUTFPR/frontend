@@ -32,7 +32,10 @@
       </div>
       <span class="font-sans text-sm font-bold leading-5 pr-6 pb-6"></span>
     </div>
-    <div class="h-57 md: lg:7/12 mx-auto mt-16 w-7/12 shadow-2xl w-7/12">
+    <div
+      :key="componentKey"
+      class="h-57 md: lg:7/12 mx-auto mt-16 w-7/12 shadow-2xl w-7/12"
+    >
       <div class="mb-10 h-7 w-full bg-gray-700">
         <div class="mb-2 flex flex-row">
           <div class="w-2/4">
@@ -55,7 +58,7 @@
                   text-center
                 "
                 >{{
-                  moment(String(student.birthDate)).format('DD/MM/YYYY')
+                  moment(String(studentEdit.birthDate)).format('DD/MM/YYYY')
                 }}</span
               >
             </div>
@@ -407,6 +410,7 @@ export default {
   data() {
     return {
       moment,
+      componentKey: 0,
       student: {},
       studentEdit: {
         birthDate: '',
@@ -449,7 +453,7 @@ export default {
     },
     async handleEdit() {
       try {
-        const edit = await axios.patch(
+        const { data } = await axios.patch(
           `http://localhost:3333/student/update/${this.student.id}`,
           this.studentEdit
         );
@@ -457,7 +461,7 @@ export default {
           title: 'Sucesso',
           message: 'Categoria atualizada com sucesso!',
         });
-        this.resetForm(edit);
+        this.resetForm(data);
         this.toggleModalEdit = false;
       } catch (e) {
         this.$notify.error({
@@ -466,18 +470,12 @@ export default {
         });
       }
     },
-    resetForm(edit) {
-      this.studentEdit = {
-        birthDate: edit.birthDate,
-        address: edit.address,
-        contact: edit.contact,
-        emergencyContact: edit.emergencyContact,
-        stature: edit.stature,
-        breed: edit.breed,
-        sex: edit.sex,
-        healthPlan: edit.healthPlan,
-        note: edit.note,
-      };
+    resetForm(student) {
+      this.componentKey += 1;
+      this.studentEdit = student;
+      this.studentEdit.birthDate = moment(String(student.birthDate)).format(
+        'DD/MM/YYYY'
+      );
     },
   },
 };
