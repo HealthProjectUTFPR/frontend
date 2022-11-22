@@ -180,10 +180,11 @@ export default {
   inject: ['toggle'],
   methods: {
     handleCommand(command) {
+      // eslint-disable-next-line default-case
       switch (command) {
         case 'logout':
           localStorage.removeItem('token');
-          this.$router.push('/login');
+          this.$router.push('/');
           break;
         case 'profile':
           this.$router.push('/profile');

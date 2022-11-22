@@ -1,6 +1,9 @@
 <template>
   <div class="grid">
     <NavBar />
+    <div class="h-7 w-full bg-gray-700 text-center">
+      <span class="font-sans text-xs font-bold text-white">Alunos</span>
+    </div>
     <el-row justify="space-between" class="p-2">
       <el-col
         v-for="aluno in alunos"
@@ -11,7 +14,7 @@
           <img
             src="/images/user.png"
             class="h-20 w-20 object-cover rounded-full"
-            @click="handleStudent()"
+            @click="$router.push(`/alunos/exibirAluno/${aluno.id}`)"
           />
         </el-col>
         <el-col :span="18" class="flex p-4 flex-col">
@@ -106,14 +109,6 @@
               </el-form-item>
             </div>
             <div class="mx-3">
-              <el-form-item prop="weight">
-                <el-input
-                  v-model="modalCreate.weight"
-                  placeholder="Peso"
-                ></el-input>
-              </el-form-item>
-            </div>
-            <div class="mx-3">
               <el-form-item prop="stature">
                 <el-input
                   v-model="modalCreate.stature"
@@ -189,7 +184,6 @@ export default {
         address: '',
         contact: '',
         emergencyContact: '',
-        weight: '',
         stature: '',
         breed: '',
         sex: '',
@@ -333,9 +327,6 @@ export default {
           message: 'Não foi possível adicionar',
         });
       }
-    },
-    async handleStudent() {
-      this.$router.push('/exibirAluno');
     },
   },
 };

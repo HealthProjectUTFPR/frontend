@@ -12,13 +12,14 @@
     <sidenav-item title="Categoria" to="/category">
       <font-awesome-icon icon="list-ul" />
     </sidenav-item>
+    <sidenav-item title="Alunos" to="/alunos">
+      <font-awesome-icon icon="users" />
+    </sidenav-item>
   </ul>
 </template>
 
 <script>
 import SidenavItem from './Item.vue';
-
-/* ICONS */
 
 export default {
   name: 'SidenavItems',
