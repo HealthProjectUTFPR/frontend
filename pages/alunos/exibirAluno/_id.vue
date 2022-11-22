@@ -82,7 +82,7 @@
                   leading-8
                   text-center
                 "
-                >{{ student.address }}</span
+                >{{ studentEdit.address }}</span
               >
             </div>
           </div>
@@ -110,7 +110,7 @@
                   leading-8
                   text-center
                 "
-                >{{ student.contact }}</span
+                >{{ studentEdit.contact }}</span
               >
             </div>
           </div>
@@ -133,7 +133,7 @@
                   leading-8
                   text-center
                 "
-                >{{ student.emergencyContact }}</span
+                >{{ studentEdit.emergencyContact }}</span
               >
             </div>
           </div>
@@ -161,7 +161,7 @@
                   leading-8
                   text-center
                 "
-                >{{ student.healthPlan }}</span
+                >{{ studentEdit.healthPlan }}</span
               >
             </div>
           </div>
@@ -184,7 +184,7 @@
                   leading-8
                   text-center
                 "
-                >{{ student.stature }}</span
+                >{{ studentEdit.stature }}</span
               >
             </div>
           </div>
@@ -210,7 +210,7 @@
                   leading-8
                   text-center
                 "
-                >{{ student.breed }}</span
+                >{{ studentEdit.breed }}</span
               >
             </div>
           </div>
@@ -231,7 +231,7 @@
                   leading-8
                   text-center
                 "
-                >{{ student.sex }}</span
+                >{{ studentEdit.sex }}</span
               >
             </div>
           </div>
@@ -258,7 +258,7 @@
                   font-medium
                   leading-8
                 "
-                >{{ student.note }}</span
+                >{{ studentEdit.note }}</span
               >
             </div>
           </div>
@@ -366,7 +366,7 @@
                 </div>
               </el-form>
               <div class="mx-3 mt-11 flex justify-between">
-                <el-button type="danger" @click="toggleModalEdit = false"
+                <el-button type="danger" @click="handleCancel()"
                   >Cancelar</el-button
                 >
                 <el-button type="success" @click="handleEdit()"
@@ -476,6 +476,14 @@ export default {
       this.studentEdit.birthDate = moment(String(student.birthDate)).format(
         'DD/MM/YYYY'
       );
+    },
+    async handleCancel() {
+      this.componentKey += 1;
+      this.studentEdit = this.student;
+      this.studentEdit.birthDate = moment(
+        String(this.student.birthDate)
+      ).format('DD/MM/YYYY');
+      this.toggleModalEdit = false;
     },
   },
 };
