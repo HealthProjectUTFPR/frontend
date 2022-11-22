@@ -1,6 +1,7 @@
 <template>
   <div>
     <NavBar />
+
     <div class="my-2 flex w-full items-center justify-end">
       <span class="mr-1 font-sans text-xs">Aluno </span>
       <div class="mr-1 h-8 w-8">
@@ -291,7 +292,6 @@
                   <el-form-item prop="birthDate">
                     <el-input
                       v-model="studentEdit.birthDate"
-                      value="10/08/2003"
                       placeholder="Data de nascimento"
                     ></el-input>
                   </el-form-item>
@@ -301,6 +301,7 @@
                     <el-input
                       v-model="studentEdit.address"
                       placeholder="Endereço"
+                      value="fdsfds"
                     ></el-input>
                   </el-form-item>
                 </div>
@@ -384,7 +385,6 @@
           size="medium"
           icon="el-icon-s-order"
           circle
-          @click="toggleModalCreate = true"
         ></el-button>
       </div>
     </div>
@@ -394,7 +394,7 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import NavBar from '@/components/bottomNav/index.vue';
+import NavBar from '../../../components/bottomNav/index.vue';
 
 export default {
   name: 'UserProfile',
@@ -420,41 +420,22 @@ export default {
         note: '',
       },
       toggleModalEdit: false,
-
-      // rules: {
-      //   birthDate: [
-      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
-      //   ],
-      //   address: [
-      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
-      //   ],
-      //   contact: [
-      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
-      //   ],
-      //   emergencyContact: [
-      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
-      //   ],
-      //   stature: [
-      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
-      //   ],
-      //   breed: [
-      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
-      //   ],
-      //   sex: [
-      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
-      //   ],
-      //   healthPlan: [
-      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
-      //   ],
-      //   note: [
-      //     { required: false, message: 'Campo obrigatório', trigger: 'blur' },
-      //   ],
-      // },
     };
   },
   async created() {
     this.student.id = this.$route.params.id;
-    this.getStudent();
+    await this.getStudent();
+    this.studentEdit.birthDate = moment(String(this.student.birthDate)).format(
+      'DD/MM/YYYY'
+    );
+    this.studentEdit.address = this.student.address;
+    this.studentEdit.contact = this.student.contact;
+    this.studentEdit.emergencyContact = this.student.emergencyContact;
+    this.studentEdit.stature = this.student.stature;
+    this.studentEdit.breed = this.student.breed;
+    this.studentEdit.sex = this.student.sex;
+    this.studentEdit.healthPlan = this.student.healthPlan;
+    this.studentEdit.note = this.student.note;
   },
   methods: {
     async getStudent() {
@@ -467,8 +448,6 @@ export default {
       this.student = data;
     },
     async handleEdit() {
-      // this.$refs[formName].validate(async (valid) => {
-      //   if (valid) {
       try {
         const edit = await axios.patch(
           `http://localhost:3333/student/update/${this.student.id}`,
@@ -486,13 +465,6 @@ export default {
           message: 'Não foi possível atualizar',
         });
       }
-      // } else {
-      //   this.$notify.error({
-      //     title: 'Erro',
-      //     message: 'Preencha os campos corretamente',
-      //   });
-      // }
-      // });
     },
     resetForm(edit) {
       this.studentEdit = {
