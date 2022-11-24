@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BalanceEvaluation data-to-edit />
+    <BalanceEvaluation edit />
   </div>
 </template>
 
@@ -10,9 +10,6 @@ import BalanceEvaluation from '@/components/evaluationsForms/balanceForm/index.v
 export default {
   name: 'BalanceEvaluationEdit',
   components: { BalanceEvaluation },
-  mounted() {
-    console.log(this.$route.params.id);
-  },
 };
 </script>
 

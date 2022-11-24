@@ -273,9 +273,10 @@
 </template>
 
 <script>
-import imcFunc from '../../../helpers/evaluations/bodyComposition/imc/index';
-import densityFunc from '../../../helpers/evaluations/bodyComposition/density/index';
-import bodyFatFunc from '../../../helpers/evaluations/bodyComposition/bodyFat/index';
+import bodyFatFunc from '@/helpers/evaluations/bodyComposition/bodyFat/index';
+import imcFunc from '@/helpers/evaluations/bodyComposition/imc/index';
+import densityFunc from '@/helpers/evaluations/bodyComposition/density/index';
+import formatDateToInput from '@/helpers/formatDateToInput';
 
 export default {
   name: 'BodyCompositionForm',
@@ -288,12 +289,7 @@ export default {
   data() {
     return {
       evaluationId: '',
-      mockup: {
-        sex: 'Homem',
-        age: 70,
-        race: 'Branco',
-        height: 192,
-      },
+      studentInfos: {},
       bodyCompositionForm: {
         date: '',
         weight: '',
@@ -326,18 +322,6 @@ export default {
             required: true,
             message: 'Por favor, escolha uma data',
             trigger: 'change',
-          },
-        ],
-        age: [
-          {
-            required: true,
-            message: 'Por favor, informe uma idade',
-            trigger: 'blur',
-          },
-          {
-            type: 'number',
-            message: 'Por favor, informe uma idade válida (>0)',
-            trigger: 'blur',
           },
         ],
         stature: [
@@ -449,7 +433,7 @@ export default {
 
   computed: {
     waistEstature() {
-      return (this.bodyCompositionForm.waist / this.mockup.height);
+      return (this.bodyCompositionForm.waist / this.studentInfos.height);
     },
 
     waistHip() {
@@ -457,7 +441,7 @@ export default {
     },
 
     imc() {
-      return imcFunc(this.bodyCompositionForm.weight, this.mockup.height);
+      return imcFunc(this.bodyCompositionForm.weight, this.studentInfos.height);
     },
 
     sumPleats() {
@@ -465,7 +449,7 @@ export default {
     },
 
     density() {
-      return densityFunc(this.mockup.sex, this.sumPleats);
+      return densityFunc(this.studentInfos.sex, this.sumPleats);
     },
 
     bodyFat() {
@@ -490,10 +474,20 @@ export default {
   },
 
   async mounted() {
+    this.studentId = sessionStorage.getItem('id');
     if (this.$props.edit) {
+      const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
+      this.studentInfos.sex = studentInfos.sex;
+      this.studentInfos.height = studentInfos.stature;
+
+      console.log(this.studentInfos);
+
+      // console.log('local', this.studentId);
       this.evaluationId = this.$route.params.id;
       const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'bodyComposition' } });
+      console.log(data.date.slice(0, 10));
       setTimeout(() => {
+        this.bodyCompositionForm.date = formatDateToInput(data.date);
         this.bodyCompositionForm.biceps = data.biceps;
         this.bodyCompositionForm.weight = data.weight;
         this.bodyCompositionForm.hip = data.hip;
@@ -569,7 +563,7 @@ export default {
       this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'none';
       this.bodyCompositionForm.cardiovascularRisk.rcq = 'none';
 
-      if (this.mockup.sex === 'Mulher') {
+      if (this.studentInfos.sex === 'F') {
         if (this.waistEstature > 0.8) {
           waistEstatureRisk = 'increased';
           this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'Risco aumentado';

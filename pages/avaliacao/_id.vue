@@ -166,6 +166,7 @@ export default {
   components: {},
   data() {
     return {
+      studentId: '',
       window: {
         width: 0,
         height: 0,
@@ -198,6 +199,9 @@ export default {
     },
   },
   async mounted() {
+    this.studentId = this.$route.params.id;
+    sessionStorage.setItem('id', this.studentId);
+
     const { data: list } = await this.$axios.get('/evaluation', { params: { studentId: this.studentId, page: 1, limit: 20, orderBy: 'updatedAt' } });
     this.tableData = list.data.map((it) => ({
       id: it.id,
