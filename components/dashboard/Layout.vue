@@ -14,7 +14,6 @@
         >
           <slot />
         </main>
-        <BottomNavigation />
       </div>
     </div>
   </div>
@@ -24,7 +23,6 @@
 import Overlay from './provider/Overlay.vue';
 import TopNavigation from './topnavigation/Index.vue';
 import SideNavigation from './sidenavigation/Index.vue';
-import BottomNavigation from '../bottomNav/index.vue';
 
 export default {
   name: 'DashboardLayout',
@@ -32,7 +30,6 @@ export default {
     Overlay,
     SideNavigation,
     TopNavigation,
-    BottomNavigation,
   },
   inject: ['state'],
 };
