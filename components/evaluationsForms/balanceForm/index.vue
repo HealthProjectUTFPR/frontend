@@ -1,12 +1,11 @@
 <template>
-  <el-card v-if="teste" class="box-card">
+  <el-card :key="forceUpdate" class="box-card">
     <template #header>
       <div class="flex h-full w-full justify-center">
         <span class="text-center font-extrabold uppercase">TESTE DE EQUILÍBRIO DE BERG 1</span>
       </div>
     </template>
 
-    dataToEdit {{dataToEdit}}
     <el-form
       ref="balanceForm"
       :rules="rules"
@@ -134,26 +133,26 @@ export default {
 
   data() {
     return {
-      teste: false,
+      forceUpdate: false,
       balanceForm: { date: '' },
       evaluationId: '',
-      studentId: '05a2b144-9912-44a5-83ce-8889d3013e61',
-      optionsGroups: {
-        'group-1': 4,
-        'group-2': 4,
-        'group-3': 4,
-        'group-4': 4,
-        'group-5': 4,
-        'group-6': 4,
-        'group-7': 4,
-        'group-8': 4,
-        'group-9': 4,
-        'group-10': 4,
-        'group-11': 4,
-        'group-12': 4,
-        'group-13': 4,
-        'group-14': 4,
-      },
+      // studentId: 'dfd5ac06-f794-447e-9c3d-0ac83ff348c6',
+      optionsGroups: {},
+      //   'group-1': 4,
+      //   'group-2': 4,
+      //   'group-3': 4,
+      //   'group-4': 4,
+      //   'group-5': 4,
+      //   'group-6': 4,
+      //   'group-7': 4,
+      //   'group-8': 4,
+      //   'group-9': 4,
+      //   'group-10': 4,
+      //   'group-11': 4,
+      //   'group-12': 4,
+      //   'group-13': 4,
+      //   'group-14': 4,
+      // },
 
       rules: {
         date: [
@@ -168,29 +167,18 @@ export default {
     };
   },
 
-  computed: {
-    total() {
-      return Object.values(this.optionsGroups).reduce((a, b) => a + b);
-    },
-  },
+  // computed: {
+  // total() {
+  //   return Object.values(this.optionsGroups).reduce((a, b) => a + b);
+  // },
+  // },
 
   async mounted() {
+    this.studentId = sessionStorage.getItem('id');
     if (this.$props.edit) {
       this.evaluationId = this.$route.params.id;
-      const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'bodyComposition' } });
-      console.log(data);
-    }
-  },
-
-  methods: {
-    getTotalMsg() {
-      if (this.total <= 36) return { description: descriptions['total-descriptions'][0], type: 'error' };
-      if (this.total <= 44) return { description: descriptions['total-descriptions'][1], type: 'warning' };
-      return { description: descriptions['total-descriptions'][2], type: 'success' };
-    },
-
-    updateOnEdition() {
-      this.balanceForm.date = this.$props.dataToEdit.date;
+      const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'AEQ' } });
+      this.forceUpdate = !this.forceUpdate;
 
       this.optionsGroups = {
         'group-1': 0,
@@ -208,7 +196,39 @@ export default {
         'group-13': 4,
         'group-14': 4,
       };
+      console.log(data);
+      // this.updateOnEdition();
+      this.$forceUpdate();
+    }
+  },
+
+  methods: {
+    getTotalMsg() {
+      if (this.total <= 36) return { description: descriptions['total-descriptions'][0], type: 'error' };
+      if (this.total <= 44) return { description: descriptions['total-descriptions'][1], type: 'warning' };
+      return { description: descriptions['total-descriptions'][2], type: 'success' };
     },
+
+    // updateOnEdition() {
+    //   // this.balanceForm.date = this.$props.dataToEdit.date;
+
+    //   this.optionsGroups = {
+    //     'group-1': 0,
+    //     'group-2': 1,
+    //     'group-3': 4,
+    //     'group-4': 4,
+    //     'group-5': 4,
+    //     'group-6': 4,
+    //     'group-7': 4,
+    //     'group-8': 4,
+    //     'group-9': 4,
+    //     'group-10': 4,
+    //     'group-11': 4,
+    //     'group-12': 4,
+    //     'group-13': 4,
+    //     'group-14': 4,
+    //   };
+    // },
 
     async submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
@@ -217,8 +237,8 @@ export default {
           try {
             if (this.$props.edit) {
               await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
-                type: 'bodyComposition',
-                data: this.bodyCompositionForm,
+                type: 'AEQ',
+                data,
               });
 
               this.$message({

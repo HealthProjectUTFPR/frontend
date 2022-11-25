@@ -479,13 +479,8 @@ export default {
       const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
       this.studentInfos.sex = studentInfos.sex;
       this.studentInfos.height = studentInfos.stature;
-
-      console.log(this.studentInfos);
-
-      // console.log('local', this.studentId);
       this.evaluationId = this.$route.params.id;
       const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'bodyComposition' } });
-      console.log(data.date.slice(0, 10));
       setTimeout(() => {
         this.bodyCompositionForm.date = formatDateToInput(data.date);
         this.bodyCompositionForm.biceps = data.biceps;
