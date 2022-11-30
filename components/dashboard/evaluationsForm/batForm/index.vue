@@ -167,6 +167,7 @@ export default {
       classif: '',
       tableData: [],
       bateriaFunc: {
+        date: '',
         sitAndDown: '',
         elbowFlexion: '',
         marchWouldPark: '',
@@ -981,7 +982,6 @@ export default {
       if(this.bateriaFunc.sitAndDown === '' || this.bateriaFunc.elbowFlexion === '' || 
          this.bateriaFunc.marchWouldPark === '' || this.bateriaFunc.sitAndReachYourFeet === '' || 
          this.bateriaFunc.reachTheBack === '' || this.bateriaFunc.tug === ''){
-        console.log('erro')
         return
       }
       this.gerarPercentil()
@@ -1084,76 +1084,54 @@ export default {
           classif: this.resultTable6,
         })
       }
-
-      this.bateriaFunc.sitAndDown = ''
-      this.bateriaFunc.elbowFlexion = ''
-      this.bateriaFunc.marchWouldPark = ''
-      this.bateriaFunc.sitAndReachYourFeet = ''
-      this.bateriaFunc.reachTheBack = ''
-      this.bateriaFunc.tug = ''
     },
-    submitForm() {
+     submitForm() {
       if(this.resultTable1 === '' || this.resultTable2 === '' || 
          this.resultTable3 === '' || this.resultTable4 === '' || 
          this.resultTable5 === '' || this.resultTable6 === ''){
-        console.log('erro 2')
         return
       }
-      const data = {
-        sitAndDown: {
-          result: this.bateriaFunc.sitAndDown,
-          percent:
+      const teste = {
+          date: this.bateriaFunc.data,
+          sitAndDownResult: this.bateriaFunc.sitAndDown,
+          sitAndDownPercent:
             description.sentarLevantarHomem.classificacao_percentil[
               this.indiceTable1
             ],
-          classif: this.resultTable1,
-        },
-        elbowFlexion: {
-          result: this.bateriaFunc.elbowFlexion,
-          percent:
+            sitAndDownClassification: this.resultTable1,
+          elbowFlexionResult: this.bateriaFunc.elbowFlexion,
+          elbowFlexionPercent:
             description.sentarLevantarHomem.classificacao_percentil[
               this.indiceTable2
             ],
-          classif: this.resultTable2,
-        },
-        marchWouldPark: {
-          result: this.bateriaFunc.marchWouldPark,
-          percent:
+            elbowFlexionClassification: this.resultTable2,
+          marchWouldParkResult: this.bateriaFunc.marchWouldPark,
+          marchWouldParkPercent:
             description.sentarLevantarMulher.classificacao_percentil[
               this.indiceTable3
             ],
-          classif: this.resultTable3,
-        },
-        sitAndReachYourFeet: {
-          result: this.bateriaFunc.sitAndReachYourFeet,
-          percent:
+            marchWouldParkClassification: this.resultTable3,
+          sitAndReachYourFeetResult: this.bateriaFunc.sitAndReachYourFeet,
+          sitAndReachYourFeetPercent:
             description.sentarLevantarMulher.classificacao_percentil[
               this.indiceTable4
             ],
-          classif: this.resultTable4,
-        },
-        reachTheBack: {
-          result: this.bateriaFunc.reachTheBack,
-          percent:
+            sitAndReachYourFeetClassification: this.resultTable4,
+          reachTheBackResult: this.bateriaFunc.reachTheBack,
+          reachTheBackPercent:
             description.sentarLevantarMulher.classificacao_percentil[
               this.indiceTable5
             ],
-          classif: this.resultTable5,
-        },
-        tug: {
-          result: this.bateriaFunc.tug,
-          percent:
+            reachTheBackClassification: this.resultTable5,
+          tugResult: this.bateriaFunc.tug,
+          tugPercent:
             description.sentarLevantarMulher.classificacao_percentil[
               this.indiceTable6
             ],
-          classif: this.resultTable6,
-        },
+            tugClassification: this.resultTable6,
       }
-
-      console.log(data)
-      console.log(this.teste)
-      console.log(this.indiceTable3)
-      
+      console.log(teste)
+      console.log(this.bateriaFunc.data)
     },
   },
 }
