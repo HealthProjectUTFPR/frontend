@@ -19,7 +19,7 @@
         <div class="mb-2 flex flex-col">
           <span><b>Nome:</b> {{ student.name }} </span>
           <span
-            ><b><b></b>Idade:</b> 56</span
+            ><b><b></b>Idade:</b> {{ date }}</span
           >
         </div>
       </div>
@@ -381,6 +381,7 @@
           size="medium"
           icon="el-icon-s-order"
           circle
+          @click="$router.push(`/avaliacao/${student.id}`)"
         ></el-button>
       </div>
     </div>
@@ -400,6 +401,7 @@ export default {
   data() {
     return {
       moment,
+      date: 0,
       componentKey: 0,
       student: {},
       studentEdit: {
@@ -487,6 +489,9 @@ export default {
     this.studentEdit.birthDate = moment(String(this.student.birthDate)).format(
       'DD/MM/YYYY'
     );
+    let date = new Date();
+    date = date.getFullYear();
+    this.date = date - moment(String(this.student.birthDate)).format('YYYY');
     this.studentEdit.address = this.student.address;
     this.studentEdit.contact = this.student.contact;
     this.studentEdit.emergencyContact = this.student.emergencyContact;

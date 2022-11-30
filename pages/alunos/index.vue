@@ -1,14 +1,15 @@
 <template>
-  <div class="grid h-60">
+  <div class="grid h-60 mb-20">
     <NavBar />
-    <div class="h-7 w-full bg-gray-700 text-center">
+    <div class="h-7 bg-gray-700 text-center">
       <span class="font-sans text-xs font-bold text-white">Alunos</span>
     </div>
     <el-row justify="space-between" class="p-2 pb-28">
-      <el-col
+      <el-row
         v-for="aluno in alunos"
         :key="aluno.id"
-        class="my-2 items-center border-b-2 border-solid p-2 flex"
+        on-click="$router.push(`/alunos/exibirAluno/${aluno.id}`)"
+        class="w-full my-2 items-center border-b-2 border-solid p-2 flex"
       >
         <el-col :span="4" class="item-center flex justify-center">
           <img
@@ -35,9 +36,9 @@
             @click="handleDelete(aluno.id)"
           ></el-button>
         </el-col>
-      </el-col>
+      </el-row>
     </el-row>
-    <div class="flex justify-end right-20 bottom-28 absolute">
+    <div class="flex justify-end right-8 bottom-28 fixed">
       <el-button
         type="primary"
         icon="el-icon-plus"
@@ -309,10 +310,21 @@ export default {
       this.$refs.modalCreateForm.validate(async (valid) => {
         if (valid) {
           try {
-            await axios.post(
-              'http://localhost:3333/student/create',
-              this.modalCreate
-            );
+            await axios.post('http://localhost:3333/student/create', {
+              name: this.modalCreate.name,
+              address: this.modalCreate.address,
+              sex: this.modalCreate.sex,
+              breed: this.modalCreate.breed,
+              stature: this.modalCreate.stature,
+              contact: this.modalCreate.contact,
+              emergencyContact: this.modalCreate.emergencyContact,
+              healthPlan: this.modalCreate.healthPlan,
+              birthDate: moment(String(this.modalCreate.birthDate)).format(
+                'DD/MM/YYYY'
+              ),
+              note: this.modalCreate.note,
+              flag: true,
+            });
             this.$notify.success({
               title: 'Sucesso',
               message: 'Adicionado com sucesso',
