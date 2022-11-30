@@ -1,7 +1,7 @@
 <template>
   
   <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
-    
+      
     <el-table v-loading="loading" :data="tableData">
       
       <el-table-column type="expand">
@@ -10,7 +10,7 @@
           
           <!-- Pre e Pos-->
           
-          <section class="container wrap">
+          <section class="wrap container">
            
             <div class= "pre_pos_div ">
 
@@ -20,7 +20,7 @@
                 <p>{{ moment(props.row.horarioPre ).format("HH:mm")}}</p>
                 <h2>PAS(mmHg) </h2>  
                 <p>{{ props.row.pasPre }}</p>  
-                <h2>PAD(mmHg)</h2>   
+                <h2>PAD(mmHg)</h2>
                 <p>{{ props.row.padPre }}</p>
                 <h2>Glicemia </h2> 
                 <p> {{ props.row.glicemiaPre }}</p>
@@ -48,7 +48,7 @@
 
           <!-- Informaçoes gerais-->
 
-          <section class="container wrap">
+          <section class="wrap container">
 
           <div class= "info_gerais" >
               <h1>Informações Gerais</h1>
@@ -64,13 +64,14 @@
           <!-- Botões Editar e Deletar-->
       
         
-            <section class="container wrap">
+            <section class="wrap container">
               
               <div class = "edit_delet">
                
                 <el-button type="primary" round size="medium" @click="getEntity(props.row)" >Editar</el-button>
-                <el-popconfirm title="Tem certeza de que deseja excluir este item?" confirm-button-text='OK'
-                cancel-button-text='Cancelar' @confirm="handleDelete(props.$index, props.row)">
+                <el-popconfirm
+                  title="Tem certeza de que deseja excluir este item?" confirm-button-text='OK'
+                  cancel-button-text='Cancelar' @confirm="handleDelete(props.$index, props.row)">
                 <el-button  slot="reference" size="medium" type="danger" round >
                   Deletar
                 </el-button>
@@ -144,7 +145,8 @@
               <el-form-item label="PAS(mmHg)" prop="pasPre">
                 <el-row class="row" justify="space-evenly">
                   <el-col class="col-md-6 mb-3">
-                    <el-input v-model="form.pasPre" 
+                    <el-input
+                      v-model="form.pasPre" 
                       placeholder="PAS(mmHg)" 
                       type="number"
                       min="0"
@@ -157,7 +159,8 @@
               <el-form-item label="PAD(mmHg)" prop="padPre">
                 <el-row class="row-bg" justify="space-evenly">
                   <el-col class="col-md-6 mb-3">
-                    <el-input v-model="form.padPre" 
+                    <el-input 
+                      v-model="form.padPre" 
                       placeholder="PAD(mmHg)" 
                       type="number"
                       min="0"
@@ -171,7 +174,8 @@
               <el-form-item label="PES" prop="pseEPre">
                 <el-row class="row-bg" justify="space-evenly">
                   <el-col class="col-md-6 mb-3">
-                    <el-input v-model="form.pseEPre" 
+                    <el-input 
+                      v-model="form.pseEPre" 
                       placeholder="PSE-s" 
                       type="number"
                       min="0"
@@ -184,7 +188,8 @@
               <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPre">
                 <el-row class="row-bg" justify="space-evenly">
                   <el-col class="col-md-6 mb-3">
-                    <el-input v-model="form.glicemiaPre" 
+                    <el-input
+                      v-model="form.glicemiaPre" 
                       placeholder="Glicemia(mg/dL)" 
                       type="number"
                       min="0"
@@ -214,7 +219,8 @@
               <el-form-item label="PAS(mmHg)" prop="pasPos">
                 <el-row class="row" justify="space-evenly">
                   <el-col class="col-md-6 mb-3">
-                    <el-input v-model="form.pasPos" 
+                    <el-input 
+                      v-model="form.pasPos" 
                       placeholder="PAS(mmHg)" 
                       type="number"
                       min="0"
@@ -227,7 +233,8 @@
               <el-form-item label="PAD(mmHg)" prop="padPos">
                 <el-row class="row-bg" justify="space-evenly">
                   <el-col class="col-md-6 mb-3">
-                    <el-input v-model="form.padPos" 
+                    <el-input 
+                      v-model="form.padPos" 
                       placeholder="PAD(mmHg)" 
                       type="number"
                       min="0"
@@ -240,7 +247,8 @@
               <el-form-item label="PES" prop="pseEPos">
                 <el-row class="row-bg" justify="space-evenly">
                   <el-col class="col-md-6 mb-3">
-                    <el-input v-model="form.pseEPos" 
+                    <el-input 
+                      v-model="form.pseEPos" 
                       placeholder="PSE-s" 
                       type="number"
                       min="0"
@@ -253,7 +261,8 @@
               <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPos">
                 <el-row class="row-bg" justify="space-evenly">
                   <el-col class="col-md-6 mb-3">
-                    <el-input v-model="form.glicemiaPos" 
+                    <el-input 
+                      v-model="form.glicemiaPos" 
                       placeholder="Glicemia(mg/dL)" 
                       type="number"
                       min="0"
@@ -311,7 +320,8 @@
 <script>
   import moment from 'moment';
   export default {
-    components: {},
+    name: "MonitoramentoPrePos",
+    layout : "navAlunos", 
     data() {
       return {
         window: {
@@ -319,8 +329,9 @@
           height: 768,
         },
         tableData: [],
-        alunos: [],
+        value: "",
         defaultTime: "", 
+        idAluno: "",
         loading: false,
         dialogFormVisible: false,
         form: {
@@ -346,31 +357,25 @@
         },
       }
     },
-
     mounted() {
+      this.$root.$on('idAluno',(data) => { 
+        this.value = data.id
+        this.fetchData()
+      });
       window.addEventListener('resize', this.handleResize);
-      this.getStudents();
-      this.fetchData();
+      
     },
 
     destroyed() {
       window.removeEventListener('resize', this.handleResize);
     },
-  
     methods: {
       moment,
-      async getStudents() {
-        const { data } = await this.$axios.get('http://localhost:3333/student/index');
-        this.alunos = data;
-        console.log(this.alunos)
-      },
       async fetchData() {
         this.loading = true;
         try {
-          const { data } = await this.$axios.get("/prepos/list");
-          this.tableData = data.data;
-          
-                  
+          const { data } = await this.$axios.get(`/prepos/student/${this.value}`);
+          this.tableData = data.data;     
         } catch (e) {
           this.$notify.error({
             title: 'Erro',
@@ -380,27 +385,22 @@
           this.loading = false;
         }
       },
-  
       getEntity(row) {
         this.form = { ...row };
         this.dialogFormVisible = true
       },
-  
       addNewEntity() {
         this.resetForm();
         this.dialogFormVisible = true
       },
-
       filterHandler(value, row, column) {
         const { property } = column;
         return row[property] === value;
       },
-
       handleResize() {
         this.window.width = window.innerWidth;
         this.window.height = window.innerHeight;
       },
-  
       handleConfirm() {
         if (this.form.id) {
           this.handleEdit();
@@ -408,7 +408,6 @@
           this.handleCreate();
         }
       },
-  
       handleCreate() {
         this.$refs.ruleForm.validate(async (valid) => {
           if (valid) {
@@ -428,7 +427,7 @@
                 pseEPos: Number(this.form.pseEPos),
                 horarioTreino: Number(this.form.horarioTreino),
                 observacao: this.form.observacao,
-                studentId: "9e8f2113-0651-4da4-ba26-1f93fe78071a"
+                studentId: this.value
               }
               );
               this.$notify.success({
@@ -437,7 +436,6 @@
               });
               this.dialogFormVisible = false;
               this.fetchData();
-            
             } catch (e) {
               this.$notify.error({
                 title: 'Erro',
@@ -453,7 +451,6 @@
           }
         });
       },
-  
       handleEdit() {
         this.$refs.ruleForm.validate(async (valid) => {
           if (valid) {
@@ -481,7 +478,6 @@
           }
         });
       },
-  
       async handleDelete(index, row) {
         try {
           await this.$axios.delete(`/prepos/delete/${row.id}`);
@@ -506,65 +502,48 @@
 </script>
   
 <style>
-
   h1{
     font-size: 25px;
     font-weight: bold;
   }
-
   p{
     color: rgba(44, 54, 50, 0.767);
   }
-
-
   h2{
     font-size: 17px;
     font-weight: bold;
-    
   }
-  
   h3{
     font-size: 20px;
-    
   }
-
   @media only screen and (max-device-width: 507px) {
     h3{
       font-size: 17px;
-      
     }
   }
-
   @media only screen and (max-device-width: 432px) {
     h3{
-      font-size: 15px;
-      
+      font-size: 15px;     
     }
   }
-
   @media only screen and (max-device-width: 395px) {
     h3{
       font-size: 13px;
-      
     }
   }
-  
   @media only screen and (max-device-width: 375px) {
     h3{
       font-size: 20px;
     }
   }
-
   @media only screen and (max-device-width: 361px) {
     h3{
       font-size: 18px;
-
     }
   }
   @media only screen and (max-device-width: 338px) {
     h3{
       font-size: 16px;
-
     }
   }
   .text_box{
@@ -577,9 +556,7 @@
     text-align: justify;
     justify-content: center;
     align-items: center;
-
   }
-
   .pre_pos_div{
     margin: 5px;
     float: left;
@@ -587,65 +564,45 @@
     flex: 1;
     flex-direction:row;
     text-align: center;
-    
-
   }
-
   .edit_delet{
     text-align: center;
     flex: 1;
   }
-
   .pos_style{
     margin: 5px;
     float: right;
-
     flex: 1;
     text-align: center;
-    
-
   }
-
   .pre_style{
-    
     margin: 5px;
     float: left;
     flex: 1;
     text-align: center;
-    
-    
-
   }
-
   .info_gerais{
     margin: 5px;
     width: 160px;
     flex: 1;
     flex-direction:row;
     text-align: center;
-    
   }
   .wrap {
-	  flex-wrap: wrap;
+    flex-wrap: wrap;
   }
-
   .container {
-  
     margin: 0 auto;
     display: flex;
-  
   }
-
   .el-button {
     margin: 4px 0;
   }
-
   @media only screen and (min-width: 768px) {
     .el-button {
       margin: 0 4px;
     }
   }
-
   .el-row {
     margin-bottom: 20px;
   }
@@ -655,10 +612,8 @@
   .el-col {
     border-radius: 4px;
   }
-
   .grid-content {
     border-radius: 4px;
     min-height: 36px;
   }
-
 </style>

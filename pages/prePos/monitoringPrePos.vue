@@ -2,7 +2,7 @@
   
       
   <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
-      
+
     <div class="date-picker">
 
       <div class="date1">
@@ -46,18 +46,16 @@
 
 
 <script>
+
   import moment from 'moment';
-
-
-
   export default {
     name: 'GraficoLinha',
-
+    layout : "navAlunos",
     data() {
-
       return{
         valuePrePos: "",
         aluno: [],
+        idAluno: "",
         prePoso : [
           {
             value: 'Pré',
@@ -161,9 +159,11 @@
     },
     
   
-    async mounted() {
-      
-      await this.fetchData();
+    mounted() {
+      this.$root.$on('idAluno',(data) => { 
+        this.idAluno = data.id
+        this.fetchData()
+      })
     },
   
     methods: {
@@ -262,7 +262,6 @@
         
         
       },
-
       graficoPrePos () {
         this.clearseries()
         this.items.forEach((item)=>{
@@ -278,7 +277,6 @@
                 this.defineDatePos(item)
               }
           }
-          console.log(this.series)
         })
 
       },
@@ -287,14 +285,8 @@
         
         this.loading = true;
         try {
-          const { data } = await this.$axios.get("/prepos/student/f979657c-5ccd-45be-8d09-9f5cda785516");
+          const { data } = await this.$axios.get(`/prepos/student/${this.idAluno}`);
           this.items = data.data;
-          console.log(this.items)
-          
-          const {alun} = await this.$axios.get("/student/index")
-          console.log(alun)
-          this.aluno = alun
-          console.log(this.tes)
         } catch (e) {
           this.$notify.error({
             title: 'Erro',
