@@ -1,29 +1,30 @@
-<template v-slot:activator="{ on }">  
-  
-      
+<template v-slot:activator="{ on }">   
   <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
 
     <div class="date-picker">
-
-      <div class="date1">
-        <el-date-picker
-        v-model="value1"
-        type="date"
-        placeholder="do dia"
-        size="size"
-        />
+      <div class="dates">
+        <div class="date1">
+            <el-date-picker 
+            v-model="value1"
+            type="date"
+            placeholder="do dia"
+            size="size"
+            />
+        </div>
+        <div class="date2">
+          <el-date-picker
+          v-model="value2"
+          class="center"
+          type="date"
+          placeholder="até o dia"
+          size="size"
+          />
+        </div>
       </div>
-      
-      <div class="date2">
-        <el-date-picker
-        v-model="value2"
-        type="date"
-        placeholder="até o dia"
-        size="size"
-        />
-      </div>
-
-      <el-select v-model="valuePrePos"  class="choose" placeholder="Selecionar" >
+      <el-select 
+        v-model="valuePrePos"  
+        class="choose" 
+        placeholder="Selecionar" >
         <el-option
           v-for="intems in prePoso"
           :key="intems.value"
@@ -32,21 +33,27 @@
         />
       </el-select>
       
-      <el-button  type="primary" round class="button"  @click="() => graficoPrePos()" >Buscar</el-button>
-
+      <el-button  
+        type="primary" 
+        round class="button"  
+        @click="() => graficoPrePos()" >
+        Buscar
+      </el-button>
     </div>
-    
+  
     <div class = "hide">
-      <apexchart ref="chart" type="line" height="350" :options="chartOptions" :series="series"></apexchart>
+      <apexchart 
+        ref="chart" 
+        type="line" 
+        height="350" 
+        :options="chartOptions" 
+        :series="series"/>
     </div>
   </div>
- 
-    
 </template>
 
 
 <script>
-
   import moment from 'moment';
   export default {
     name: 'GraficoLinha',
@@ -120,12 +127,10 @@
           },
           tooltip: {
             custom: ({seriesIndex, dataPointIndex, w}) => {
-              
               return (
                 `<div class="arrow_box">
                   <span> test  ${ w.globals.initialSeries[seriesIndex].name} : </span>
                   ${w.globals.initialSeries[seriesIndex].data[dataPointIndex].y} 
-                
                 </div>`
               );
             }
@@ -136,7 +141,6 @@
           },
           legend: {
             position: 'top',
-           
             onItemClick: {
               toggleDataSeries: true
             },
@@ -154,118 +158,87 @@
             categories: [],
           }
         },
-        
       }
     },
-    
-  
     mounted() {
       this.$root.$on('idAluno',(data) => { 
         this.idAluno = data.id
         this.fetchData()
       })
     },
-  
     methods: {
       moment,
       clearseries(){
-
         this.series[0].data.splice(0,this.series[0].data.length)
         this.series[1].data.splice(0,this.series[1].data.length)
         this.series[2].data.splice(0,this.series[2].data.length)
         this.series[3].data.splice(0,this.series[3].data.length)
-        
       },
-
       defineDatePre(item){
-
         this.series[0].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.padPre,
           z: new Date(item.date)
         })
-
         this.series[1].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.pasPre,
           z: new Date(item.date)
         })
-        
         this.series[2].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.glicemiaPre,
           z: new Date(item.date)
         })
-
         this.series[3].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.pseEPre,
-          
         })
-
         this.series.forEach((s)=>{
-
           s.data.sort((a,b) => a.z - b.z)
-
         })
-
-
         this.$refs.chart.updateSeries(this.series);
         this.$refs.chart.updateOptions({
-          
             title: {
               text: 'Grafico Monitoramento Pré',
               align: 'center' 
             }
           }
         )     
-        
       },
-
       defineDatePos(item){
-
         this.series[0].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.padPos,
           z: new Date(item.date)
         })
-
         this.series[1].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.pasPos,
           z: new Date(item.date)
         })
-        
         this.series[2].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.glicemiaPos,
           z: new Date(item.date)
         })
-
         this.series[3].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.pseEPos,
           z: new Date(item.date)
         })
-
-        
         this.$refs.chart.updateSeries(this.series);
         this.$refs.chart.updateOptions({
-          
           title: {
             text: 'Grafico Monitoramento Pós',
             align: 'center' 
           }
         }
       )
-        
-        
-        
       },
       graficoPrePos () {
         this.clearseries()
         this.items.forEach((item)=>{
-          
           if(new Date(item.date).valueOf() >= new Date(this.value1).valueOf() &&  new Date(item.date).valueOf() <= new Date(this.value2).valueOf() ){
               if (this.valuePrePos === "Pré"){
 
@@ -278,11 +251,8 @@
               }
           }
         })
-
       },
-
       async fetchData() {
-        
         this.loading = true;
         try {
           const { data } = await this.$axios.get(`/prepos/student/${this.idAluno}`);
@@ -296,112 +266,141 @@
           this.loading = false;
         }
       },
-  
       getEntity(row) {
         this.form = { ...row };
         this.dialogFormVisible = true
       },
-
-    
     }
-
   }
 </script>
 
 
 <style scoped>
+  .date-picker {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+    flex-wrap: wrap;
+    flex: 1; 
+    width: 100%;
+  }
+  .demo-date-picker .block {
+    padding: 30px 0;
+    text-align: center;
+    border-right: solid 1px var(--el-border-color);
+    flex: 1;
+  }
+  .demo-date-picker .block:last-child {
+    border-right: none;
+  }
+  .demo-date-picker .demonstration {
+    display: block;
+    color: var(--el-text-color-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .date1{
+    margin: 5px;
+    float: right;
+    flex: 1;
+  }
+  .date2{
+    margin: 5px;
+    float: left;
+    flex: 1;
+  }
+  .choose{
+    margin: 5px;
+    float: left;
+    flex: 1;
+    width: 220px;
+  }
+  .button{
+    margin: 5px;
+    width: 10px;
+    float: left;
+    flex: 1;
+  }
+  .arrow_box {
+    position: relative;
+    background: #555;
+    height: 15px;
+    border: 2px solid #000000;
+  }
+  .arrow_box:after, .arrow_box:before {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+  .arrow_box:after {
+    border-color: rgba(85, 85, 85, 0);
+    border-right-color: #555;
+    border-width: 10px;
+    margin-top: -10px;
+  }
+  .arrow_box:before {
+    border-color: rgba(0, 0, 0, 0);
+    border-right-color: #000000;
+    border-width: 13px;
+    margin-top: -13px;
+  }
+  #chart .apexcharts-tooltip {
+    color: #fff;
+    transform: translateX(10px) translateY(10px);
+    overflow: visible !important;
+    white-space: normal !important;
+  }
+  #chart .apexcharts-tooltip span {
+    padding: 5px 10px;
+    display: inline-block;
+  }
+  @media only screen and (max-device-width: 507px) {
+    .date-picker {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      flex-wrap: wrap;
+      flex: 1; 
+      width: 100%;
+    }
+    .date-picker .dates{
+      text-align: center;
+      border-right: solid 1px var(--el-border-color);
+      flex: 1;
 
-.date-picker {
-  display: flex;
-  flex-direction: row;
-  margin: 5px;
-  flex-wrap: wrap;
-  flex: 1; 
-  width: 100%;
-  
-  
-}
-.demo-date-picker .block {
-  padding: 30px 0;
-  text-align: center;
-  border-right: solid 1px var(--el-border-color);
-  flex: 1;
-}
-.demo-date-picker .block:last-child {
-  border-right: none;
-}
-.demo-date-picker .demonstration {
-  display: block;
-  color: var(--el-text-color-secondary);
-  font-size: 14px;
-  margin-bottom: 20px;
-}
-
-.date1{
-  margin: 5px;
-  float: right;
-  flex: 1;
-  
-}
-.date2{
-  margin: 5px;
-  float: left;
-  flex: 1;
-  
-}
-.choose{
-  margin: 5px;
-  float: left;
-  flex: 1;
-}
-.button{
-  margin: 5px;
-  float: left;
-  flex: 1;
-}
-
-
-.arrow_box {
-  position: relative;
-  background: #555;
-  height: 15px;
-  border: 2px solid #000000;
-}
-.arrow_box:after, .arrow_box:before {
-  right: 100%;
-  top: 50%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-
-.arrow_box:after {
-  border-color: rgba(85, 85, 85, 0);
-  border-right-color: #555;
-  border-width: 10px;
-  margin-top: -10px;
-}
-.arrow_box:before {
-  border-color: rgba(0, 0, 0, 0);
-  border-right-color: #000000;
-  border-width: 13px;
-  margin-top: -13px;
-}
-
-#chart .apexcharts-tooltip {
-  color: #fff;
-  transform: translateX(10px) translateY(10px);
-  overflow: visible !important;
-  white-space: normal !important;
-}
-
-#chart .apexcharts-tooltip span {
-  padding: 5px 10px;
-  display: inline-block;
-}
-
-
+    }
+    .date1{
+      margin: 5px;
+      width: 100%;
+      float: left;
+      flex: 1;
+    }
+    .center{
+      text-align: center;
+      float: center;
+    }
+    .date2{
+      margin: 5px;
+      float: left;
+      width: 100%;
+      flex: 1;
+    }
+    .choose{
+      margin: 5px;
+      width: 100%;
+      float: left;
+      flex: 1;
+    }
+    .button{
+      margin: 5px;
+      width: 100%;
+      float: left;
+      flex: 1;
+    }
+  }
 </style>

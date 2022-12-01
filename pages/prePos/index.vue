@@ -331,7 +331,6 @@
         tableData: [],
         value: "",
         defaultTime: "", 
-        idAluno: "",
         loading: false,
         dialogFormVisible: false,
         form: {
@@ -348,7 +347,6 @@
           pseEPre: "number",
           pseEPos: "number",
           observacao: "string",
-          student: [],
         },
         rules: {
           date: [
