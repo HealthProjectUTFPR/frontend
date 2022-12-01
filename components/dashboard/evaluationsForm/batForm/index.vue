@@ -148,7 +148,8 @@ export default {
   data() {
     return {
       studentId: '5fb3a2c2-42e8-4fe6-b721-14c654339f05',
-      moc: null,
+      evaluationId: '',
+      studentInfos: {},
       indiceTable1: 18,
       indiceTable2: 18,
       indiceTable3: 18,
@@ -1086,6 +1087,24 @@ export default {
         })
       }
     },
+    async mounted() {
+      this.studentId = sessionStorage.getItem('id');
+      const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
+      this.studentInfos.sex = studentInfos.sex;
+      this.studentInfos.age = studentInfos.age;
+      this.evaluationId = this.$route.params.id;
+      const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'functionalBattery' }})
+      setTimeout(() => {
+        this.bateriaFunc.date = data.date;
+        this.bateriaFunc.sitAndDown = data.sitAndDown;
+        this.bateriaFunc.elbowFlexion = data.elbowFlexion;
+        this.bateriaFunc.marchWouldPark = data.marchWouldPark;
+        this.bateriaFunc.sitAndReachYourFeet = data.sitAndReachYourFeet;
+        this.bateriaFunc.reachTheBack = data.reachTheBack;
+        this.bateriaFunc.tug = data.tug;
+      }, 100);
+    },
+
      async submitForm() {
       if(this.resultTable1 === '' || this.resultTable2 === '' || 
          this.resultTable3 === '' || this.resultTable4 === '' || 
@@ -1130,7 +1149,6 @@ export default {
               this.indiceTable6
             ],
             tugClassification: this.resultTable6,
-            result: this.moc
       };
       try {
         await this.$axios.post(
