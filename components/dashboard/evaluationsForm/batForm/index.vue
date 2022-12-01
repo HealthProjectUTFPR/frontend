@@ -147,7 +147,8 @@ export default {
   name: 'BatForm',
   data() {
     return {
-      teste: 18,
+      studentId: '5fb3a2c2-42e8-4fe6-b721-14c654339f05',
+      moc: null,
       indiceTable1: 18,
       indiceTable2: 18,
       indiceTable3: 18,
@@ -1085,14 +1086,14 @@ export default {
         })
       }
     },
-     submitForm() {
+     async submitForm() {
       if(this.resultTable1 === '' || this.resultTable2 === '' || 
          this.resultTable3 === '' || this.resultTable4 === '' || 
          this.resultTable5 === '' || this.resultTable6 === ''){
         return
       }
-      const teste = {
-          date: this.bateriaFunc.data,
+      const evaluation = {
+          date: this.bateriaFunc.date,
           sitAndDownResult: this.bateriaFunc.sitAndDown,
           sitAndDownPercent:
             description.sentarLevantarHomem.classificacao_percentil[
@@ -1129,9 +1130,20 @@ export default {
               this.indiceTable6
             ],
             tugClassification: this.resultTable6,
+            result: this.moc
+      };
+      try {
+        await this.$axios.post(
+          `/evaluation/${this.studentId}`,
+          {
+            type: "functionalBattery",
+            data: evaluation,
+          },
+        );
+      } catch (error){
+        console.log(error);
       }
-      console.log(teste)
-      console.log(this.bateriaFunc.data)
+      this.$router.go();
     },
   },
 }
