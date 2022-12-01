@@ -432,10 +432,13 @@ export default {
             data: evaluation,
           },
         );
+        this.$router.go();
       } catch (error) {
-        console.log(error);
+        this.$notify.error({
+          title: 'Erro',
+          message: 'Não foi possivel salvar avaliação de mini cognição.',
+        });
       }
-      this.$router.go();
     },
   },
 };
