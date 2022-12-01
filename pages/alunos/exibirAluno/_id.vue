@@ -19,7 +19,7 @@
         <div class="mb-2 flex flex-col">
           <span><b>Nome:</b> {{ student.name }} </span>
           <span
-            ><b><b></b>Idade:</b> 56</span
+            ><b><b></b>Idade:</b> {{ date }}</span
           >
         </div>
       </div>
@@ -381,6 +381,7 @@
           size="medium"
           icon="el-icon-s-order"
           circle
+          @click="$router.push(`/avaliacao/${student.id}`)"
         ></el-button>
       </div>
     </div>
@@ -400,6 +401,7 @@ export default {
   data() {
     return {
       moment,
+      date: 0,
       componentKey: 0,
       student: {},
       studentEdit: {
@@ -414,6 +416,71 @@ export default {
         note: '',
       },
       toggleModalEdit: false,
+      rulesModalCreate: {
+        birthDate: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        address: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        contact: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        emergencyContact: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        stature: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        breed: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        sex: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        healthPlan: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+        note: [
+          {
+            required: true,
+            message: 'Campo obrigatório',
+            trigger: 'blur',
+          },
+        ],
+      },
     };
   },
   async created() {
@@ -422,6 +489,9 @@ export default {
     this.studentEdit.birthDate = moment(String(this.student.birthDate)).format(
       'DD/MM/YYYY'
     );
+    let date = new Date();
+    date = date.getFullYear();
+    this.date = date - moment(String(this.student.birthDate)).format('YYYY');
     this.studentEdit.address = this.student.address;
     this.studentEdit.contact = this.student.contact;
     this.studentEdit.emergencyContact = this.student.emergencyContact;
@@ -442,23 +512,27 @@ export default {
       this.student = data;
     },
     async handleEdit() {
-      try {
-        await axios.patch(
-          `http://localhost:3333/student/update/${this.student.id}`,
-          this.studentEdit
-        );
-        this.$notify.success({
-          title: 'Sucesso',
-          message: 'Categoria atualizada com sucesso!',
-        });
-        this.resetForm();
-        this.toggleModalEdit = false;
-      } catch (e) {
-        this.$notify.error({
-          title: 'Erro',
-          message: 'Não foi possível atualizar',
-        });
-      }
+      this.$refs.modalEditForm.validate(async (valid) => {
+        if (valid) {
+          try {
+            await axios.patch(
+              `http://localhost:3333/student/update/${this.student.id}`,
+              this.studentEdit
+            );
+            this.$notify.success({
+              title: 'Sucesso',
+              message: 'Categoria atualizada com sucesso!',
+            });
+            this.resetForm();
+            this.toggleModalEdit = false;
+          } catch (e) {
+            this.$notify.error({
+              title: 'Erro',
+              message: 'Não foi possível atualizar',
+            });
+          }
+        }
+      });
     },
     resetForm() {
       this.getStudent(this.student.id);
