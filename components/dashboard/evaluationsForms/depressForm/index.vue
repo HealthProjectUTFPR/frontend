@@ -238,12 +238,14 @@
 </template>
 
 <script>
+import formatDateToInput from '@/helpers/formatDateToInput';
 
 export default {
     name: 'DepressForm',
     data() {
       return {
-        studentId: '5fb3a2c2-42e8-4fe6-b721-14c654339f05',
+        studentId: '',
+        evaluationId: '',
         depressionForm: {
             date: '',
             campo1: false,
@@ -286,6 +288,28 @@ export default {
             this.depressionForm.campo10 + this.depressionForm.campo11 +  this.depressionForm.campo12 +
             this.depressionForm.campo13 + this.depressionForm.campo14 +  this.depressionForm.campo15;
         }
+    },
+    async mounted(){
+        this.studentId = sessionStorage.getItem('id');
+        const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'Depression'} });
+        setTimeout(() => {
+            this.depressionForm.date = formatDateToInput(data.date);
+            this.depressionForm.campo1 = data.campo1;
+            this.depressionForm.campo2 = data.campo2;
+            this.depressionForm.campo3 = data.campo3;
+            this.depressionForm.campo4 = data.campo4;
+            this.depressionForm.campo5 = data.campo5;
+            this.depressionForm.campo6 = data.campo6;
+            this.depressionForm.campo7 = data.campo7;
+            this.depressionForm.campo8 = data.campo8;
+            this.depressionForm.campo9 = data.campo9;
+            this.depressionForm.campo10 = data.campo10;
+            this.depressionForm.campo11 = data.campo11;
+            this.depressionForm.campo12 = data.campo12;
+            this.depressionForm.campo13 = data.campo13;
+            this.depressionForm.campo14 = data.campo14;
+            this.depressionForm.campo15 = data.campo15;
+        }, 100);
     },
     methods: {
         calc(){
