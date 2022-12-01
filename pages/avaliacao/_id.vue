@@ -108,13 +108,17 @@
           Escala de Depressão Geriátrica
         </el-button>
 
-        <el-button @click="outerVisible = true">
+        <el-button @click="$router.push('/avaliacao/criar/sarcopenia')">
           Avaliação de Sarcopenia
         </el-button>
 
         <el-button @click="outerVisible = true">Bateria Funcional</el-button>
 
-        <el-button @click="outerVisible = true">
+        <el-button
+          @click="
+            $router.push('/avaliacao/criar/capacidadeCardiorrespiratoria')
+          "
+        >
           Capacidade Cardiorrespiratória
         </el-button>
 
@@ -202,7 +206,14 @@ export default {
     this.studentId = this.$route.params.id;
     sessionStorage.setItem('id', this.studentId);
 
-    const { data: list } = await this.$axios.get('/evaluation', { params: { studentId: this.studentId, page: 1, limit: 20, orderBy: 'updatedAt' } });
+    const { data: list } = await this.$axios.get('/evaluation', {
+      params: {
+        studentId: this.studentId,
+        page: 1,
+        limit: 20,
+        orderBy: 'updatedAt',
+      },
+    });
     this.tableData = list.data.map((it) => ({
       id: it.id,
       avaliacao: it.name,
