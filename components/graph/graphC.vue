@@ -189,13 +189,13 @@ export default {
 
       arrav1: [],
       arrav2: [],
-      av3: [],
-      av4: [],
-      av5: [],
-      av6: [],
-      av7: [],
-      av8: [],
-      av9: [],
+      arrav3: [],
+      arrav4: [],
+      arrav5: [],
+      arrav6: [],
+      arrav7: [],
+      arrav8: [],
+      arrav9: [],
 
       student: {
         id: '',
@@ -237,22 +237,41 @@ export default {
  async created(){
     this.getUser();
 
-    const { data } = await axios.get(`http://localhost:3333/evaluation?studentId=89cd6b64-b38f-4a3c-a5e4-568757112d86&page=1&limit=1&orderBy=createdAt`);
+    const { data } = await axios.get(`http://localhost:3333/evaluation?studentId=89cd6b64-b38f-4a3c-a5e4-568757112d86&orderBy=createdAt`);
 
     data.data.forEach(d => {
       const {
         name,
-        id,
         result,
+        date,
+        imc,
+        muscleMassIndex,
+        finalFC
       } = d;
 
       if(name === 'AVD'){
-        console.log("Correto")
-        this.arrav1.push(result, id);
+        console.log("AVD")
+        this.arrav1.push(result, date);
       }
       if(name === 'AEQ'){
-        console.log("Correto")
-        this.arrav2.push(result, id);
+        console.log("AEQ")
+        this.arrav2.push(result, date);
+      }
+      if(name === 'bodyComposition'){
+        console.log("BodyComposition")
+        this.arrav3.push(imc, date);
+      }
+      if(name === 'sarcopenia'){
+        console.log("Sarcopenia")
+        this.arrav4.push(muscleMassIndex, date);
+      }
+      if(name === 'ACR'){
+        console.log("ACR")
+        this.arrav5.push(finalFC, date);
+      }
+      if(name === 'Depression'){
+        console.log("Depression")
+        this.arrav6.push(result, date);
       }
     });
 
