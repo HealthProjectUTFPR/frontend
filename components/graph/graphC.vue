@@ -16,7 +16,7 @@
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData1"
-          
+
         />
       </div>
       <div id="bar2" class=" text-center">
@@ -24,7 +24,7 @@
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData2"
-          
+
         />
       </div>
       <div id="bar3" class=" text-center">
@@ -32,7 +32,7 @@
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData3"
-          
+
         />
       </div>
       <div id="bar4" class=" text-center">
@@ -40,7 +40,7 @@
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData4"
-          
+
         />
       </div>
       <div id="bar5" class=" text-center">
@@ -48,7 +48,7 @@
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData5"
-          
+
         />
       </div>
       <div id="bar6" class=" text-center">
@@ -87,6 +87,7 @@
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import Exporter from "vue-chartjs-exporter";
+import axios from 'axios'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -97,94 +98,109 @@ export default {
     return {
       chartData1: {
         labels: [ 'January', 'February', 'March', ],
-        datasets: [ 
-          { 
+        datasets: [
+          {
             data: [40, 20, 12],
             label: 'Av1',
             backgroundColor: '#F08700'
-          } 
+          }
         ]
       },
       chartData2: {
         labels: [ 'January', 'February', 'March', ],
-        datasets: [ 
-          { 
+        datasets: [
+          {
             data: [40, 20, 12],
             label: 'Av2',
             backgroundColor: '#17BEBB'
-          } 
+          }
         ]
       },
       chartData3: {
         labels: [ 'January', 'February', 'March', ],
-        datasets: [ 
-          { 
+        datasets: [
+          {
             data: [40, 20, 12],
             label: 'Av3',
             backgroundColor: '#E4572E'
-          } 
+          }
         ]
       },
       chartData4: {
         labels: [ 'January', 'February', 'March', ],
-        datasets: [ 
-          { 
+        datasets: [
+          {
             data: [40, 20, 12],
             label: 'Av4',
             backgroundColor: '#9BC53D'
-          } 
+          }
         ]
       },
       chartData5: {
         labels: [ 'January', 'February', 'March', ],
-        datasets: [ 
-          { 
+        datasets: [
+          {
             data: [40, 20, 12],
             label: 'Av5',
             backgroundColor: '#FA7921'
-          } 
+          }
         ]
       },
       chartData6: {
         labels: [ 'January', 'February', 'March', ],
-        datasets: [ 
-          { 
+        datasets: [
+          {
             data: [40, 20, 12],
             label: 'Av6',
             backgroundColor: '#FDE74C'
-          } 
+          }
         ]
       },
       chartData7: {
         labels: [ 'January', 'February', 'March', ],
-        datasets: [ 
-          { 
+        datasets: [
+          {
             data: [40, 20, 12],
             label: 'Av7',
             backgroundColor: '#9368B7'
-          } 
+          }
         ]
       },
       chartData8: {
         labels: [ 'January', 'February', 'March', ],
-        datasets: [ 
-          { 
+        datasets: [
+          {
             data: [40, 20, 12],
             label: 'Av8',
             backgroundColor: '#E87461'
-          } 
+          }
         ]
       },
       chartData9: {
         labels: [ 'January', 'February', 'March', ],
-        datasets: [ 
-          { 
+        datasets: [
+          {
             data: [40, 20, 12],
             label: 'Av9',
             backgroundColor: '#38369A'
-          } 
+          }
         ]
       },
+
+      arrav1: [],
+      arrav2: [],
+      av3: [],
+      av4: [],
+      av5: [],
+      av6: [],
+      av7: [],
+      av8: [],
+      av9: [],
+
+      student: {
+        id: '',
+      },
+
       chartOptions: {
         responsive: true
       },
@@ -218,7 +234,42 @@ export default {
         value1: '',
     }
   },
+ async created(){
+    this.getUser();
+
+    const { data } = await axios.get(`http://localhost:3333/evaluation?studentId=89cd6b64-b38f-4a3c-a5e4-568757112d86&page=1&limit=1&orderBy=createdAt`);
+
+    data.data.forEach(d => {
+      const {
+        name,
+        id,
+        result,
+      } = d;
+
+      if(name === 'AVD'){
+        console.log("Correto")
+        this.arrav1.push(result, id);
+      }
+      if(name === 'AEQ'){
+        console.log("Correto")
+        this.arrav2.push(result, id);
+      }
+    });
+
+    console.log(this.arrav1);
+    console.log(this.arrav2);
+
+  },
   methods: {
+    async getUser(){
+      axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`;
+      const { data } = await axios.get(`http://localhost:3333/student/show/89cd6b64-b38f-4a3c-a5e4-568757112d86`);
+
+      this.student.id = data.id;
+
+      console.log(this.student.id);
+    },
+
     downloadPDF() {
       const bar = document.getElementById("bar");
       const bar2 = document.getElementById("bar2");
