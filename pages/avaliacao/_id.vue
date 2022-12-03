@@ -11,7 +11,14 @@
             icon="el-icon-circle-plus"
             @click="outerVisible = true"
           >
-            CRIAR
+            Criar
+          </el-button>
+          <el-button
+            type="primary"
+            icon="el-icon-data-analysis"
+            @click="$router.push('/avalgraficos/')"
+          >
+            Ver desempenho
           </el-button>
         </div>
       </template>
