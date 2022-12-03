@@ -1,5 +1,5 @@
 <template>
-  <el-card :key="forceUpdate" class="box-card">
+  <el-card v-if="wait" class="box-card">
     <template #header>
       <div class="flex h-full w-full justify-center">
         <span class="text-center font-extrabold uppercase">TESTE DE EQUILÍBRIO DE BERG 1</span>
@@ -27,59 +27,59 @@
     <div class="px-6 py-3">
 
       <el-form-item label="1. Sentado para em pé">
-        <RadioInputGroup class="-mt-5" group="group-1" />
+        <RadioInputGroup class="-mt-5" group="group-1" :edit="edit" :updated-value="optionsGroupsUpdated['group-1']" @update="getUpdatedInfo"/>
       </el-form-item>
 
       <el-form-item label="2. Em pé sem apoio">
-        <RadioInputGroup class="-mt-5" group="group-2" />
+        <RadioInputGroup class="-mt-5" group="group-2" :edit="edit" :updated-value="optionsGroupsUpdated['group-2']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <el-form-item label="3. Sentado sem apoio">
-        <RadioInputGroup class="-mt-5" group="group-3" />
+        <RadioInputGroup class="-mt-5" group="group-3" :edit="edit" :updated-value="optionsGroupsUpdated['group-3']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <el-form-item label="4. Em pé para sentado">
-        <RadioInputGroup class="-mt-5" group="group-4" />
+        <RadioInputGroup class="-mt-5" group="group-4" :edit="edit" :updated-value="optionsGroupsUpdated['group-4']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <el-form-item label="5. Transferências">
-        <RadioInputGroup class="-mt-5" group="group-5" />
+        <RadioInputGroup class="-mt-5" group="group-5" :edit="edit" :updated-value="optionsGroupsUpdated['group-5']" @update="getUpdatedInfo"/>
       </el-form-item>
 
       <el-form-item label="6. Em pé com os olhos fechados">
-        <RadioInputGroup class="-mt-5" group="group-6" />
+        <RadioInputGroup class="-mt-5" group="group-6" :edit="edit" :updated-value="optionsGroupsUpdated['group-6']" @update="getUpdatedInfo"/>
       </el-form-item>
 
       <el-form-item label="7. Em pé com os pés juntos">
-        <RadioInputGroup class="-mt-5" group="group-7" />
+        <RadioInputGroup class="-mt-5" group="group-7" :edit="edit" :updated-value="optionsGroupsUpdated['group-7']" @update="getUpdatedInfo"/>
       </el-form-item>
 
       <el-form-item label="8. Em pé para sentado">
-        <RadioInputGroup class="-mt-5" group="group-8" />
+        <RadioInputGroup class="-mt-5" group="group-8" :edit="edit" :updated-value="optionsGroupsUpdated['group-8']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <el-form-item label="9. Apanhar objeto do chão">
-        <RadioInputGroup class="-mt-5" group="group-9" />
+        <RadioInputGroup class="-mt-5" group="group-9" :edit="edit" :updated-value="optionsGroupsUpdated['group-9']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <el-form-item label="10. Virando-se para olhar para trás">
-        <RadioInputGroup class="-mt-5" group="group-10" />
+        <RadioInputGroup class="-mt-5" group="group-10" :edit="edit" :updated-value="optionsGroupsUpdated['group-10']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <el-form-item label="11. Girando 360°">
-        <RadioInputGroup class="-mt-5" group="group-11" />
+        <RadioInputGroup class="-mt-5" group="group-11" :edit="edit" :updated-value="optionsGroupsUpdated['group-11']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <el-form-item label="12. Colocar os pés alternadamente sobre um banco">
-        <RadioInputGroup class="-mt-5" group="group-12" />
+        <RadioInputGroup class="-mt-5" group="group-12" :edit="edit" :updated-value="optionsGroupsUpdated['group-12']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <el-form-item label="13. Em pé com um pé em frente ao outro">
-        <RadioInputGroup class="-mt-5" group="group-13" />
+        <RadioInputGroup class="-mt-5" group="group-13" :edit="edit" :updated-value="optionsGroupsUpdated['group-13']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <el-form-item label="14. Em pé apoiado em um dos pés">
-        <RadioInputGroup class="-mt-5" group="group-14" />
+        <RadioInputGroup class="-mt-5" group="group-14" :edit="edit" :updated-value="optionsGroupsUpdated['group-14']" @update="getUpdatedInfo" />
       </el-form-item>
 
       <div>
@@ -111,9 +111,12 @@
 </template>
 
 <script>
+
 import RadioInputGroup from '@/components/evaluationsForms/balanceForm/RadioInputGroup.vue';
 import descriptions from '@/components/evaluationsForms/balanceForm/descriptions';
 import BalanceForm from '@/dto/balanceForm.dto';
+import formatDateToInput from '@/helpers/formatDateToInput';
+import balanceFormAdapter from '@/helpers/adpter/balanceFormAdapter';
 
 export default {
   name: 'BalanceForm',
@@ -133,26 +136,26 @@ export default {
 
   data() {
     return {
-      forceUpdate: false,
+      wait: false,
       balanceForm: { date: '' },
       evaluationId: '',
-      // studentId: 'dfd5ac06-f794-447e-9c3d-0ac83ff348c6',
-      optionsGroups: {},
-      //   'group-1': 4,
-      //   'group-2': 4,
-      //   'group-3': 4,
-      //   'group-4': 4,
-      //   'group-5': 4,
-      //   'group-6': 4,
-      //   'group-7': 4,
-      //   'group-8': 4,
-      //   'group-9': 4,
-      //   'group-10': 4,
-      //   'group-11': 4,
-      //   'group-12': 4,
-      //   'group-13': 4,
-      //   'group-14': 4,
-      // },
+      optionsGroupsUpdated: {},
+      optionsGroups: {
+        'group-1': 4,
+        'group-2': 4,
+        'group-3': 4,
+        'group-4': 4,
+        'group-5': 4,
+        'group-6': 4,
+        'group-7': 4,
+        'group-8': 4,
+        'group-9': 4,
+        'group-10': 4,
+        'group-11': 4,
+        'group-12': 4,
+        'group-13': 4,
+        'group-14': 4,
+      },
 
       rules: {
         date: [
@@ -167,39 +170,28 @@ export default {
     };
   },
 
-  // computed: {
-  // total() {
-  //   return Object.values(this.optionsGroups).reduce((a, b) => a + b);
-  // },
-  // },
+  computed: {
+    total() {
+      if (this.edit) {
+        return Object.values(this.optionsGroupsUpdated).length
+          ? Object.values(this.optionsGroupsUpdated).reduce((a, b) => a + b) : 0;
+      }
+      return Object.values(this.optionsGroups).reduce((a, b) => a + b);
+    },
+  },
 
   async mounted() {
     this.studentId = sessionStorage.getItem('id');
     if (this.$props.edit) {
       this.evaluationId = this.$route.params.id;
       const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'AEQ' } });
-      this.forceUpdate = !this.forceUpdate;
 
-      this.optionsGroups = {
-        'group-1': 0,
-        'group-2': 1,
-        'group-3': 4,
-        'group-4': 4,
-        'group-5': 4,
-        'group-6': 4,
-        'group-7': 4,
-        'group-8': 4,
-        'group-9': 4,
-        'group-10': 4,
-        'group-11': 4,
-        'group-12': 4,
-        'group-13': 4,
-        'group-14': 4,
-      };
-      console.log(data);
-      // this.updateOnEdition();
-      this.$forceUpdate();
-    }
+      setTimeout(() => {
+        this.optionsGroupsUpdated = balanceFormAdapter(data);
+        this.balanceForm.date = formatDateToInput(data.date);
+        this.wait = true;
+      }, 10);
+    } else this.wait = true;
   },
 
   methods: {
@@ -209,26 +201,9 @@ export default {
       return { description: descriptions['total-descriptions'][2], type: 'success' };
     },
 
-    // updateOnEdition() {
-    //   // this.balanceForm.date = this.$props.dataToEdit.date;
-
-    //   this.optionsGroups = {
-    //     'group-1': 0,
-    //     'group-2': 1,
-    //     'group-3': 4,
-    //     'group-4': 4,
-    //     'group-5': 4,
-    //     'group-6': 4,
-    //     'group-7': 4,
-    //     'group-8': 4,
-    //     'group-9': 4,
-    //     'group-10': 4,
-    //     'group-11': 4,
-    //     'group-12': 4,
-    //     'group-13': 4,
-    //     'group-14': 4,
-    //   };
-    // },
+    getUpdatedInfo(value, group) {
+      this.optionsGroupsUpdated[group] = value;
+    },
 
     async submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
@@ -242,7 +217,7 @@ export default {
               });
 
               this.$message({
-                message: 'Avaliação de atualizada com sucesso!',
+                message: 'Avaliação atualizada com sucesso!',
                 type: 'success',
               });
             } else {
@@ -252,7 +227,7 @@ export default {
               });
 
               this.$message({
-                message: 'Avaliação de criada com sucesso!',
+                message: 'Avaliação criada com sucesso!',
                 type: 'success',
               });
             }

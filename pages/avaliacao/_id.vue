@@ -199,7 +199,8 @@ export default {
     },
   },
   async mounted() {
-    this.studentId = this.$route.params.id;
+    // this.studentId = this.$route.params.id;
+    this.studentId = 'dfd5ac06-f794-447e-9c3d-0ac83ff348c6';
     sessionStorage.setItem('id', this.studentId);
 
     const { data: list } = await this.$axios.get('/evaluation', { params: { studentId: this.studentId, page: 1, limit: 20, orderBy: 'updatedAt' } });

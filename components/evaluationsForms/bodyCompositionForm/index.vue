@@ -508,7 +508,7 @@ export default {
               });
 
               this.$message({
-                message: 'Avaliação de atualizada com sucesso!',
+                message: 'Avaliação atualizada com sucesso!',
                 type: 'success',
               });
             } else {
@@ -518,7 +518,7 @@ export default {
               });
 
               this.$message({
-                message: 'Avaliação de criada com sucesso!',
+                message: 'Avaliação criada com sucesso!',
                 type: 'success',
               });
             }

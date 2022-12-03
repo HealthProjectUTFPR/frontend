@@ -1,3 +1,3 @@
-const formatDateToInput = (date) => new Date(date).getTime() + 80000000;
+const formatDateToInput = (date) => new Date(date).getTime();
 
 export default formatDateToInput;

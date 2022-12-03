@@ -2,10 +2,11 @@
   <div class="mt-2">
     <span class="demonstration"></span>
     <el-slider
-      v-model="optionsGroups[group]" :max="4"
+      v-model="item" :max="4"
       :step="1"
       input-size="large"
-      input>
+      input
+      @change="updateValue">
     </el-slider>
 
     <span class="mt-3 block text-xs md:text-sm md:mt-0 md:inline">{{ getDescription(group, optionsGroups[group]) }}</span>
@@ -24,10 +25,21 @@ export default {
       type: String,
       default: '',
     },
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+    updatedValue: {
+      type: Number,
+      default: 0,
+    },
   },
 
   data() {
-    return { screenWidthSize: window.innerWidth };
+    return {
+      screenWidthSize: window.innerWidth,
+      item: this.edit ? this.updatedValue : this.optionsGroups[this.group],
+    };
   },
 
   mounted() {
@@ -43,6 +55,11 @@ export default {
   methods: {
     onResize() {
       this.screenWidthSize = window.innerWidth;
+    },
+
+    updateValue(value) {
+      this.optionsGroups[this.group] = value;
+      this.$emit('update', value, this.group);
     },
 
     getDescription(group, description) {
