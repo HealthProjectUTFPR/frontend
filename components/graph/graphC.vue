@@ -88,6 +88,7 @@ import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import Exporter from "vue-chartjs-exporter";
 import axios from 'axios'
+import moment from 'moment'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -237,13 +238,14 @@ export default {
  async created(){
     this.getUser();
 
-    const { data } = await axios.get(`http://localhost:3333/evaluation?studentId=89cd6b64-b38f-4a3c-a5e4-568757112d86&orderBy=createdAt`);
+    const { data } = await axios.get(`http://localhost:3333/evaluation?studentId=96d0c75f-bed5-4f3c-92c4-e6ae19e953d8&orderBy=createdAt`);
 
     data.data.forEach(d => {
+      const date = moment(d.date, "YYYY-MM-DD HH:mm:ss").format('DD/MM/YYYY');
+
       const {
         name,
         result,
-        date,
         imc,
         muscleMassIndex,
         finalFC
@@ -280,13 +282,8 @@ export default {
 
   },
   methods: {
-    async getUser(){
+    getUser(){
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`;
-      const { data } = await axios.get(`http://localhost:3333/student/show/89cd6b64-b38f-4a3c-a5e4-568757112d86`);
-
-      this.student.id = data.id;
-
-      console.log(this.student.id);
     },
 
     downloadPDF() {
