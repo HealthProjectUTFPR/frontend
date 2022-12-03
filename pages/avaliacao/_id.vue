@@ -203,25 +203,10 @@ export default {
     },
   },
   async mounted() {
-    // this.studentId = this.$route.params.id;
-    this.studentId = 'dfd5ac06-f794-447e-9c3d-0ac83ff348c6';
+    this.studentId = this.$route.params.id;
     sessionStorage.setItem('id', this.studentId);
 
-    const { data: list } = await this.$axios.get('/evaluation', {
-      params: {
-        studentId: this.studentId,
-        page: 1,
-        limit: 20,
-        orderBy: 'updatedAt',
-      },
-    });
-    this.tableData = list.data.map((it) => ({
-      id: it.id,
-      avaliacao: it.name,
-      data: formatDate(it.date),
-      resultado: it.result,
-      to: getEditRouter(it.name),
-    }));
+    await this.handleGetEvaluations();
 
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
@@ -248,8 +233,28 @@ export default {
     handleEdit(row) {
       this.$router.push(`${row.to}/${row.id}`);
     },
-    handleDelete() {
-      console.log(this.evaluationToBeDeleted);
+    async handleDelete() {
+      this.openDeleteModal = false;
+      await this.$axios.delete(`/evaluation/${this.evaluationToBeDeleted.row.id}`);
+      await this.handleGetEvaluations();
+    },
+
+    async handleGetEvaluations() {
+      const { data: list } = await this.$axios.get('/evaluation', {
+        params: {
+          studentId: this.studentId,
+          page: 1,
+          limit: 20,
+          orderBy: 'updatedAt',
+        },
+      });
+      this.tableData = list.data.map((it) => ({
+        id: it.id,
+        avaliacao: it.name,
+        data: formatDate(it.date),
+        resultado: it.result,
+        to: getEditRouter(it.name),
+      }));
     },
   },
 };
