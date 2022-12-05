@@ -25,6 +25,7 @@
     "chart.js": "^3.9.1",
     "core-js": "^3.15.1",
     "element-ui": "^2.15.10",
+    "moment": "^2.29.4",
     "nuxt": "^2.15.7",
     "vue-chartjs": "^4.1.2",
     "vue-chartjs-exporter": "^1.0.2"

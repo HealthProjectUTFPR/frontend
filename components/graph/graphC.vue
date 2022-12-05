@@ -97,16 +97,7 @@ export default {
   components: { Bar },
   data() {
     return {
-      chartData1: {
-        labels: [ 'January', 'February', 'March', ],
-        datasets: [
-          {
-            data: [40, 20, 12],
-            label: 'Av1',
-            backgroundColor: '#F08700'
-          }
-        ]
-      },
+      chartData1: {},
       chartData2: {
         labels: [ 'January', 'February', 'March', ],
         datasets: [
@@ -238,7 +229,7 @@ export default {
  async created(){
     this.getUser();
 
-    const { data } = await axios.get(`http://localhost:3333/evaluation?studentId=96d0c75f-bed5-4f3c-92c4-e6ae19e953d8&orderBy=createdAt`);
+    const { data } = await axios.get(`http://localhost:3333/evaluation?studentId=${sessionStorage.getItem('id')}&orderBy=createdAt`);
 
     data.data.forEach(d => {
       const date = moment(d.date, "YYYY-MM-DD HH:mm:ss").format('DD/MM/YYYY');
@@ -252,34 +243,40 @@ export default {
       } = d;
 
       if(name === 'AVD'){
-        console.log("AVD")
-        this.arrav1.push(result, date);
+        this.arrav1.push({total: result, date});
       }
       if(name === 'AEQ'){
-        console.log("AEQ")
-        this.arrav2.push(result, date);
+        this.arrav2.push({total: result, date});
       }
       if(name === 'bodyComposition'){
-        console.log("BodyComposition")
-        this.arrav3.push(imc, date);
+        this.arrav3.push({total: imc, date});
       }
       if(name === 'sarcopenia'){
-        console.log("Sarcopenia")
-        this.arrav4.push(muscleMassIndex, date);
+        this.arrav4.push({total: muscleMassIndex, date});
       }
       if(name === 'ACR'){
-        console.log("ACR")
-        this.arrav5.push(finalFC, date);
+        this.arrav5.push({total: finalFC, date});
       }
       if(name === 'Depression'){
-        console.log("Depression")
-        this.arrav6.push(result, date);
+        this.arrav6.push({total: result, date});
       }
     });
 
-    console.log(this.arrav1);
-    console.log(this.arrav2);
+    console.log(this.arrav1[0]);
 
+    const dates1 = this.arrav1.map(d => d.date).reverse()
+    const totals1 = this.arrav1.map (d => d.total).reverse()
+
+    this.chartData1 = {
+        labels: dates1,
+        datasets: [
+          {
+            data: totals1,
+            label: 'Av1',
+            backgroundColor: '#F08700'
+          }
+        ]
+      }
   },
   methods: {
     getUser(){
