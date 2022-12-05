@@ -1091,7 +1091,7 @@ export default {
       this.studentId = sessionStorage.getItem('id');
       const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
       this.studentInfos.sex = studentInfos.sex;
-      this.studentInfos.age = studentInfos.age;
+      this.studentInfos.birthDate = studentInfos.birthDate;
       this.evaluationId = this.$route.params.id;
       const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'functionalBattery' }})
       setTimeout(() => {
