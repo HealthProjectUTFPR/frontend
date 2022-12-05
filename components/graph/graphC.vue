@@ -12,7 +12,7 @@
     </div>
     <div class="grid grid-cols-1 mt-5 gap-x-8 gap-y-8 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
       <div id="bar" class=" text-center">
-        <span>Av1</span>
+        <span class="font-semibold">Independência nas atividades diárias</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData1"
@@ -20,7 +20,7 @@
         />
       </div>
       <div id="bar2" class=" text-center">
-        <span>Av2</span>
+        <span class="font-semibold">Equilibrio</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData2"
@@ -28,7 +28,7 @@
         />
       </div>
       <div id="bar3" class=" text-center">
-        <span>Av3</span>
+        <span class="font-semibold">Composição corporal</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData3"
@@ -36,7 +36,7 @@
         />
       </div>
       <div id="bar4" class=" text-center">
-        <span>Av4</span>
+        <span class="font-semibold">Sarcopenia</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData4"
@@ -44,7 +44,7 @@
         />
       </div>
       <div id="bar5" class=" text-center">
-        <span>Av5</span>
+        <span class="font-semibold">Capacidade Cardiorrespiratória.</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData5"
@@ -52,28 +52,28 @@
         />
       </div>
       <div id="bar6" class=" text-center">
-        <span>Av6</span>
+        <span class="font-semibold">Depressão geriátrica</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData6"
         />
       </div>
       <div id="bar7" class=" text-center">
-        <span>Av7</span>
+        <span class="font-semibold">Fragilidade</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData7"
         />
       </div>
       <div id="bar8" class=" text-center">
-        <span>Av8</span>
+        <span class="font-semibold">Av8</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData8"
         />
       </div>
       <div id="bar9" class=" text-center">
-        <span>Av9</span>
+        <span class="font-semibold">Av9</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData9"
@@ -98,86 +98,14 @@ export default {
   data() {
     return {
       chartData1: {},
-      chartData2: {
-        labels: [ 'January', 'February', 'March', ],
-        datasets: [
-          {
-            data: [40, 20, 12],
-            label: 'Av2',
-            backgroundColor: '#17BEBB'
-          }
-        ]
-      },
-      chartData3: {
-        labels: [ 'January', 'February', 'March', ],
-        datasets: [
-          {
-            data: [40, 20, 12],
-            label: 'Av3',
-            backgroundColor: '#E4572E'
-          }
-        ]
-      },
-      chartData4: {
-        labels: [ 'January', 'February', 'March', ],
-        datasets: [
-          {
-            data: [40, 20, 12],
-            label: 'Av4',
-            backgroundColor: '#9BC53D'
-          }
-        ]
-      },
-      chartData5: {
-        labels: [ 'January', 'February', 'March', ],
-        datasets: [
-          {
-            data: [40, 20, 12],
-            label: 'Av5',
-            backgroundColor: '#FA7921'
-          }
-        ]
-      },
-      chartData6: {
-        labels: [ 'January', 'February', 'March', ],
-        datasets: [
-          {
-            data: [40, 20, 12],
-            label: 'Av6',
-            backgroundColor: '#FDE74C'
-          }
-        ]
-      },
-      chartData7: {
-        labels: [ 'January', 'February', 'March', ],
-        datasets: [
-          {
-            data: [40, 20, 12],
-            label: 'Av7',
-            backgroundColor: '#9368B7'
-          }
-        ]
-      },
-      chartData8: {
-        labels: [ 'January', 'February', 'March', ],
-        datasets: [
-          {
-            data: [40, 20, 12],
-            label: 'Av8',
-            backgroundColor: '#E87461'
-          }
-        ]
-      },
-      chartData9: {
-        labels: [ 'January', 'February', 'March', ],
-        datasets: [
-          {
-            data: [40, 20, 12],
-            label: 'Av9',
-            backgroundColor: '#38369A'
-          }
-        ]
-      },
+      chartData2: {},
+      chartData3: {},
+      chartData4: {},
+      chartData5: {},
+      chartData6: {},
+      chartData7: {},
+      chartData8: {},
+      chartData9: {},
 
       arrav1: [],
       arrav2: [],
@@ -196,6 +124,7 @@ export default {
       chartOptions: {
         responsive: true
       },
+
       pickerOptions: {
           shortcuts: [{
             text: 'Last week',
@@ -239,7 +168,8 @@ export default {
         result,
         imc,
         muscleMassIndex,
-        finalFC
+        finalFC,
+        score
       } = d;
 
       if(name === 'AVD'){
@@ -260,6 +190,9 @@ export default {
       if(name === 'Depression'){
         this.arrav6.push({total: result, date});
       }
+      if(name === 'fragilidade'){
+        this.arrav7.push({total: score, date});
+      }
     });
 
     console.log(this.arrav1[0]);
@@ -268,16 +201,101 @@ export default {
     const totals1 = this.arrav1.map (d => d.total).reverse()
 
     this.chartData1 = {
-        labels: dates1,
-        datasets: [
-          {
-            data: totals1,
-            label: 'Av1',
-            backgroundColor: '#F08700'
-          }
-        ]
-      }
+      labels: dates1,
+      datasets: [
+        {
+          data: totals1,
+          label: 'AVD',
+          backgroundColor: '#F08700'
+        }
+      ]
+    }
+
+    const dates2 = this.arrav2.map(d => d.date).reverse()
+    const totals2 = this.arrav2.map (d => d.total).reverse()
+
+    this.chartData2 = {
+      labels: dates2,
+      datasets: [
+        {
+          data: totals2,
+          label: 'AEQ',
+          backgroundColor: '#17BEBB'
+        }
+      ]
+    }
+
+    const dates3 = this.arrav3.map(d => d.date).reverse()
+    const totals3 = this.arrav3.map (d => d.total).reverse()
+
+    this.chartData3 = {
+      labels: dates3,
+      datasets: [
+        {
+          data: totals3,
+          label: 'Composição Corporal',
+          backgroundColor: '#E4572E'
+        }
+      ]
+    }
+
+    const dates4 = this.arrav4.map(d => d.date).reverse()
+    const totals4 = this.arrav4.map (d => d.total).reverse()
+
+    this.chartData4 = {
+      labels: dates4,
+      datasets: [
+        {
+          data: totals4,
+          label: 'Sarcopenia',
+          backgroundColor: '#9BC53D'
+        }
+      ]
+    }
+
+    const dates5 = this.arrav5.map(d => d.date).reverse()
+    const totals5 = this.arrav5.map (d => d.total).reverse()
+
+    this.chartData5 = {
+      labels: dates5,
+      datasets: [
+        {
+          data: totals5,
+          label: 'ACR',
+          backgroundColor: '#FA7921'
+        }
+      ]
+    }
+
+    const dates6 = this.arrav6.map(d => d.date).reverse()
+    const totals6 = this.arrav6.map (d => d.total).reverse()
+
+    this.chartData6 = {
+      labels: dates6,
+      datasets: [
+        {
+          data: totals6,
+          label: 'Depression',
+          backgroundColor: '#FDE74C'
+        }
+      ]
+    }
+
+    const dates7 = this.arrav7.map(d => d.date).reverse()
+    const totals7 = this.arrav7.map (d => d.total).reverse()
+
+    this.chartData7 = {
+      labels: dates7,
+      datasets: [
+        {
+          data: totals7,
+          label: 'Fragilidade',
+          backgroundColor: '#9368B7'
+        }
+      ]
+    }
   },
+
   methods: {
     getUser(){
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`;
@@ -294,7 +312,7 @@ export default {
       const bar8 = document.getElementById("bar8");
       const bar9 = document.getElementById("bar9");
       const exp = new Exporter([bar, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9]);
-      exp.export_pdf().then((pdf) => pdf.save("charts.pdf")); // returns a jsPDF doc object which you can do whatever you wish with.
+      exp.export_pdf().then((pdf) => pdf.save("Gráficos.pdf"));
     }
   }
 }
