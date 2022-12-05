@@ -238,10 +238,15 @@
 </template>
 
 <script>
-import formatDateToInput from '@/helpers/formatDateToInput';
 
 export default {
     name: 'DepressForm',
+    props: {
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+    },
     data() {
       return {
         studentId: '',
@@ -291,9 +296,10 @@ export default {
     },
     async mounted(){
         this.studentId = sessionStorage.getItem('id');
-        const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'Depression'} });
-        setTimeout(() => {
-            this.depressionForm.date = formatDateToInput(data.date);
+        if(this.$props.edit){
+            const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'Depression'} });
+            setTimeout(() => {
+            this.depressionForm.date = (data.date);
             this.depressionForm.campo1 = data.campo1;
             this.depressionForm.campo2 = data.campo2;
             this.depressionForm.campo3 = data.campo3;
@@ -310,6 +316,7 @@ export default {
             this.depressionForm.campo14 = data.campo14;
             this.depressionForm.campo15 = data.campo15;
         }, 100);
+        }
     },
     methods: {
         calc(){
