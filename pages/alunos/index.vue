@@ -25,7 +25,7 @@
           >
           <span class="text-base text-gray-500 mt-2"
             >Data de nascimento:
-            {{ moment(String(aluno.birthDate)).format('DD/MM/YYYY') }}</span
+            {{ moment(String(aluno.birthDate)).format('MM/DD/YYYY') }}</span
           >
         </el-col>
         <el-col :span="2">
@@ -79,10 +79,12 @@
             </div>
             <div class="mx-3 mt-3 mb-2">
               <el-form-item prop="birthDate">
-                <el-input
+                <el-date-picker
                   v-model="modalCreate.birthDate"
-                  placeholder="Data de nascimento"
-                ></el-input>
+                  type="date"
+                  placeholder="Data"
+                >
+                </el-date-picker>
               </el-form-item>
             </div>
             <div class="mx-3 mt-3 mb-2">
@@ -127,10 +129,15 @@
             </div>
             <div class="mx-3">
               <el-form-item prop="sex">
-                <el-input
-                  v-model="modalCreate.sex"
-                  placeholder="Sexo"
-                ></el-input>
+                <el-select v-model="modalCreate.sex" placeholder="Sexo">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </div>
             <div class="mx-3">
@@ -179,6 +186,16 @@ export default {
   },
   data() {
     return {
+      options: [
+        {
+          value: 'M',
+          label: 'Masculino',
+        },
+        {
+          value: 'F',
+          label: 'Feminino',
+        },
+      ],
       alunos: [],
       moment,
       modalCreate: {
