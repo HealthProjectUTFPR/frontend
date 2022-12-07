@@ -1,13 +1,6 @@
 <template>
   <div class=" py-4 px-4 rounded-2xl bg-white shadow">
-    <div class="flex gap-2 justify-between">
-      <el-date-picker
-      v-model="value1"
-      type="daterange"
-      range-separator="-"
-      start-placeholder="Data Inicial"
-      end-placeholder="Data Final">
-      </el-date-picker>
+    <div class="flex gap-2 justify-center">
       <el-button type="primary" @click="downloadPDF()">Gerar Relátorio PDF</el-button>
     </div>
     <div class="grid grid-cols-1 mt-5 gap-x-8 gap-y-8 2xl:grid-cols-3 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1">
@@ -66,14 +59,14 @@
         />
       </div>
       <div id="bar8" class=" text-center">
-        <span class="font-semibold">Av8</span>
+        <span class="font-semibold">Bateria funcional</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData8"
         />
       </div>
       <div id="bar9" class=" text-center">
-        <span class="font-semibold">Av9</span>
+        <span class="font-semibold">Bateria funcional</span>
         <Bar
           :chart-options="chartOptions"
           :chart-data="chartData9"
@@ -117,42 +110,9 @@ export default {
       arrav8: [],
       arrav9: [],
 
-      student: {
-        id: '',
-      },
-
       chartOptions: {
         responsive: true
       },
-
-      pickerOptions: {
-          shortcuts: [{
-            text: 'Last week',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: 'Last month',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: 'Last 3 months',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit('pick', [start, end]);
-            }
-          }]
-        },
-        value1: '',
     }
   },
  async created(){
@@ -169,7 +129,9 @@ export default {
         imc,
         muscleMassIndex,
         finalFC,
-        score
+        score,
+        sitAndDownResult,
+        elbowFlexionResult
       } = d;
 
       if(name === 'AVD'){
@@ -193,9 +155,11 @@ export default {
       if(name === 'fragilidade'){
         this.arrav7.push({total: score, date});
       }
+      if(name === 'functionalBattery'){
+        this.arrav8.push({total: sitAndDownResult, date});
+        this.arrav9.push({total: elbowFlexionResult, date});
+      }
     });
-
-    console.log(this.arrav1[0]);
 
     const dates1 = this.arrav1.map(d => d.date).reverse()
     const totals1 = this.arrav1.map (d => d.total).reverse()
@@ -233,7 +197,7 @@ export default {
       datasets: [
         {
           data: totals3,
-          label: 'Composição Corporal',
+          label: 'IMC',
           backgroundColor: '#E4572E'
         }
       ]
@@ -275,7 +239,7 @@ export default {
       datasets: [
         {
           data: totals6,
-          label: 'Depression',
+          label: 'Depressão',
           backgroundColor: '#FDE74C'
         }
       ]
@@ -291,6 +255,34 @@ export default {
           data: totals7,
           label: 'Fragilidade',
           backgroundColor: '#9368B7'
+        }
+      ]
+    }
+
+    const dates8 = this.arrav8.map(d => d.date).reverse()
+    const totals8 = this.arrav8.map (d => d.total).reverse()
+
+    this.chartData8 = {
+      labels: dates8,
+      datasets: [
+        {
+          data: totals8,
+          label: 'Sentar e abaixar',
+          backgroundColor: '#E87461'
+        }
+      ]
+    }
+
+    const dates9 = this.arrav9.map(d => d.date).reverse()
+    const totals9 = this.arrav9.map (d => d.total).reverse()
+
+    this.chartData9 = {
+      labels: dates9,
+      datasets: [
+        {
+          data: totals9,
+          label: 'Flexão de cotovelo',
+          backgroundColor: '#38369A'
         }
       ]
     }
