@@ -20,10 +20,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '@/plugins/element-ui',
-    '@/plugins/axios',
-  ],
+  plugins: ['@/plugins/element-ui', '@/plugins/axios'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -53,7 +50,11 @@ export default {
         Vary: '*',
       },
     },
-    extend(config, ctx) {},
+    postcss: {
+      plugins: {
+        'postcss-custom-properties': false,
+      },
+    },
   },
 
   // Server Configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-server
