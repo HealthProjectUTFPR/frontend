@@ -9,8 +9,7 @@
       <div class="OptionsPicker">
           <div class="order1">
             <el-select 
-              v-model="value"
-              :required="!selected" 
+              v-model="value" 
               class="select" 
               filterable placeholder="Alunos"
             >
@@ -285,13 +284,13 @@
         if(this.graphon === false){ 
           this.changeDiplay2();
           if(this.valuePrePos === "" || this.value === ""  || this.value1 === null || this.value2 ===null){
-            this.$notify.error({
-            title: 'Erro',
+            this.$notify.warning({
+            title: 'Aviso',
             message: 'Algum campo não foi preenchido corretamente'
           });
           }else{
-            this.$notify.error({
-              title: 'Erro',
+            this.$notify.warning({
+              title: 'Aviso',
               message: 'Não há registro de dados na faixa de tempo selecionada'
             });
           }
