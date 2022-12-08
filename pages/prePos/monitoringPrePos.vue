@@ -1,67 +1,98 @@
-<template v-slot:activator="{ on }">   
-  <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
+<template v-slot:activator="{ on }">  
+  <div>
+    <div class="h-7 w-full bg-gray-700 text-center">
+      <span class="font-sans text-xs font-bold text-white"
+        >Gráfico do Monitoramento</span
+      >
+    </div>
 
-    <div class="date-picker">
-      <div class="dates">
-        <div class="date1">
-            <el-date-picker 
-            v-model="value1"
-            type="date"
-            placeholder="do dia"
-            size="size"
-            />
-        </div>
-        <div class="date2">
-          <el-date-picker
-          v-model="value2"
-          class="center"
-          type="date"
-          placeholder="até o dia"
-          size="size"
-          />
+    <div class="shadow-lg  p-4 bg-white dark:bg-gray-700 w-full">
+      <div class="OptionsPicker">
+        
+          <div class="order1">
+            <el-select 
+              v-model="value" 
+              class="select" 
+              filterable placeholder="Alunos"
+            >
+              <el-option
+                v-for="item in alunos"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </div>
+          <div class="order3">
+            <div class="date">
+              <el-date-picker 
+              v-model="value1"
+              type="date"
+              placeholder="do dia"
+              size="size"
+              />
+            </div>
+          </div>
+          <div class="order4">
+            <div class="date">
+              <el-date-picker
+              v-model="value2"
+              type="date"
+              placeholder="até o dia"
+              size="size"
+              />
+            </div>
+          </div>
+          <div class="order2">
+            <el-select 
+              v-model="valuePrePos"  
+              class="select" 
+              placeholder="Pré ou Pós" >
+              <el-option
+                v-for="intems in prePoso"
+                :key="intems.value"
+                :label="intems.label"
+                :value="intems.value"
+              />
+            </el-select>
+          </div>
+          <div class="order5">
+            <el-button  
+              type="primary" 
+              round class="btt2"  
+              @click="() => graficoPrePos()" >
+              Buscar
+            </el-button>
+          </div>
         </div>
       </div>
-      <el-select 
-        v-model="valuePrePos"  
-        class="choose" 
-        placeholder="Selecionar" >
-        <el-option
-          v-for="intems in prePoso"
-          :key="intems.value"
-          :label="intems.label"
-          :value="intems.value"
-        />
-      </el-select>
-      
-      <el-button  
-        type="primary" 
-        round class="button"  
-        @click="() => graficoPrePos()" >
-        Buscar
-      </el-button>
-    </div>
-  
-    <div class = "hide">
-      <apexchart 
+      <div
+        v-show="display"
+      >
+        <apexchart 
         ref="chart" 
         type="line" 
         height="350" 
         :options="chartOptions" 
         :series="series"/>
-    </div>
+      </div>
+        
+    
   </div>
 </template>
 
 
 <script>
   import moment from 'moment';
+
   export default {
     name: 'GraficoLinha',
-    layout : "navAlunos",
     data() {
       return{
         valuePrePos: "",
-        aluno: [],
+        value: "",
+        display: false,
+        alunos: [],
         idAluno: "",
         prePoso : [
           {
@@ -78,21 +109,7 @@
         value2:null,
         loading: false,
         dialogFormVisible: false,
-        form: {
-          date: "date",
-          horarioPos : "date",
-          horarioPre : "date",
-          pasPre : "number",
-          pasPos : "number",
-          padPre: "number",
-          padPos: "number",
-          glicemiaPre: "number",
-          glicemiaPos: "number",
-          horarioTreino: "number",
-          pseEPre: "number",
-          pseEPos: "number",
-          observacao: "string",
-        },
+
         series: [
           {
             name: "PAD",
@@ -126,14 +143,7 @@
             curve: 'straight'
           },
           tooltip: {
-            custom: ({seriesIndex, dataPointIndex, w}) => {
-              return (
-                `<div class="arrow_box">
-                  <span> test  ${ w.globals.initialSeries[seriesIndex].name} : </span>
-                  ${w.globals.initialSeries[seriesIndex].data[dataPointIndex].y} 
-                </div>`
-              );
-            }
+            enabled: true
           },
           title: {
             text: '',
@@ -160,14 +170,21 @@
         },
       }
     },
-    mounted() {
-      this.$root.$on('idAluno',(data) => { 
-        this.idAluno = data.id
+    watch: {
+      value(){
         this.fetchData()
-      })
+      }
+    },
+    mounted() {
+      this.getStudents()
     },
     methods: {
       moment,
+      async getStudents() {
+        const data = await this.$axios.$get('/student/index');
+        this.alunos = data;  
+        
+      },
       clearseries(){
         this.series[0].data.splice(0,this.series[0].data.length)
         this.series[1].data.splice(0,this.series[1].data.length)
@@ -178,24 +195,26 @@
         this.series[0].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.padPre,
-          z: new Date(item.date)
+          date: new Date(item.date)
         })
         this.series[1].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.pasPre,
-          z: new Date(item.date)
+          date: new Date(item.date)
         })
         this.series[2].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.glicemiaPre,
-          z: new Date(item.date)
+          date: new Date(item.date)
         })
         this.series[3].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.pseEPre,
+          date: new Date(item.date)
+
         })
         this.series.forEach((s)=>{
-          s.data.sort((a,b) => a.z - b.z)
+          s.data.sort((a,b) => a.date - b.date)
         })
         this.$refs.chart.updateSeries(this.series);
         this.$refs.chart.updateOptions({
@@ -210,22 +229,25 @@
         this.series[0].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.padPos,
-          z: new Date(item.date)
+          date: new Date(item.date)
         })
         this.series[1].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.pasPos,
-          z: new Date(item.date)
+          date: new Date(item.date)
         })
         this.series[2].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.glicemiaPos,
-          z: new Date(item.date)
+          date: new Date(item.date)
         })
         this.series[3].data.push({
           x: moment(new Date(item.date)).format("DD/MM/YYYY"),
           y: item.pseEPos,
-          z: new Date(item.date)
+          date: new Date(item.date)
+        })        
+        this.series.forEach((s)=>{
+          s.data.sort((a,b) => a.date - b.date)
         })
         this.$refs.chart.updateSeries(this.series);
         this.$refs.chart.updateOptions({
@@ -236,26 +258,42 @@
         }
       )
       },
+      // eslint-disable-next-line object-shorthand
+      changeDiplay(){
+        if( this.display === false){
+          this.display = true; 
+        }
+      },
+      changeDiplay2(){
+        if( this.display === false){
+          this.display = false; 
+        }
+      },  
       graficoPrePos () {
-        this.clearseries()
+        this.clearseries();
+        
         this.items.forEach((item)=>{
           if(new Date(item.date).valueOf() >= new Date(this.value1).valueOf() &&  new Date(item.date).valueOf() <= new Date(this.value2).valueOf() ){
               if (this.valuePrePos === "Pré"){
-
                 this.defineDatePre(item)
-                
               }
               if (this.valuePrePos === "Pós"){
-                
                 this.defineDatePos(item)
               }
+            this.changeDiplay();
+          }else{
+            this.$notify.error({
+            title: 'Erro',
+            message: 'Não há registro na faixa de tempo selecionada'
+          });
+          this.changeDiplay2();
           }
         })
       },
       async fetchData() {
         this.loading = true;
         try {
-          const { data } = await this.$axios.get(`/prepos/student/${this.idAluno}`);
+          const { data } = await this.$axios.get(`/prepos/student/${this.value}`);
           this.items = data.data;
         } catch (e) {
           this.$notify.error({
@@ -266,141 +304,91 @@
           this.loading = false;
         }
       },
-      getEntity(row) {
-        this.form = { ...row };
-        this.dialogFormVisible = true
-      },
     }
   }
 </script>
 
 
 <style scoped>
-  .date-picker {
+  .order1{
+    order: 1;
+  }
+  .order2{
+    order: 2;
+  }
+  .order3{
+    order: 3;
+  }
+  .order4{
+    order: 4;
+  }
+  .order5{
+    order: 5;
+  }    
+  .OptionsPicker {
+    margin: 0 auto;
     display: flex;
-    flex-direction: row;
-    margin: 5px;
-    flex-wrap: wrap;
-    flex: 1; 
     width: 100%;
   }
-  .demo-date-picker .block {
-    padding: 30px 0;
-    text-align: center;
-    border-right: solid 1px var(--el-border-color);
-    flex: 1;
-  }
-  .demo-date-picker .block:last-child {
-    border-right: none;
-  }
-  .demo-date-picker .demonstration {
-    display: block;
-    color: var(--el-text-color-secondary);
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-  .date1{
+  .select{
     margin: 5px;
-    float: right;
-    flex: 1;
   }
-  .date2{
+  .btt2{
     margin: 5px;
-    float: left;
-    flex: 1;
   }
-  .choose{
+  .date{
     margin: 5px;
-    float: left;
-    flex: 1;
-    width: 220px;
   }
-  .button{
-    margin: 5px;
-    width: 10px;
-    float: left;
-    flex: 1;
+  @media only screen and (max-device-width: 1066px ) {
+    .OptionsPicker {
+      margin: 0 auto;
+      display: flex;
+      width: 100%;
+      flex-flow: row wrap;
+    }
   }
-  .arrow_box {
-    position: relative;
-    background: #555;
-    height: 15px;
-    border: 2px solid #000000;
+  @media only screen and (max-device-width: 1023px ) {
+    .OptionsPicker {
+      margin: 0 auto;
+      display: flex;
+      width: 100%;
+      flex-flow: row;
+
+    }
+  } 
+  @media only screen and (max-device-width: 790px) {
+    .OptionsPicker {
+      margin: 0 auto;
+      display: flex;
+      width: 100%;
+      flex-flow: row wrap;
+    }
   }
-  .arrow_box:after, .arrow_box:before {
-    right: 100%;
-    top: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-  }
-  .arrow_box:after {
-    border-color: rgba(85, 85, 85, 0);
-    border-right-color: #555;
-    border-width: 10px;
-    margin-top: -10px;
-  }
-  .arrow_box:before {
-    border-color: rgba(0, 0, 0, 0);
-    border-right-color: #000000;
-    border-width: 13px;
-    margin-top: -13px;
-  }
-  #chart .apexcharts-tooltip {
-    color: #fff;
-    transform: translateX(10px) translateY(10px);
-    overflow: visible !important;
-    white-space: normal !important;
-  }
-  #chart .apexcharts-tooltip span {
-    padding: 5px 10px;
-    display: inline-block;
-  }
+
   @media only screen and (max-device-width: 507px) {
-    .date-picker {
+    .OptionsPicker {
       display: flex;
       flex-direction: column;
+      text-align: center;
       padding: 0;
-      flex-wrap: wrap;
       flex: 1; 
       width: 100%;
     }
-    .date-picker .dates{
-      text-align: center;
-      border-right: solid 1px var(--el-border-color);
-      flex: 1;
-
-    }
-    .date1{
+    .date{
       margin: 5px;
-      width: 100%;
-      float: left;
       flex: 1;
     }
-    .center{
-      text-align: center;
-      float: center;
-    }
-    .date2{
+    .select{
+      flex: 1;
       margin: 5px;
-      float: left;
-      width: 100%;
-      flex: 1;
+      width: 220px;
     }
-    .choose{
-      margin: 5px;
-      width: 100%;
-      float: left;
+    .btt2{
       flex: 1;
-    }
-    .button{
       margin: 5px;
-      width: 100%;
-      float: left;
-      flex: 1;
+      width: 240px;
     }
   }
+
+
 </style>

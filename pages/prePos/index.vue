@@ -1,327 +1,337 @@
 <template>
-  
-  <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
-      
-    <el-table v-loading="loading" :data="tableData">
-      
-      <el-table-column type="expand">
-        
-        <template #default="props" >
-          
-          <!-- Pre e Pos-->
-          
-          <section class="wrap container">
-           
-            <div class= "pre_pos_div ">
-
-              <div class= "pre_style " >
-                <h1>Pré</h1>
-                <h2>Horario</h2>
-                <p>{{ moment(props.row.horarioPre ).format("HH:mm")}}</p>
-                <h2>PAS(mmHg) </h2>  
-                <p>{{ props.row.pasPre }}</p>  
-                <h2>PAD(mmHg)</h2>
-                <p>{{ props.row.padPre }}</p>
-                <h2>Glicemia </h2> 
-                <p> {{ props.row.glicemiaPre }}</p>
-                <h2>PSE-s </h2>  
-                <p>{{ props.row.pseEPre }}</p>
-              </div>
-              
-              <div class= "pos_style" >
-                <h1>Pós</h1>
-                <h2>Horario</h2>
-                <p>{{ moment(props.row.horarioPos ).format("HH:mm")}}</p>
-                <h2>PAS(mmHg) </h2>  
-                <p>{{ props.row.pasPos }}</p>  
-                <h2>PAD(mmHg)</h2>   
-                <p>{{ props.row.padPos }}</p>
-                <h2>Glicemia </h2> 
-                <p> {{ props.row.glicemiaPos }}</p>
-                <h2>PSE-s </h2>  
-                <p>{{ props.row.pseEPos }}</p>
-              </div>
-
-            </div>
-
-          </section>
-
-          <!-- Informaçoes gerais-->
-
-          <section class="wrap container">
-
-          <div class= "info_gerais" >
-              <h1>Informações Gerais</h1>
-              <h2>Horario total de Treino</h2>  
-              <p>{{ props.row.horarioTreino }}</p>
-              <h2>Observação </h2>  
-              <div class = "text_box">
-                <p>{{ props.row.observacao }}</p>
-
-              </div>
-          </div>
-          </section>
-          <!-- Botões Editar e Deletar-->
-      
-        
-            <section class="wrap container">
-              
-              <div class = "edit_delet">
-               
-                <el-button type="primary" round size="medium" @click="getEntity(props.row)" >Editar</el-button>
-                <el-popconfirm
-                  title="Tem certeza de que deseja excluir este item?" confirm-button-text='OK'
-                  cancel-button-text='Cancelar' @confirm="handleDelete(props.$index, props.row)">
-                <el-button  slot="reference" size="medium" type="danger" round >
-                  Deletar
-                </el-button>
-              </el-popconfirm>  
-            </div>
-          </section>
-
-        </template>
-
-      </el-table-column>
-        
-      <el-table-column label="DATA">
-        <template #default="props">
-          <h3>{{ moment(props.row.date).format("DD/MM/YYYY") }}</h3>
-          
-        </template> 
-      </el-table-column>
-      
-      <el-table-column align="right">
-        <template slot="header">
-          <el-button size="mini" type="primary" @click="addNewEntity()">
-            Adicionar
-          </el-button>
-        </template>
-      </el-table-column>
-    
-    </el-table>
-
-  <!-- Adicao de um novo treino -->
-  <el-dialog 
-        title="Adicionar novo registro de treino"
-        :visible.sync="dialogFormVisible"
-        :fullscreen="window.width < 768 ? true : false"
-        center
+  <div>
+    <div class="h-7 w-full bg-gray-700 text-center">
+      <span class="font-sans text-xs font-bold text-white"
+        >Hístorico de Monitoramento</span
       >
-        <el-form 
-          ref="ruleForm"
-          :model="form" 
-          :rules="rules">          
-          <div>            
-            <!-- Data -->
-            <el-form-item label="Data" prop="date" required>  
-
-              <el-date-picker
-                v-model="form.date"
-                type="date"
-                placeholder="DD/MM/AAAA"
-                size="large"
-                style="width: 100%"
-                format="dd/MM/yyyy"
-              />
-            </el-form-item>
+    </div>
+    <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
+      <el-select v-model="value" filterable placeholder="Alunos">
+        <el-option
+          v-for="item in alunos"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        />
+      </el-select>
+      <el-table v-loading="loading" :data="tableData">
+        <el-table-column type="expand">
+          
+          <template #default="props" >
             
-            <!-- Pre treino -->
-            <el-form-item> 
-              <el-divider content-position="left">Dados Pré Treino</el-divider>
-
-              <!-- Hora pre treino -->
-              <el-form-item label="Hora pré treino" prop="date">
-                <el-time-picker
-                  v-model.number="form.horarioPre"
-                  placeholder="HH:MM:SS"
-                  type="date"
-                  format="HH:mm:ss"
-                  style="width: 100%"
-                  :default-time="defaultTime"
-                />
-              </el-form-item>
-
-              <!-- Informacoes do exame -->
-              <el-form-item label="PAS(mmHg)" prop="pasPre">
-                <el-row class="row" justify="space-evenly">
-                  <el-col class="col-md-6 mb-3">
-                    <el-input
-                      v-model="form.pasPre" 
-                      placeholder="PAS(mmHg)" 
-                      type="number"
-                      min="0"
-                    >
-                    </el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
+            <!-- Pre e Pos-->
             
-              <el-form-item label="PAD(mmHg)" prop="padPre">
-                <el-row class="row-bg" justify="space-evenly">
-                  <el-col class="col-md-6 mb-3">
-                    <el-input 
-                      v-model="form.padPre" 
-                      placeholder="PAD(mmHg)" 
-                      type="number"
-                      min="0"
-                      step=".01"
-                    >
-                    </el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-
-              <el-form-item label="PES" prop="pseEPre">
-                <el-row class="row-bg" justify="space-evenly">
-                  <el-col class="col-md-6 mb-3">
-                    <el-input 
-                      v-model="form.pseEPre" 
-                      placeholder="PSE-s" 
-                      type="number"
-                      min="0"
-                    >
-                    </el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-
-              <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPre">
-                <el-row class="row-bg" justify="space-evenly">
-                  <el-col class="col-md-6 mb-3">
-                    <el-input
-                      v-model="form.glicemiaPre" 
-                      placeholder="Glicemia(mg/dL)" 
-                      type="number"
-                      min="0"
-                    >
-                    </el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-            </el-form-item>
-  
-            <!-- Pos treino -->
-            <el-form-item>
-              <el-divider content-position="left">Dados Pós Treino</el-divider>
-              
-              <!-- Hora pos treino -->
-              <el-form-item label="Hora pós treino" prop="date">
-                <el-time-picker
-                  v-model.number="form.horarioPos"
-                  placeholder="HH:MM:SS"
-                  type="date"
-                  format="HH:mm:ss"
-                  style="width: 100%"
-                />
-              </el-form-item>
-
-              <!-- Informacoes do exame -->
-              <el-form-item label="PAS(mmHg)" prop="pasPos">
-                <el-row class="row" justify="space-evenly">
-                  <el-col class="col-md-6 mb-3">
-                    <el-input 
-                      v-model="form.pasPos" 
-                      placeholder="PAS(mmHg)" 
-                      type="number"
-                      min="0"
-                    >
-                    </el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
+            <section class="wrap container">
             
-              <el-form-item label="PAD(mmHg)" prop="padPos">
-                <el-row class="row-bg" justify="space-evenly">
-                  <el-col class="col-md-6 mb-3">
-                    <el-input 
-                      v-model="form.padPos" 
-                      placeholder="PAD(mmHg)" 
-                      type="number"
-                      min="0"
-                    >
-                    </el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
+              <div class= "pre_pos_div ">
 
-              <el-form-item label="PES" prop="pseEPos">
-                <el-row class="row-bg" justify="space-evenly">
-                  <el-col class="col-md-6 mb-3">
-                    <el-input 
-                      v-model="form.pseEPos" 
-                      placeholder="PSE-s" 
-                      type="number"
-                      min="0"
-                    >
-                    </el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
+                <div class= "pre_style " >
+                  <h1>Pré</h1>
+                  <h2>Horario</h2>
+                  <p>{{ moment(props.row.horarioPre ).format("HH:mm")}}</p>
+                  <h2>PAS(mmHg) </h2>  
+                  <p>{{ props.row.pasPre }}</p>  
+                  <h2>PAD(mmHg)</h2>
+                  <p>{{ props.row.padPre }}</p>
+                  <h2>Glicemia </h2> 
+                  <p> {{ props.row.glicemiaPre }}</p>
+                  <h2>PSE-s </h2>  
+                  <p>{{ props.row.pseEPre }}</p>
+                </div>
+                
+                <div class= "pos_style" >
+                  <h1>Pós</h1>
+                  <h2>Horario</h2>
+                  <p>{{ moment(props.row.horarioPos ).format("HH:mm")}}</p>
+                  <h2>PAS(mmHg) </h2>  
+                  <p>{{ props.row.pasPos }}</p>  
+                  <h2>PAD(mmHg)</h2>   
+                  <p>{{ props.row.padPos }}</p>
+                  <h2>Glicemia </h2> 
+                  <p> {{ props.row.glicemiaPos }}</p>
+                  <h2>PSE-s </h2>  
+                  <p>{{ props.row.pseEPos }}</p>
+                </div>
 
-              <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPos">
-                <el-row class="row-bg" justify="space-evenly">
-                  <el-col class="col-md-6 mb-3">
-                    <el-input 
-                      v-model="form.glicemiaPos" 
-                      placeholder="Glicemia(mg/dL)" 
-                      type="number"
-                      min="0"
-                    >
-                    </el-input>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-            </el-form-item>
-            
-            <!-- Tempo total do treino -->
-            <el-form-item label="Tempo total do treino(min)">
-              <el-input 
-                v-model="form.horarioTreino"
-                placeholder="Tempo total do treino"
-                type="number"
-                min="0"
-              >
-              </el-input>
-            </el-form-item>
-  
-            <!-- Observacao -->
-            <el-form-item>
-              <el-divider content-position="left">Observação</el-divider>
-              <el-input v-model="form.observacao" type="textarea" placeholder="Observação" />
-            </el-form-item>
-          </div>
-        </el-form>
+              </div>
+
+            </section>
+
+            <!-- Informaçoes gerais-->
+
+            <section class="wrap container">
+              <div class= "info_gerais" >
+                  <h1>Informações Gerais</h1>
+                  <h2>Horario total de Treino</h2>  
+                  <p>{{ props.row.horarioTreino }}</p>
+                  <h2>Observação </h2>  
+                  <div class = "text_box">
+                    <p>{{ props.row.observacao }}</p>
+
+                  </div>
+              </div>
+            </section>
+            <!-- Botões Editar e Deletar-->
         
-        <!-- Botoes no fim do modal -->
-        <div class="mt-10 flex w-full justify-center">
-          <el-button 
-            icon="el-icon-error" 
-            @click="dialogFormVisible = false"
-            >
-              Cancelar
-            </el-button>
-          <el-button 
-            type="primary" 
-            icon="el-icon-success" 
-            @click="handleConfirm()"
+          
+              <section class="wrap container">
+                
+                <div class = "edit_delet">
+                
+                  <el-button type="primary" round size="medium" @click="getEntity(props.row)" >Editar</el-button>
+                  <el-popconfirm
+                    title="Tem certeza de que deseja excluir este item?" confirm-button-text='OK'
+                    cancel-button-text='Cancelar' @confirm="handleDelete(props.$index, props.row)">
+                  <el-button  slot="reference" size="medium" type="danger" round >
+                    Deletar
+                  </el-button>
+                </el-popconfirm>  
+              </div>
+            </section>
+
+          </template>
+
+        </el-table-column >
+          
+        <el-table-column label="DATA">
+          <template #default="props">
+            <h3>{{ moment(props.row.date).format("DD/MM/YYYY") }}</h3>
+            
+
+            
+          </template> 
+        </el-table-column>   
+  
+        <el-table-column align="right">
+          <template slot="header">
+            <div class="register">
+              <el-button class="register" type="primary" round size="mini" @click="addNewEntity()">
+                Adicionar
+              </el-button>
+            </div>
+          </template>
+        </el-table-column>
+      
+      </el-table>
+      <!-- Adicao de um novo treino -->
+      <el-dialog 
+            title="Adicionar novo registro de treino"
+            :visible.sync="dialogFormVisible"
+            :fullscreen="window.width < 768 ? true : false"
+            center
           >
-            Confirmar
-          </el-button>
-        </div>
-        <span slot="footer" class="dialog-footer">
-        </span>
+            <el-form 
+              ref="ruleForm"
+              :model="form" 
+              :rules="rules">          
+              <div>            
+                <!-- Data -->
+                <el-form-item label="Data" prop="date" required>  
+
+                  <el-date-picker
+                    v-model="form.date"
+                    type="date"
+                    placeholder="DD/MM/AAAA"
+                    size="large"
+                    style="width: 100%"
+                    format="dd/MM/yyyy"
+                  />
+                </el-form-item>
+                
+                <!-- Pre treino -->
+                <el-form-item> 
+                  <el-divider content-position="left">Dados Pré Treino</el-divider>
+
+                  <!-- Hora pre treino -->
+                  <el-form-item label="Hora pré treino" prop="date">
+                    <el-time-picker
+                      v-model.number="form.horarioPre"
+                      placeholder="HH:MM:SS"
+                      type="date"
+                      format="HH:mm:ss"
+                      style="width: 100%"
+                      :default-time="defaultTime"
+                    />
+                  </el-form-item>
+
+                  <!-- Informacoes do exame -->
+                  <el-form-item label="PAS(mmHg)" prop="pasPre">
+                    <el-row class="row" justify="space-evenly">
+                      <el-col class="col-md-6 mb-3">
+                        <el-input
+                          v-model="form.pasPre" 
+                          placeholder="PAS(mmHg)" 
+                          type="number"
+                          min="0"
+                        >
+                        </el-input>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+                
+                  <el-form-item label="PAD(mmHg)" prop="padPre">
+                    <el-row class="row-bg" justify="space-evenly">
+                      <el-col class="col-md-6 mb-3">
+                        <el-input 
+                          v-model="form.padPre" 
+                          placeholder="PAD(mmHg)" 
+                          type="number"
+                          min="0"
+                          step=".01"
+                        >
+                        </el-input>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+
+                  <el-form-item label="PES" prop="pseEPre">
+                    <el-row class="row-bg" justify="space-evenly">
+                      <el-col class="col-md-6 mb-3">
+                        <el-input 
+                          v-model="form.pseEPre" 
+                          placeholder="PSE-s" 
+                          type="number"
+                          min="0"
+                        >
+                        </el-input>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+
+                  <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPre">
+                    <el-row class="row-bg" justify="space-evenly">
+                      <el-col class="col-md-6 mb-3">
+                        <el-input
+                          v-model="form.glicemiaPre" 
+                          placeholder="Glicemia(mg/dL)" 
+                          type="number"
+                          min="0"
+                        >
+                        </el-input>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+                </el-form-item>
+      
+                <!-- Pos treino -->
+                <el-form-item>
+                  <el-divider content-position="left">Dados Pós Treino</el-divider>
+                  
+                  <!-- Hora pos treino -->
+                  <el-form-item label="Hora pós treino" prop="date">
+                    <el-time-picker
+                      v-model.number="form.horarioPos"
+                      placeholder="HH:MM:SS"
+                      type="date"
+                      format="HH:mm:ss"
+                      style="width: 100%"
+                    />
+                  </el-form-item>
+
+                  <!-- Informacoes do exame -->
+                  <el-form-item label="PAS(mmHg)" prop="pasPos">
+                    <el-row class="row" justify="space-evenly">
+                      <el-col class="col-md-6 mb-3">
+                        <el-input 
+                          v-model="form.pasPos" 
+                          placeholder="PAS(mmHg)" 
+                          type="number"
+                          min="0"
+                        >
+                        </el-input>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+                
+                  <el-form-item label="PAD(mmHg)" prop="padPos">
+                    <el-row class="row-bg" justify="space-evenly">
+                      <el-col class="col-md-6 mb-3">
+                        <el-input 
+                          v-model="form.padPos" 
+                          placeholder="PAD(mmHg)" 
+                          type="number"
+                          min="0"
+                        >
+                        </el-input>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+
+                  <el-form-item label="PES" prop="pseEPos">
+                    <el-row class="row-bg" justify="space-evenly">
+                      <el-col class="col-md-6 mb-3">
+                        <el-input 
+                          v-model="form.pseEPos" 
+                          placeholder="PSE-s" 
+                          type="number"
+                          min="0"
+                        >
+                        </el-input>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+
+                  <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPos">
+                    <el-row class="row-bg" justify="space-evenly">
+                      <el-col class="col-md-6 mb-3">
+                        <el-input 
+                          v-model="form.glicemiaPos" 
+                          placeholder="Glicemia(mg/dL)" 
+                          type="number"
+                          min="0"
+                        >
+                        </el-input>
+                      </el-col>
+                    </el-row>
+                  </el-form-item>
+                </el-form-item>
+                
+                <!-- Tempo total do treino -->
+                <el-form-item label="Tempo total do treino(min)">
+                  <el-input 
+                    v-model="form.horarioTreino"
+                    placeholder="Tempo total do treino"
+                    type="number"
+                    min="0"
+                  >
+                  </el-input>
+                </el-form-item>
+      
+                <!-- Observacao -->
+                <el-form-item>
+                  <el-divider content-position="left">Observação</el-divider>
+                  <el-input v-model="form.observacao" type="textarea" placeholder="Observação" />
+                </el-form-item>
+              </div>
+            </el-form>
+            
+            <!-- Botoes no fim do modal -->
+            <div class="mt-10 flex w-full justify-center">
+              <el-button 
+                icon="el-icon-error" 
+                @click="dialogFormVisible = false"
+                >
+                  Cancelar
+                </el-button>
+              <el-button 
+                type="primary" 
+                icon="el-icon-success" 
+                @click="handleConfirm()"
+              >
+                Confirmar
+              </el-button>
+            </div>
+            <span slot="footer" class="dialog-footer">
+            </span>
       </el-dialog>
-
-
+    </div>
   </div>
-
 </template>
 
 <script>
   import moment from 'moment';
   export default {
     name: "MonitoramentoPrePos",
-    layout : "navAlunos", 
     data() {
       return {
         window: {
@@ -329,6 +339,7 @@
           height: 768,
         },
         tableData: [],
+        alunos: [],
         value: "",
         defaultTime: "", 
         loading: false,
@@ -355,11 +366,14 @@
         },
       }
     },
-    mounted() {
-      this.$root.$on('idAluno',(data) => { 
-        this.value = data.id
+    watch: {
+      value(){
         this.fetchData()
-      });
+      }
+    },
+    mounted() {
+
+      this.getStudents();
       window.addEventListener('resize', this.handleResize);
       
     },
@@ -369,6 +383,11 @@
     },
     methods: {
       moment,
+      async getStudents() {
+        const data = await this.$axios.$get('/student/index');
+        this.alunos = data;  
+        
+      },
       async fetchData() {
         this.loading = true;
         try {
@@ -544,6 +563,7 @@
       font-size: 16px;
     }
   }
+
   .text_box{
     margin-left: 10%;
     margin-right: 5%;
@@ -614,4 +634,5 @@
     border-radius: 4px;
     min-height: 36px;
   }
+
 </style>
