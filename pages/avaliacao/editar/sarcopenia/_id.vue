@@ -1,15 +1,15 @@
 <template>
   <div>
-    <FormCreateSarcopenia edit />
+    <SarcopeniaEvaluation edit />
   </div>
 </template>
 
 <script>
-import FormCreateSarcopenia from '@/components/evaluationsForms/sarcopenia/index.vue';
+import SarcopeniaEvaluation from '@/components/evaluationsForms/sarcopenia/index.vue';
 
 export default {
   name: 'BalanceEvaluationEdit',
-  components: { FormCreateSarcopenia },
+  components: { SarcopeniaEvaluation },
 };
 </script>
 

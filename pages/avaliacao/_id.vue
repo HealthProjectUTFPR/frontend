@@ -211,7 +211,7 @@ export default {
   },
   async mounted() {
     // this.studentId = this.$route.params.id;
-    this.studentId = 'c0fa520c-8f14-4921-a469-810a194c599f';
+    this.studentId = '047999d3-7796-417b-a824-3c5ee714a371';
     sessionStorage.setItem('id', this.studentId);
 
     await this.handleGetEvaluations();
@@ -243,7 +243,9 @@ export default {
     },
     async handleDelete() {
       this.openDeleteModal = false;
-      await this.$axios.delete(`/evaluation/${this.evaluationToBeDeleted.row.id}`);
+      await this.$axios.delete(
+        `/evaluation/${this.evaluationToBeDeleted.row.id}`,
+      );
       await this.handleGetEvaluations();
     },
 

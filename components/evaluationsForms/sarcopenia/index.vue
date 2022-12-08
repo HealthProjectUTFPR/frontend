@@ -147,19 +147,26 @@ import calculateIndexOfMeasuredMuscleMassPerStature from '@/helpers/evaluations/
 import calculateIndexOfEstimatedMuscleMassPerStature from '@/helpers/evaluations/sarcopenia/calculateIndexOfEstimatedMuscleMassPerStature';
 import classifyResult from '@/helpers/evaluations/sarcopenia/classifyResult';
 import SarcopeniaForm from '@/dto/sarcopeniaFrom.dto';
+import formatDateToInput from '@/helpers/formatDateToInput';
 
 moment.locale('pt');
 
 export default {
   name: 'ExampleForm',
+  props: {
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      studentId: 'f3a67f48-b5ef-43d0-b71c-14760090f9b9',
-      mockup: {
-        sex: 'Homem',
-        age: 42,
-        race: 'Branco',
-        height: 1.925,
+      studentId: '',
+      userDate: {
+        sex: '',
+        age: 0,
+        race: '',
+        height: 0,
       },
       elAlertState: {
         title: '',
@@ -271,7 +278,7 @@ export default {
   watch: {
     'sarcopeniaForm.weight': {
       handler(weight) {
-        const { age, sex, race, height } = this.mockup;
+        const { age, sex, race, height } = this.userDate;
 
         this.sarcopeniaForm.estimatedMuscleMass = calculateEstimatedMuscleMass({
           weight,
@@ -284,7 +291,7 @@ export default {
     },
     'sarcopeniaForm.measuredMuscleMass': {
       handler(measuredMuscleMass) {
-        const { height } = this.mockup;
+        const { height } = this.userDate;
 
         this.indexOfMeasuredMuscleMassPerStature =
           calculateIndexOfMeasuredMuscleMassPerStature({
@@ -295,7 +302,7 @@ export default {
     },
     'sarcopeniaForm.estimatedMuscleMass': {
       handler(estimatedMuscleMass) {
-        const { height } = this.mockup;
+        const { height } = this.userDate;
 
         this.indexOfEstimatedMuscleMassPerStature =
           calculateIndexOfEstimatedMuscleMassPerStature({
@@ -322,15 +329,33 @@ export default {
     },
     sarcopeniaForm: {
       handler() {
-        // console.log('aaaaa');
         this.calculateResult();
       },
       deep: true,
     },
   },
-  mounted() {
+  async mounted() {
     const { weight, measuredMuscleMass } = this.sarcopeniaForm;
-    const { age, sex, race, height } = this.mockup;
+    this.studentId = sessionStorage.getItem('id');
+    const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
+
+    this.userDate.age = new Date().getFullYear() - new Date(studentInfos.birthDate).getFullYear();
+    this.userDate.sex = studentInfos.sex;
+    this.userDate.race = studentInfos.breed;
+    this.userDate.height = studentInfos.stature;
+
+    if (this.$props.edit) {
+      this.evaluationId = this.$route.params.id;
+      const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'sarcopenia' } });
+      this.sarcopeniaForm.date = formatDateToInput(data.date);
+      this.sarcopeniaForm.weight = data.weight;
+      this.sarcopeniaForm.measuredMuscleMass = data.measuredMuscleMass;
+      this.sarcopeniaForm.walkingSpeed = data.walkingSpeed;
+      this.sarcopeniaForm.handGripStrength = data.handGripStrength;
+      this.sarcopeniaForm.calfCircumference = data.calfCircumference;
+    }
+
+    const { sex, age, race, height } = this.userDate;
 
     this.sarcopeniaForm.estimatedMuscleMass = calculateEstimatedMuscleMass({
       weight,
@@ -364,12 +389,33 @@ export default {
           );
 
           try {
-            await this.$axios.post(`/evaluation/${this.studentId}`, {
-              type: 'sarcopenia',
-              data,
-            });
+            if (this.$props.edit) {
+              await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
+                type: 'sarcopenia',
+                data,
+              });
+
+              this.$message({
+                message: 'Avaliação atualizada com sucesso!',
+                type: 'success',
+              });
+            } else {
+              await this.$axios.post(`/evaluation/${this.studentId}`, {
+                type: 'sarcopenia',
+                data,
+              });
+
+              this.$message({
+                message: 'Avaliação criada com sucesso!',
+                type: 'success',
+              });
+            }
+
+            setTimeout(() => {
+              this.$router.push({ path: '/' });
+            }, 500);
           } catch (error) {
-            console.log(error);
+            this.$message.error({ message: `${error.response.data.message}` });
           }
         }
         return false;
@@ -397,8 +443,7 @@ export default {
 
       const { walkingSpeed, handGripStrength, muscleMassIndex } =
         this.sarcopeniaForm;
-      const { sex } = this.mockup;
-      console.log(isAllFieldsFilled);
+      const { sex } = this.userDate;
 
       if (isAllFieldsFilled) {
         const result = classifyResult({
@@ -409,8 +454,6 @@ export default {
         });
 
         const { title, description, type, hasSarcopenia } = result;
-
-        console.log(result);
 
         this.elAlertState = {
           type,

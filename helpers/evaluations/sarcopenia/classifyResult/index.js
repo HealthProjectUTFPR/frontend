@@ -71,7 +71,6 @@ function classifyResult({
   sex,
 }) {
   let result;
-  console.log(walkingSpeed, handGripStrength, muscleMassIndex, sex);
   if (sex === 'Homem') {
     result = verifySarcopeniaOfMan({
       walkingSpeed,

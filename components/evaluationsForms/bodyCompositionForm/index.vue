@@ -475,10 +475,10 @@ export default {
 
   async mounted() {
     this.studentId = sessionStorage.getItem('id');
+    const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
+    this.studentInfos.sex = studentInfos.sex;
+    this.studentInfos.height = studentInfos.stature;
     if (this.$props.edit) {
-      const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
-      this.studentInfos.sex = studentInfos.sex;
-      this.studentInfos.height = studentInfos.stature;
       this.evaluationId = this.$route.params.id;
       const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'bodyComposition' } });
       setTimeout(() => {
