@@ -264,12 +264,11 @@ export default {
       `/student/show/${this.studentId}`,
     );
 
-    this.userData.sex = this.studentInfos.sex;
+    this.userData.sex = studentInfos.sex;
     this.userData.age =
       new Date().getFullYear() - new Date(studentInfos.birthDate).getFullYear();
 
-    console.log(this.studentId);
-    console.log('estou aqui!');
+    console.log('paso', this.studentId);
     // if (this.$props.edit) {
     //   // const { data } = await this.$axios.get(
     //   //   `/evaluation/${this.evaluationId}`,
@@ -286,7 +285,8 @@ export default {
     const { weight, finalFC, time, vo2Lmin } =
       this.cardiorespiratoryCapacityForm;
 
-    const { age, sex } = this.userDate;
+    const { age, sex } = this.userData;
+    console.log('estou aqui!', age, sex);
 
     this.cardiorespiratoryCapacityForm.vo2MlKG = calculateVO2MlKg({
       weight,
