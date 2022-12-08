@@ -7,7 +7,10 @@ describe('calculateIndexOfEstimatedMuscleMassPerStature', () => {
     const height = 1.92;
     const estimatedMuscleMass = 26.776;
 
-    const response = calculateIndexOfEstimatedMuscleMassPerStature({ height, estimatedMuscleMass });
+    const response = calculateIndexOfEstimatedMuscleMassPerStature({
+      height,
+      estimatedMuscleMass,
+    });
     const result = 7.26;
 
     expect(+response).toBeCloseTo(+result);
@@ -17,7 +20,10 @@ describe('calculateIndexOfEstimatedMuscleMassPerStature', () => {
     const height = '';
     const estimatedMuscleMass = 10;
 
-    const response = calculateIndexOfEstimatedMuscleMassPerStature({ height, estimatedMuscleMass });
+    const response = calculateIndexOfEstimatedMuscleMassPerStature({
+      height,
+      estimatedMuscleMass,
+    });
     const result = '';
 
     expect(+response).toBeCloseTo(+result);

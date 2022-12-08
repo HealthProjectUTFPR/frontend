@@ -12,5 +12,3 @@ export default {
   components: { FormCreateSarcopenia },
 };
 </script>
-
-</style>

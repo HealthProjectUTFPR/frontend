@@ -36,6 +36,14 @@
             @click="handleDelete(aluno.id)"
           ></el-button>
         </el-col>
+        <el-col :span="2">
+          <el-button
+            type="primary"
+            icon="el-icon-notebook-2"
+            circle
+            @click="handleDelete(aluno.id)"
+          ></el-button>
+        </el-col>
       </el-row>
     </el-row>
     <div class="flex justify-end right-8 bottom-28 fixed">
@@ -174,9 +182,7 @@ import moment from 'moment';
 import NavBar from '@/components/bottomNav/index.vue';
 
 export default {
-  components: {
-    NavBar,
-  },
+  components: { NavBar },
   data() {
     return {
       alunos: [],
@@ -276,14 +282,14 @@ export default {
   methods: {
     async getStudents() {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        'token'
+        'token',
       )}`;
       const { data } = await axios.get('http://localhost:3333/student/index');
       this.alunos = data;
     },
     async handleDelete(index) {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        'token'
+        'token',
       )}`;
       try {
         await axios.patch(`http://localhost:3333/student/delete/${index}`);
@@ -305,7 +311,7 @@ export default {
     },
     async handleCreate() {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        'token'
+        'token',
       )}`;
       this.$refs.modalCreateForm.validate(async (valid) => {
         if (valid) {
@@ -320,7 +326,7 @@ export default {
               emergencyContact: this.modalCreate.emergencyContact,
               healthPlan: this.modalCreate.healthPlan,
               birthDate: moment(String(this.modalCreate.birthDate)).format(
-                'DD/MM/YYYY'
+                'DD/MM/YYYY',
               ),
               note: this.modalCreate.note,
               flag: true,

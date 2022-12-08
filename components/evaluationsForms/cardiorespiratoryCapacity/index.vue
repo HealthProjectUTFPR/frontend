@@ -343,18 +343,13 @@ export default {
     },
     calculateResult() {
       const { result: _, ...rest } = this.cardiorespiratoryCapacityForm;
-      const isAllFieldsFilled = Object.values(
-        rest,
-      ).every((field) => !!field);
+      const isAllFieldsFilled = Object.values(rest).every((field) => !!field);
 
       const { sex } = this.userData;
       const { vo2MlKG } = this.cardiorespiratoryCapacityForm;
 
       if (isAllFieldsFilled) {
-        const { type, title } = classifyResult(
-          sex,
-          vo2MlKG,
-        );
+        const { type, title } = classifyResult(sex, vo2MlKG);
 
         this.calculated = true;
         this.elAlertState = {

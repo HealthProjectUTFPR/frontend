@@ -394,9 +394,7 @@ import moment from 'moment';
 import NavBar from '@/components/bottomNav/index.vue';
 
 export default {
-  components: {
-    NavBar,
-  },
+  components: { NavBar },
 
   data() {
     return {
@@ -487,7 +485,7 @@ export default {
     this.student.id = this.$route.params.id;
     await this.getStudent();
     this.studentEdit.birthDate = moment(String(this.student.birthDate)).format(
-      'DD/MM/YYYY'
+      'DD/MM/YYYY',
     );
     let date = new Date();
     date = date.getFullYear();
@@ -504,10 +502,10 @@ export default {
   methods: {
     async getStudent() {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        'token'
+        'token',
       )}`;
       const { data } = await axios.get(
-        `http://localhost:3333/student/show/${this.student.id}`
+        `http://localhost:3333/student/show/${this.student.id}`,
       );
       this.student = data;
     },
@@ -517,7 +515,7 @@ export default {
           try {
             await axios.patch(
               `http://localhost:3333/student/update/${this.student.id}`,
-              this.studentEdit
+              this.studentEdit,
             );
             this.$notify.success({
               title: 'Sucesso',
@@ -541,7 +539,7 @@ export default {
       this.getStudent(this.student.id);
       this.studentEdit = this.student;
       this.studentEdit.birthDate = moment(
-        String(this.student.birthDate)
+        String(this.student.birthDate),
       ).format('DD/MM/YYYY');
       this.toggleModalEdit = false;
     },

@@ -1,4 +1,7 @@
-const calculateIndexOfMeasuredMuscleMassPerStature = ({ measuredMuscleMass, height }) => {
+const calculateIndexOfMeasuredMuscleMassPerStature = ({
+  measuredMuscleMass,
+  height,
+}) => {
   if (!height) return '';
 
   return measuredMuscleMass / height ** 2;

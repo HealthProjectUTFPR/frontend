@@ -25,10 +25,7 @@
           </el-date-picker>
         </el-form-item>
 
-        <el-form-item
-        label="Peso (kg)"
-          prop="weight"
-        >
+        <el-form-item label="Peso (kg)" prop="weight">
           <el-input
             v-model.number="bodyCompositionForm.weight"
             placeholder="Peso (kg)"
@@ -48,10 +45,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="Quadril (cm)"
-          prop="hip"
-        >
+        <el-form-item label="Quadril (cm)" prop="hip">
           <el-input
             v-model.number="bodyCompositionForm.hip"
             placeholder="Quadril (cm)"
@@ -61,10 +55,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="Cintura/Estatura"
-          prop="estimatedMuscleMass"
-        >
+        <el-form-item label="Cintura/Estatura" prop="estimatedMuscleMass">
           <el-input
             v-model.number="waistEstature"
             placeholder="Este campo será calculado automaticamente..."
@@ -73,10 +64,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="Cintura/Quadril"
-          prop="estimatedMuscleMass"
-        >
+        <el-form-item label="Cintura/Quadril" prop="estimatedMuscleMass">
           <el-input
             v-model.number="waistHip"
             placeholder="Este campo será calculado automaticamente..."
@@ -85,10 +73,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="IMC"
-          prop="estimatedMuscleMass"
-        >
+        <el-form-item label="IMC" prop="estimatedMuscleMass">
           <el-input
             v-model.number="imc"
             placeholder="Este campo será calculado automaticamente..."
@@ -97,10 +82,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="Subescapula (cm)"
-          prop="scapula"
-        >
+        <el-form-item label="Subescapula (cm)" prop="scapula">
           <el-input
             v-model.number="bodyCompositionForm.scapula"
             placeholder="Subescapula (cm)"
@@ -110,10 +92,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="Tríceps (cm)"
-          prop="triceps"
-        >
+        <el-form-item label="Tríceps (cm)" prop="triceps">
           <el-input
             v-model.number="bodyCompositionForm.triceps"
             placeholder="Tríceps (cm)"
@@ -123,10 +102,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="Bíceps (cm)"
-          prop="biceps"
-        >
+        <el-form-item label="Bíceps (cm)" prop="biceps">
           <el-input
             v-model.number="bodyCompositionForm.biceps"
             placeholder="Bíceps (cm)"
@@ -136,10 +112,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-          label="Supra ilíaca (cm)"
-          prop="suprailiac"
-        >
+        <el-form-item label="Supra ilíaca (cm)" prop="suprailiac">
           <el-input
             v-model.number="bodyCompositionForm.suprailiac"
             placeholder="Supra ilíaca (cm)"
@@ -149,115 +122,118 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
-            label="Soma Pregas"
-            prop="estimatedMuscleMass"
-          >
-            <el-input
-              v-model.number="sumPleats"
-              placeholder="Este campo será calculado automaticamente..."
-              type="number"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+        <el-form-item label="Soma Pregas" prop="estimatedMuscleMass">
+          <el-input
+            v-model.number="sumPleats"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
 
-          <el-form-item
-            label="Densidade"
-            prop="estimatedMuscleMass"
-          >
-            <el-input
-              v-model.number="density"
-              placeholder="Este campo será calculado automaticamente..."
-              type="number"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+        <el-form-item label="Densidade" prop="estimatedMuscleMass">
+          <el-input
+            v-model.number="density"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
 
-          <el-form-item
-            label="Gordura Corporal"
-            prop="estimatedMuscleMass"
-          >
-            <el-input
-              v-model.number="bodyFat"
-              placeholder="Este campo será calculado automaticamente..."
-              type="number"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+        <el-form-item label="Gordura Corporal" prop="estimatedMuscleMass">
+          <el-input
+            v-model.number="bodyFat"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
 
-          <el-form-item
-            label="MG (kg)"
-            prop="estimatedMuscleMass"
-          >
-            <el-input
-              v-model.number="mg"
-              placeholder="Este campo será calculado automaticamente..."
-              type="number"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+        <el-form-item label="MG (kg)" prop="estimatedMuscleMass">
+          <el-input
+            v-model.number="mg"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
 
-          <el-form-item
-            label="MCM (kg)"
-            prop="estimatedMuscleMass"
-          >
-            <el-input
-              v-model.number="mcm"
-              placeholder="Este campo será calculado automaticamente..."
-              type="number"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+        <el-form-item label="MCM (kg)" prop="estimatedMuscleMass">
+          <el-input
+            v-model.number="mcm"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
 
-          <el-form-item
-            label="Peso mínimo (kg)"
-            prop="estimatedMuscleMass"
-          >
-            <el-input
-              v-model.number="minimumWeight"
-              placeholder="Este campo será calculado automaticamente..."
-              type="number"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+        <el-form-item label="Peso mínimo (kg)" prop="estimatedMuscleMass">
+          <el-input
+            v-model.number="minimumWeight"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
 
-          <el-form-item
-            label="Peso máximo (kg)"
-            prop="estimatedMuscleMass"
-          >
-            <el-input
-              v-model.number="maximumWeight"
-              placeholder="Este campo será calculado automaticamente..."
-              type="number"
-              :disabled="true"
-            ></el-input>
-          </el-form-item>
+        <el-form-item label="Peso máximo (kg)" prop="estimatedMuscleMass">
+          <el-input
+            v-model.number="maximumWeight"
+            placeholder="Este campo será calculado automaticamente..."
+            type="number"
+            :disabled="true"
+          ></el-input>
+        </el-form-item>
       </div>
 
-      <div v-if="checkRisks().waistEstatureRisk !== 'none' || checkRisks().waistHipRisk !== 'none'">
+      <div
+        v-if="
+          checkRisks().waistEstatureRisk !== 'none' ||
+          checkRisks().waistHipRisk !== 'none'
+        "
+      >
         <el-divider content-position="center">Risco cardiovascular</el-divider>
         <el-alert
-          v-if="checkRisks().waistEstatureRisk === 'increased' || checkRisks().waistEstatureRisk === 'high'"
+          v-if="
+            checkRisks().waistEstatureRisk === 'increased' ||
+            checkRisks().waistEstatureRisk === 'high'
+          "
           title="Circunferência de cintura"
-          :type="checkRisks().waistEstatureRisk === 'high' ? 'error' : 'warning'"
-          :description="checkRisks().waistEstatureRisk === 'high'? 'Risco elevado' : 'Risco aumentado'"
+          :type="
+            checkRisks().waistEstatureRisk === 'high' ? 'error' : 'warning'
+          "
+          :description="
+            checkRisks().waistEstatureRisk === 'high'
+              ? 'Risco elevado'
+              : 'Risco aumentado'
+          "
           show-icon
           :closable="false"
         ></el-alert>
 
         <el-alert
-          v-if="checkRisks().waistHipRisk === 'increased' || checkRisks().waistHipRisk === 'high'"
+          v-if="
+            checkRisks().waistHipRisk === 'increased' ||
+            checkRisks().waistHipRisk === 'high'
+          "
           class="mt-important"
           title="RCQ"
           :type="checkRisks().waistHipRisk === 'high' ? 'error' : 'warning'"
-          :description="checkRisks().waistHipRisk === 'high' ? 'Risco elevado' : 'Risco aumentado'"
+          :description="
+            checkRisks().waistHipRisk === 'high'
+              ? 'Risco elevado'
+              : 'Risco aumentado'
+          "
           show-icon
           :closable="false"
         ></el-alert>
       </div>
 
       <div class="mt-10 flex w-full justify-center">
-        <el-button icon="el-icon-error" @click="resetForm('bodyCompositionForm')">
+        <el-button
+          icon="el-icon-error"
+          @click="resetForm('bodyCompositionForm')"
+        >
           Limpar
         </el-button>
         <el-button
@@ -313,7 +289,6 @@ export default {
           waistCircumference: 'none',
           rcq: 'none',
         },
-
       },
       rules: {
         date: [
@@ -344,8 +319,7 @@ export default {
           },
           {
             type: 'number',
-            message:
-              'Por favor, informe uma faixa de peso válida (>0)',
+            message: 'Por favor, informe uma faixa de peso válida (>0)',
             trigger: 'blur',
           },
         ],
@@ -357,8 +331,7 @@ export default {
           },
           {
             type: 'number',
-            message:
-              'Por favor, informe uma medida de cintura válida (>0)',
+            message: 'Por favor, informe uma medida de cintura válida (>0)',
             trigger: 'blur',
           },
         ],
@@ -370,8 +343,7 @@ export default {
           },
           {
             type: 'number',
-            message:
-              'Por favor, informe uma medida de quadril válido (>0)',
+            message: 'Por favor, informe uma medida de quadril válido (>0)',
             trigger: 'blur',
           },
         ],
@@ -409,8 +381,7 @@ export default {
           },
           {
             type: 'number',
-            message:
-              'Por favor, informe uma medida para os bíceps válida (>0)',
+            message: 'Por favor, informe uma medida para os bíceps válida (>0)',
             trigger: 'blur',
           },
         ],
@@ -433,11 +404,11 @@ export default {
 
   computed: {
     waistEstature() {
-      return (this.bodyCompositionForm.waist / this.studentInfos.height);
+      return this.bodyCompositionForm.waist / this.studentInfos.height;
     },
 
     waistHip() {
-      return (this.bodyCompositionForm.waist / this.bodyCompositionForm.hip);
+      return this.bodyCompositionForm.waist / this.bodyCompositionForm.hip;
     },
 
     imc() {
@@ -445,7 +416,12 @@ export default {
     },
 
     sumPleats() {
-      return (this.bodyCompositionForm.scapula + this.bodyCompositionForm.triceps + this.bodyCompositionForm.biceps + this.bodyCompositionForm.suprailiac);
+      return (
+        this.bodyCompositionForm.scapula +
+        this.bodyCompositionForm.triceps +
+        this.bodyCompositionForm.biceps +
+        this.bodyCompositionForm.suprailiac
+      );
     },
 
     density() {
@@ -453,34 +429,39 @@ export default {
     },
 
     bodyFat() {
-      return 4.95 / this.density ? bodyFatFunc(this.density) : (0);
+      return 4.95 / this.density ? bodyFatFunc(this.density) : 0;
     },
 
     mg() {
-      return ((this.bodyCompositionForm.weight * this.bodyFat) / 100);
+      return (this.bodyCompositionForm.weight * this.bodyFat) / 100;
     },
 
     mcm() {
-      return (this.bodyCompositionForm.weight - this.mg);
+      return this.bodyCompositionForm.weight - this.mg;
     },
 
     minimumWeight() {
-      return (this.mcm * 1.3888888888889);
+      return this.mcm * 1.3888888888889;
     },
 
     maximumWeight() {
-      return (this.mcm * 1.47058824);
+      return this.mcm * 1.47058824;
     },
   },
 
   async mounted() {
     this.studentId = sessionStorage.getItem('id');
-    const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
+    const { data: studentInfos } = await this.$axios.get(
+      `/student/show/${this.studentId}`,
+    );
     this.studentInfos.sex = studentInfos.sex;
     this.studentInfos.height = studentInfos.stature;
     if (this.$props.edit) {
       this.evaluationId = this.$route.params.id;
-      const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'bodyComposition' } });
+      const { data } = await this.$axios.get(
+        `/evaluation/${this.evaluationId}`,
+        { params: { type: 'bodyComposition' } },
+      );
       setTimeout(() => {
         this.bodyCompositionForm.date = formatDateToInput(data.date);
         this.bodyCompositionForm.biceps = data.biceps;
@@ -561,10 +542,12 @@ export default {
       if (this.studentInfos.sex === 'F') {
         if (this.waistEstature > 0.8) {
           waistEstatureRisk = 'increased';
-          this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'Risco aumentado';
+          this.bodyCompositionForm.cardiovascularRisk.waistCircumference =
+            'Risco aumentado';
           if (this.waistEstature > 0.88) {
             waistEstatureRisk = 'high';
-            this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'Risco elevado';
+            this.bodyCompositionForm.cardiovascularRisk.waistCircumference =
+              'Risco elevado';
           }
         }
         if (this.waistHip > 0.85) {
@@ -579,11 +562,13 @@ export default {
       } else {
         if (this.waistEstature > 0.94) {
           waistEstatureRisk = 'increased';
-          this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'Risco aumentado';
+          this.bodyCompositionForm.cardiovascularRisk.waistCircumference =
+            'Risco aumentado';
 
           if (this.waistEstature > 1) {
             waistEstatureRisk = 'high';
-            this.bodyCompositionForm.cardiovascularRisk.waistCircumference = 'Risco elevado';
+            this.bodyCompositionForm.cardiovascularRisk.waistCircumference =
+              'Risco elevado';
           }
         }
         if (this.waistHip > 0.9) {
@@ -607,5 +592,4 @@ export default {
 .mt-important {
   margin-top: 8px !important;
 }
-
 </style>

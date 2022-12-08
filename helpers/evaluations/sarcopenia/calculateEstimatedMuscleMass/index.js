@@ -12,10 +12,10 @@ const calculateEstimatedMuscleMass = ({ weight, sex, race, height, age }) => {
 
   return (
     0.244 * weight +
-        7.8 * height +
-        6.6 * sexValue -
-        0.098 * age +
-        (raceValue - 3.3)
+    7.8 * height +
+    6.6 * sexValue -
+    0.098 * age +
+    (raceValue - 3.3)
   );
 };
 

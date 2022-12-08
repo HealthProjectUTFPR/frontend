@@ -255,9 +255,7 @@ export default {
         email: '',
         password: '',
       },
-      modalName: {
-        inputNewName: '',
-      },
+      modalName: { inputNewName: '' },
       modalEmail: {
         inputNewEmail: '',
         inputConfirmEmail: '',
@@ -303,10 +301,10 @@ export default {
   methods: {
     async getUser() {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        'token'
+        'token',
       )}`;
       const { data } = await axios.get(
-        `http://localhost:3333/users/getMe/${localStorage.getItem('token')}`
+        `http://localhost:3333/users/getMe/${localStorage.getItem('token')}`,
       );
       this.user.name = data.name;
       this.user.email = data.email;
@@ -314,12 +312,10 @@ export default {
       this.user.password = data.password;
     },
     async updateName() {
-      const newName = {
-        name: this.modalName.inputNewName,
-      };
+      const newName = { name: this.modalName.inputNewName };
       await axios.patch(
         `http://localhost:3333/users/editMe/${localStorage.getItem('token')}`,
-        newName
+        newName,
       );
       this.user.name = this.modalName.inputNewName;
     },
@@ -336,12 +332,10 @@ export default {
       });
     },
     async updateEmail() {
-      const newEmail = {
-        email: this.modalEmail.inputNewEmail,
-      };
+      const newEmail = { email: this.modalEmail.inputNewEmail };
       await axios.patch(
         `http://localhost:3333/users/editMe/${this.user.id}`,
-        newEmail
+        newEmail,
       );
       this.user.email = this.modalEmail.inputNewEmail;
     },
@@ -351,7 +345,7 @@ export default {
           valid,
           flag,
           inputConfirmEmail = this.modalEmail.inputConfirmEmail,
-          inputNewEmail = this.modalEmail.inputNewEmail
+          inputNewEmail = this.modalEmail.inputNewEmail,
         ) => {
           if (valid && inputConfirmEmail === inputNewEmail) {
             flag = true;
@@ -362,16 +356,14 @@ export default {
               message: 'Email inválido',
             });
           }
-        }
+        },
       );
     },
     async updatePassword() {
-      const newPassword = {
-        password: this.modalPassword.inputNewPassword,
-      };
+      const newPassword = { password: this.modalPassword.inputNewPassword };
       await axios.patch(
         `http://localhost:3333/users/editMe/${this.user.id}`,
-        newPassword
+        newPassword,
       );
     },
     submitPassword() {
@@ -380,7 +372,7 @@ export default {
           valid,
           flag,
           inputConfirmPassword = this.modalPassword.inputConfirmPassword,
-          inputNewPassword = this.modalPassword.inputNewPassword
+          inputNewPassword = this.modalPassword.inputNewPassword,
         ) => {
           if (valid && inputConfirmPassword === inputNewPassword) {
             flag = true;
@@ -391,7 +383,7 @@ export default {
               message: 'Senha inválida',
             });
           }
-        }
+        },
       );
     },
   },

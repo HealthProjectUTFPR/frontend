@@ -9,12 +9,18 @@ describe('classifyResult', () => {
     const handgripStrength = 32;
     const muscleMassIndex = 2.71;
 
-    const response = classifyResult({ sex, walkingSpeed, handgripStrength, muscleMassIndex });
+    const response = classifyResult({
+      sex,
+      walkingSpeed,
+      handgripStrength,
+      muscleMassIndex,
+    });
 
     const result = {
       type: 'success',
       title: 'Sem sarcopenia',
-      description: 'De acordo com os dados informados, o paciente não sofre de Sarcopenia.',
+      description:
+        'De acordo com os dados informados, o paciente não sofre de Sarcopenia.',
       hasSarcopenia: false,
     };
 
@@ -27,12 +33,18 @@ describe('classifyResult', () => {
     const handgripStrength = 32;
     const muscleMassIndex = 2.71;
 
-    const response = classifyResult({ sex, walkingSpeed, handgripStrength, muscleMassIndex });
+    const response = classifyResult({
+      sex,
+      walkingSpeed,
+      handgripStrength,
+      muscleMassIndex,
+    });
 
     const result = {
       type: 'success',
       title: 'Sem sarcopenia',
-      description: 'De acordo com os dados informados, o paciente não sofre de Sarcopenia.',
+      description:
+        'De acordo com os dados informados, o paciente não sofre de Sarcopenia.',
       hasSarcopenia: false,
     };
 
@@ -45,12 +57,18 @@ describe('classifyResult', () => {
     const handgripStrength = 2;
     const muscleMassIndex = 2.71;
 
-    const response = classifyResult({ sex, walkingSpeed, handgripStrength, muscleMassIndex });
+    const response = classifyResult({
+      sex,
+      walkingSpeed,
+      handgripStrength,
+      muscleMassIndex,
+    });
 
     const result = {
       type: 'error',
       title: 'Com sarcopenia',
-      description: 'De acordo com os dados informados, o paciente possui Sarcopenia.',
+      description:
+        'De acordo com os dados informados, o paciente possui Sarcopenia.',
       hasSarcopenia: true,
     };
 
@@ -63,12 +81,18 @@ describe('classifyResult', () => {
     const handgripStrength = 2;
     const muscleMassIndex = 2.71;
 
-    const response = classifyResult({ sex, walkingSpeed, handgripStrength, muscleMassIndex });
+    const response = classifyResult({
+      sex,
+      walkingSpeed,
+      handgripStrength,
+      muscleMassIndex,
+    });
 
     const result = {
       type: 'error',
       title: 'Com sarcopenia',
-      description: 'De acordo com os dados informados, o paciente possui Sarcopenia.',
+      description:
+        'De acordo com os dados informados, o paciente possui Sarcopenia.',
       hasSarcopenia: true,
     };
 
@@ -81,12 +105,18 @@ describe('classifyResult', () => {
     const handgripStrength = 25;
     const muscleMassIndex = 0.27;
 
-    const response = classifyResult({ sex, walkingSpeed, handgripStrength, muscleMassIndex });
+    const response = classifyResult({
+      sex,
+      walkingSpeed,
+      handgripStrength,
+      muscleMassIndex,
+    });
 
     const result = {
       type: 'success',
       title: 'Sem sarcopenia',
-      description: 'De acordo com os dados informados, o paciente não sofre de Sarcopenia.',
+      description:
+        'De acordo com os dados informados, o paciente não sofre de Sarcopenia.',
       hasSarcopenia: false,
     };
 
@@ -99,12 +129,18 @@ describe('classifyResult', () => {
     const handgripStrength = 25;
     const muscleMassIndex = 0.27;
 
-    const response = classifyResult({ sex, walkingSpeed, handgripStrength, muscleMassIndex });
+    const response = classifyResult({
+      sex,
+      walkingSpeed,
+      handgripStrength,
+      muscleMassIndex,
+    });
 
     const result = {
       type: 'error',
       title: 'Com sarcopenia',
-      description: 'De acordo com os dados informados, o paciente possui Sarcopenia.',
+      description:
+        'De acordo com os dados informados, o paciente possui Sarcopenia.',
       hasSarcopenia: true,
     };
 

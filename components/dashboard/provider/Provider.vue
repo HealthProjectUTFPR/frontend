@@ -17,9 +17,7 @@ export default {
     return { state, toggle: this.toggle };
   },
   data() {
-    return {
-      open: false,
-    };
+    return { open: false };
   },
   watch: {
     $route() {

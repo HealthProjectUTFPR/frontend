@@ -11,7 +11,7 @@ describe('calculate VO2 l/Min', () => {
     const sex = 'Mulher';
 
     const response = calculateVO2LMin({ weight, finalFC, time, age, sex });
-    const result = 2.70;
+    const result = 2.7;
 
     expect(+response.toFixed(2)).toBe(+result);
   });

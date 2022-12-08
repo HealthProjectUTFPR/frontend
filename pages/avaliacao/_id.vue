@@ -267,7 +267,8 @@ export default {
     },
   },
 };
-</script>.el-button {
+</script>
+.el-button {
 
 <style scoped>
 .el-button {

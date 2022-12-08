@@ -2,14 +2,18 @@
   <div class="mt-2">
     <span class="demonstration"></span>
     <el-slider
-      v-model="item" :max="4"
+      v-model="item"
+      :max="4"
       :step="1"
       input-size="large"
       input
-      @change="updateValue">
+      @change="updateValue"
+    >
     </el-slider>
 
-    <span class="mt-3 block text-xs md:text-sm md:mt-0 md:inline">{{ getDescription(group, optionsGroups[group]) }}</span>
+    <span class="mt-3 block text-xs md:text-sm md:mt-0 md:inline">{{
+      getDescription(group, optionsGroups[group])
+    }}</span>
   </div>
 </template>
 

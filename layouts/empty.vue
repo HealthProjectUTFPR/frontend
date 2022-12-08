@@ -5,7 +5,5 @@
 </template>
 
 <script>
-export default {
-  name: 'EmptyLayout',
-};
+export default { name: 'EmptyLayout' };
 </script>

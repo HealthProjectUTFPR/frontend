@@ -18,12 +18,7 @@ module.exports = {
   },
   plugins: ['vue', 'tailwindcss', 'prettier'],
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'auto',
-      },
-    ],
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'tailwindcss/no-custom-classname': 'off',
     'max-len': 'off',
     'no-param-reassign': 'off',

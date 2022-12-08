@@ -337,16 +337,22 @@ export default {
   async mounted() {
     const { weight, measuredMuscleMass } = this.sarcopeniaForm;
     this.studentId = sessionStorage.getItem('id');
-    const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
+    const { data: studentInfos } = await this.$axios.get(
+      `/student/show/${this.studentId}`,
+    );
 
-    this.userDate.age = new Date().getFullYear() - new Date(studentInfos.birthDate).getFullYear();
+    this.userDate.age =
+      new Date().getFullYear() - new Date(studentInfos.birthDate).getFullYear();
     this.userDate.sex = studentInfos.sex;
     this.userDate.race = studentInfos.breed;
     this.userDate.height = studentInfos.stature;
 
     if (this.$props.edit) {
       this.evaluationId = this.$route.params.id;
-      const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'sarcopenia' } });
+      const { data } = await this.$axios.get(
+        `/evaluation/${this.evaluationId}`,
+        { params: { type: 'sarcopenia' } },
+      );
       this.sarcopeniaForm.date = formatDateToInput(data.date);
       this.sarcopeniaForm.weight = data.weight;
       this.sarcopeniaForm.measuredMuscleMass = data.measuredMuscleMass;
@@ -430,10 +436,6 @@ export default {
       indexOfMeasuredMuscleMassPerStature,
       indexOfEstimatedMuscleMassPerStature,
     ) {
-      console.log(
-        indexOfMeasuredMuscleMassPerStature,
-        indexOfEstimatedMuscleMassPerStature,
-      );
       if (indexOfMeasuredMuscleMassPerStature) {
         this.sarcopeniaForm.muscleMassIndex =
           +indexOfMeasuredMuscleMassPerStature;

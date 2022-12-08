@@ -10,7 +10,13 @@ describe('calculateEstimatedMuscleMass', () => {
     const race = 'Branco';
     const sex = 'Homem';
 
-    const response = calculateEstimatedMuscleMass({ weight, age, height, race, sex });
+    const response = calculateEstimatedMuscleMass({
+      weight,
+      age,
+      height,
+      race,
+      sex,
+    });
     const result = 33.376;
 
     expect(+response).toBeCloseTo(+result);
@@ -23,7 +29,13 @@ describe('calculateEstimatedMuscleMass', () => {
     const race = 'Branco';
     const sex = 'Mulher';
 
-    const response = calculateEstimatedMuscleMass({ weight, age, height, race, sex });
+    const response = calculateEstimatedMuscleMass({
+      weight,
+      age,
+      height,
+      race,
+      sex,
+    });
     const result = 26.776;
 
     expect(+response).toBeCloseTo(+result);
@@ -36,7 +48,13 @@ describe('calculateEstimatedMuscleMass', () => {
     const race = 'Branco';
     const sex = 'Homem';
 
-    const response = calculateEstimatedMuscleMass({ weight, age, height, race, sex });
+    const response = calculateEstimatedMuscleMass({
+      weight,
+      age,
+      height,
+      race,
+      sex,
+    });
 
     const result = '';
 

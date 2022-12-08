@@ -4,9 +4,7 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Nuxt.js Starter',
-    htmlAttrs: {
-      lang: 'pt-br',
-    },
+    htmlAttrs: { lang: 'pt-br' },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -50,27 +48,15 @@ export default {
         Vary: '*',
       },
     },
-    postcss: {
-      plugins: {
-        'postcss-custom-properties': false,
-      },
-    },
+    postcss: { plugins: { 'postcss-custom-properties': false } },
   },
 
   // Server Configuration: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-server
-  server: {
-    port: process.env.PORT || 3000,
-  },
+  server: { port: process.env.PORT || 3000 },
 
   // Axios Configuration: https://axios.nuxtjs.org/options
-  axios: {
-    baseURL: process.env.API_BASE_URL,
-  },
+  axios: { baseURL: process.env.API_BASE_URL },
 
   // Font Awesome Configuration: https://github.com/nuxt-community/fontawesome-module
-  fontawesome: {
-    icons: {
-      solid: true,
-    },
-  },
+  fontawesome: { icons: { solid: true } },
 };
