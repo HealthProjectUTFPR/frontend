@@ -1,8 +1,8 @@
 <template>
-  <div class="relative h-screen overflow-hidden bg-gray-100 lg:p-4">
+  <div class="bg-gray-100 h-screen overflow-hidden relative lg:p-4">
     <div class="container m-auto">
       <div class="align-center justify-center">
-        <div class="w-full rounded-2xl bg-white p-4 shadow-lg dark:bg-gray-700">
+        <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
           <h1>LOGIN</h1>
           <el-form
             ref="loginForm"
@@ -37,7 +37,6 @@
 
 <script>
 export default {
-  name: 'LoginPage',
   layout: 'empty',
   data() {
     return {
