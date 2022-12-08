@@ -387,6 +387,7 @@ export default {
             this.sarcopeniaForm,
             this.hasSarcopenia,
           );
+          console.log('data', data);
 
           try {
             if (this.$props.edit) {
@@ -429,12 +430,16 @@ export default {
       indexOfMeasuredMuscleMassPerStature,
       indexOfEstimatedMuscleMassPerStature,
     ) {
+      console.log(
+        indexOfMeasuredMuscleMassPerStature,
+        indexOfEstimatedMuscleMassPerStature,
+      );
       if (indexOfMeasuredMuscleMassPerStature) {
         this.sarcopeniaForm.muscleMassIndex =
-          +indexOfMeasuredMuscleMassPerStature.toFixed(2);
+          +indexOfMeasuredMuscleMassPerStature;
       } else {
         this.sarcopeniaForm.muscleMassIndex =
-          +indexOfEstimatedMuscleMassPerStature.toFixed(2);
+          +indexOfEstimatedMuscleMassPerStature;
       }
     },
     calculateResult() {
@@ -445,6 +450,7 @@ export default {
         this.sarcopeniaForm;
       const { sex } = this.userDate;
 
+      console.log(isAllFieldsFilled);
       if (isAllFieldsFilled) {
         const result = classifyResult({
           sex,
@@ -452,6 +458,7 @@ export default {
           handGripStrength,
           muscleMassIndex,
         });
+        console.log(result);
 
         const { title, description, type, hasSarcopenia } = result;
 
