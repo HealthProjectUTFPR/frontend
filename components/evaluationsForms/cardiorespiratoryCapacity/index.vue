@@ -114,12 +114,23 @@ import classifyResult from '@/helpers/evaluations/cardiorespiratoryCapacity/clas
 
 export default {
   name: 'CardiorespiratoryCapacityForm',
+
+  props: {
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      studentId: '0050e6a1-b79f-45c0-9590-8e1db94905ef',
+      studentId: '',
       mockup: {
         sex: 'Homem',
         age: 70,
+      },
+      userData: {
+        sex: '',
+        age: 0,
       },
       calculated: false,
       elAlertState: {
@@ -187,7 +198,7 @@ export default {
       handler() {
         const { weight, finalFC, time, vo2Lmin } =
           this.cardiorespiratoryCapacityForm;
-        const { age, sex } = this.mockup;
+        const { age, sex } = this.userData;
 
         this.cardiorespiratoryCapacityForm.vo2Lmin = calculateVO2LMin({
           weight,
@@ -214,7 +225,7 @@ export default {
     'cardiorespiratoryCapacityForm.finalFC': {
       handler() {
         const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
-        const { age, sex } = this.mockup;
+        const { age, sex } = this.userData;
 
         this.cardiorespiratoryCapacityForm.vo2Lmin = calculateVO2LMin({
           weight,
@@ -228,7 +239,7 @@ export default {
     'cardiorespiratoryCapacityForm.time': {
       handler() {
         const { weight, finalFC, time } = this.cardiorespiratoryCapacityForm;
-        const { age, sex } = this.mockup;
+        const { age, sex } = this.userData;
 
         this.cardiorespiratoryCapacityForm.vo2Lmin = calculateVO2LMin({
           weight,
@@ -246,10 +257,36 @@ export default {
       deep: true,
     },
   },
-  mounted() {
+  async mounted() {
+    this.studentId = sessionStorage.getItem('id');
+
+    const { data: studentInfos } = await this.$axios.get(
+      `/student/show/${this.studentId}`,
+    );
+
+    this.userData.sex = this.studentInfos.sex;
+    this.userData.age =
+      new Date().getFullYear() - new Date(studentInfos.birthDate).getFullYear();
+
+    console.log(this.studentId);
+    console.log('estou aqui!');
+    // if (this.$props.edit) {
+    //   // const { data } = await this.$axios.get(
+    //   //   `/evaluation/${this.evaluationId}`,
+    //   //   { params: { type: 'ACR' } },
+    //   // );
+
+    //   setTimeout(() => {
+    //     this.cardiorespiratoryCapacityForm = studentInfos;
+    //   }, 1000);
+
+    //   console.log('GET do ACR: ', studentInfos);
+    // }
+
     const { weight, finalFC, time, vo2Lmin } =
       this.cardiorespiratoryCapacityForm;
-    const { age, sex } = this.mockup;
+
+    const { age, sex } = this.userDate;
 
     this.cardiorespiratoryCapacityForm.vo2MlKG = calculateVO2MlKg({
       weight,
@@ -263,13 +300,14 @@ export default {
       sex,
     });
   },
+
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
             await this.$axios.post(`/evaluation/${this.studentId}`, {
-              type: 'cardiorespiratoryCapacity',
+              type: 'ACR',
               data: this.cardiorespiratoryCapacityForm,
             });
           } catch (error) {
@@ -288,11 +326,14 @@ export default {
         this.cardiorespiratoryCapacityForm,
       ).every((field) => !!field);
 
-      const { sex } = this.mockup;
+      // const { sex } = this.mockup;
       const { vo2MlKG } = this.cardiorespiratoryCapacityForm;
 
       if (isAllFieldsFilled) {
-        const { type, title } = classifyResult({ sex, vo2MlKG });
+        const { type, title } = classifyResult({
+          sex: this.userData.sex,
+          vo2MlKG,
+        });
 
         this.calculated = true;
         this.elAlertState = {

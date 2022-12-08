@@ -210,7 +210,8 @@ export default {
     },
   },
   async mounted() {
-    this.studentId = this.$route.params.id;
+    // this.studentId = this.$route.params.id;
+    this.studentId = 'c0fa520c-8f14-4921-a469-810a194c599f';
     sessionStorage.setItem('id', this.studentId);
 
     await this.handleGetEvaluations();
