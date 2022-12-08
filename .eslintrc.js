@@ -27,6 +27,8 @@ module.exports = {
     'tailwindcss/no-custom-classname': 'off',
     'max-len': 'off',
     'no-param-reassign': 'off',
+    'operator-linebreak': 'off',
+    'object-curly-newline': ['error', { multiline: true }],
     'comma-dangle': 'off',
     'vue/multi-word-component-names': 'off',
     'linebreak-style': 0,
