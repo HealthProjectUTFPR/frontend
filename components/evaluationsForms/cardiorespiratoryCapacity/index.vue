@@ -123,7 +123,7 @@ export default {
   },
   data() {
     return {
-      studentId: '',
+      studentId: 'd0525a86-7b04-4f14-92e2-9d4552f05cd8',
       mockup: {
         sex: 'Homem',
         age: 70,
