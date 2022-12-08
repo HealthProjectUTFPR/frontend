@@ -27,6 +27,7 @@ module.exports = {
     'comma-dangle': 'off',
     'vue/multi-word-component-names': 'off',
     'linebreak-style': 0,
+    'padded-blocks:': 0,
   },
   settings: {
     'import/core-modules': ['vue', 'vuex'], // these modules are included in nuxt.js

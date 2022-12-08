@@ -30,16 +30,16 @@
         </el-col>
         <el-col :span="2">
           <el-button
-            type="danger"
-            icon="el-icon-delete"
+            type="primary"
+            icon="el-icon-notebook-2"
             circle
-            @click="handleDelete(aluno.id)"
+            @click="handleEdit(aluno.id)"
           ></el-button>
         </el-col>
         <el-col :span="2">
           <el-button
-            type="primary"
-            icon="el-icon-notebook-2"
+            type="danger"
+            icon="el-icon-delete"
             circle
             @click="handleDelete(aluno.id)"
           ></el-button>
@@ -287,6 +287,10 @@ export default {
       const { data } = await axios.get('http://localhost:3333/student/index');
       this.alunos = data;
     },
+    handleEdit(id) {
+      this.$router.push(`/avaliacao/${id}`);
+    },
+
     async handleDelete(index) {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
         'token',
