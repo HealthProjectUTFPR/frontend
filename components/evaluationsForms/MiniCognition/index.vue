@@ -14,6 +14,16 @@
         placeholder="0"
         style="width: 80px"
       ></el-input>
+      <span class="px-3">Date: </span>
+      <el-date-picker
+        v-model="checkedGroups.date"
+        type="date"
+        placeholder="XX/XX/XXXX"
+        size="large"
+        style="width: 23em"
+        format="dd/MM/yyyy"
+      >
+      </el-date-picker>
     </div>
     <div class="px-3 py-4">
       <el-card class="box-card">
@@ -346,6 +356,12 @@ export default {
   provide() {
     return { checkedGroups: this.checkedGroups };
   },
+  props: {
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       scholarity: 0,
@@ -353,6 +369,7 @@ export default {
       colSpan: 12,
       result: '',
       checkedGroups: {
+        date: '',
         checked1_1: false,
         checked1_3: false,
         checked1_4: false,
@@ -390,7 +407,8 @@ export default {
         checked12_1: false,
       },
       descriptions: {},
-      studentId: 'fd6cea79-4250-493a-8b2f-7b92feeff077',
+      studentId: '',
+      evaluationId: '',
     };
   },
   computed: {
@@ -402,6 +420,53 @@ export default {
       });
     },
   },
+
+  async mounted() {
+    this.studentId = sessionStorage.getItem('id');
+    if (this.$props.edit) {
+      const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'MiniCognition' } });
+      setTimeout(() => {
+        // this.checkedGroups.date = new Date(data.date).getTime();
+        this.checkedGroups.date = data.date;
+        this.checkedGroups.checked1_1 = data.checked1_1;
+        this.checkedGroups.checked1_2 = data.checked1_2;
+        this.checkedGroups.checked1_3 = data.checked1_3;
+        this.checkedGroups.checked1_4 = data.checked1_4;
+        this.checkedGroups.checked1_5 = data.checked1_5;
+        this.checkedGroups.checked2_1 = data.checked2_1;
+        this.checkedGroups.checked2_2 = data.checked2_2;
+        this.checkedGroups.checked2_3 = data.checked2_3;
+        this.checkedGroups.checked2_4 = data.checked2_4;
+        this.checkedGroups.checked2_5 = data.checked2_5;
+        this.checkedGroups.checked3_1 = data.checked3_1;
+        this.checkedGroups.checked3_2 = data.checked3_2;
+        this.checkedGroups.checked3_3 = data.checked3_3;
+        this.checkedGroups.checked4_1 = data.checked4_1;
+        this.checkedGroups.checked4_2 = data.checked4_2;
+        this.checkedGroups.checked4_3 = data.checked4_3;
+        this.checkedGroups.checked4_4 = data.checked4_4;
+        this.checkedGroups.checked4_5 = data.checked4_5;
+        this.checkedGroups.checked5_1 = data.checked5_1;
+        this.checkedGroups.checked5_2 = data.checked5_2;
+        this.checkedGroups.checked5_3 = data.checked5_3;
+        this.checkedGroups.checked5_4 = data.checked5_4;
+        this.checkedGroups.checked5_5 = data.checked5_5;
+        this.checkedGroups.checked6_1 = data.checked6_1;
+        this.checkedGroups.checked6_2 = data.checked6_2;
+        this.checkedGroups.checked6_3 = data.checked6_3;
+        this.checkedGroups.checked7_1 = data.checked7_1;
+        this.checkedGroups.checked7_2 = data.checked7_2;
+        this.checkedGroups.checked8_1 = data.checked8_1;
+        this.checkedGroups.checked9_2 = data.checked9_2;
+        this.checkedGroups.checked9_1 = data.checked9_1;
+        this.checkedGroups.checked9_3 = data.checked9_3;
+        this.checkedGroups.checked10_1 = data.checked10_1;
+        this.checkedGroups.checked11_1 = data.checked11_1;
+        this.checkedGroups.checked12_1 = data.checked12_1;
+      }, 100);
+    }
+  },
+
   methods: {
     getTotalMsg() {
       if (
