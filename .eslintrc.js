@@ -16,22 +16,19 @@ module.exports = {
     parser: '@babel/eslint-parser',
     requireConfigFile: false,
   },
-  plugins: [
-    'vue',
-    'tailwindcss',
-  ],
+  plugins: ['vue', 'tailwindcss'],
   rules: {
     'tailwindcss/no-custom-classname': 'off',
     'max-len': 'off',
     'no-param-reassign': 'off',
+    'comma-dangle': 'off',
+    'vue/multi-word-component-names': 'off',
   },
   settings: {
     'import/core-modules': ['vue', 'vuex'], // these modules are included in nuxt.js
     'import/resolver': {
       alias: {
-        map: [
-          ['@', '.'],
-        ],
+        map: [['@', '.']],
         extensions: ['.vue', '.js'],
       },
     },
