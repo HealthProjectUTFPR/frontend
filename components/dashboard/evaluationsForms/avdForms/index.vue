@@ -9,72 +9,84 @@
     <div class="px-6 py-3">
       <div class="mb-3 flex flex-col">
         <el-form
-            ref="data"
+            ref="avdForm"
             :rules="rules"
-            :model="data"
+            :model="avdForm"
             label-position="top"
         >
+        <el-form-item label="Data" prop="date">
+          <el-date-picker
+              v-model="avdForm.date"
+              type="date"
+              placeholder="XX/XX/XXXX"
+              size="large"
+              style="width: 23em"
+              format="dd/MM/yyyy"
+          >
+          </el-date-picker>
+        </el-form-item>
+
           <el-form-item label="1. Banho - Banho de leito, Banheira ou Chuveiro" prop="bath">
-            <span v-if="data.bath===1">Não recebe assistência</span>
-            <span v-if="data.bath===2">Recebe assistência apenas para uma parte do corpo</span>
-            <span v-if="data.bath===3">Recebe assistência em mais de uma parte do corpo</span>
+            <span v-if="avdForm.bath===1">Não recebe assistência</span>
+            <span v-if="avdForm.bath===2">Recebe assistência apenas para uma parte do corpo</span>
+            <span v-if="avdForm.bath===3">Recebe assistência em mais de uma parte do corpo</span>
             <el-slider
-                v-model="data.bath" max="3"
+                v-model="avdForm.bath" max="3"
                 :step="1"
                 show-stops
                 input>
               </el-slider>
           </el-form-item>
           <el-form-item label="2. Vestir - pega roupa no armário e veste, incluindo roupas íntimas, roupas externas e fechos e cintos" prop="dress">
-            <span v-if="data.dress===1">Não recebe assistência</span>
-            <span v-if="data.dress===2">Recebe assistência apenas para amarrar os sapatos</span>
-            <span v-if="data.dress===3">Recebe assistência para pegar as roupas ou para vestir-se ou permanece parcial ou totalmente despido</span>
+            <span v-if="avdForm.dress===1">Não recebe assistência</span>
+            <span v-if="avdForm.dress===2">Recebe assistência apenas para amarrar os sapatos</span>
+            <span v-if="avdForm.dress===3">Recebe assistência para pegar as roupas ou para vestir-se ou permanece parcial ou totalmente despido</span>
             <el-slider
-                v-model="data.dress" max="3"
+                v-model="avdForm.dress" max="3"
                 :step="1"
                 show-stops
                 input>
               </el-slider>
           </el-form-item>
           <el-form-item label="3. Ir ao banheiro - Dirige-se ao banheiro para urinar ao evacuar: faz sua higiene e se veste depois" prop="bathroom">
-            <span v-if="data.bathroom===1">Não recebe assistência(pode utilizar objetos de apoio, comadre ou urinol à noite, asvaziando pela manhã)</span>
-            <span v-if="data.bathroom===2">Recebe assistência para ir ao banheiro ou para higienizar-se ou para vestir-se após as eliminações ou para usar o urinol à noite</span>
-            <span v-if="data.bathroom===3">Recebe assistência em mais de uma parte do corpo</span>
+            <span v-if="avdForm.bathroom===1">Não recebe assistência(pode utilizar objetos de apoio, comadre ou urinol à noite, asvaziando pela manhã)</span>
+            <span v-if="avdForm.bathroom===2">Recebe assistência para ir ao banheiro ou para higienizar-se ou para vestir-se após as eliminações ou para usar o urinol à noite</span>
+            <span v-if="avdForm.bathroom===3">Recebe assistência em mais de uma parte do corpo</span>
             <el-slider
-                v-model="data.bathroom" max="3"
+                v-model="avdForm.bathroom" max="3"
                 :step="1"
                 show-stops
                 input>
               </el-slider>
           </el-form-item>
           <el-form-item label="4. Transferência - movimentação e locomoção" prop="transfer">
-            <span v-if="data.transfer===1">Deita-se e levanta-se da cama ou da cadeira sem assistência(pode utilizar um objeto de apoio como bengala ou andador)</span>
-            <span v-if="data.transfer===2">Deita-se e levanta-se da cama ou da cadeira com auxílio</span>
-            <span v-if="data.transfer===3">Não sai da cama</span>
+            <span v-if="avdForm.transfer===1">Deita-se e levanta-se da cama ou da cadeira sem assistência(pode utilizar um objeto de apoio como bengala ou andador)</span>
+            <span v-if="avdForm.transfer===2">Deita-se e levanta-se da cama ou da cadeira com auxílio</span>
+            <span v-if="avdForm.transfer===3">Não sai da cama</span>
             <el-slider
-                v-model="data.transfer" max="3"
+                v-model="avdForm.transfer" max="3"
                 :step="1"
                 show-stops
                 input>
               </el-slider>
           </el-form-item>
           <el-form-item label="5. Continência - Controle sobre as funções" prop="salute">
-            <span v-if="data.salute===1">Tem controle sobre as funções de urinar e evacuar</span>
-            <span v-if="data.salute===2">Perdas urinárias ou fecais ocasionais("acidentes")</span>
-            <span v-if="data.salute===3">Supervisão para controlar urina e fezes, utiliza cateterismo ou é incontinente</span>
+            <span v-if="avdForm.salute===1">Tem controle sobre as funções de urinar e evacuar</span>
+            <span v-if="avdForm.salute===2">Perdas urinárias ou fecais ocasionais("acidentes")</span>
+            <span v-if="avdForm.salute===3">Supervisão para controlar urina e fezes, utiliza cateterismo ou é incontinente</span>
             <el-slider
-                v-model="data.salute" max="3"
+                v-model="avdForm.salute" max="3"
                 :step="1"
                 show-stops
                 input>
               </el-slider>
           </el-form-item>
           <el-form-item label="6. Alimentação - assistência para ingerir" prop="feeding">
-            <span v-if="data.feeding===1">Tem controle sobre as funções de urinar e evacuar</span>
-            <span v-if="data.feeding===2">Perdas urinárias ou fecais ocasionais("acidentes")</span>
-            <span v-if="data.feeding===3">Supervisão para controlar urina e fezes, utiliza cateterismo ou é incontinente</span>
+            <span v-if="avdForm.feeding===1">Tem controle sobre as funções de urinar e evacuar</span>
+            <span v-if="avdForm.feeding===2">Perdas urinárias ou fecais ocasionais("acidentes")</span>
+            <span v-if="avdForm.feeding===3">Supervisão para controlar urina e fezes, utiliza cateterismo ou é incontinente</span>
             <el-slider
-                v-model="data.feeding" max="3"
+                v-model="avdForm.feeding" max="3"
                 :step="1"
                 show-stops
                 input>
@@ -99,7 +111,7 @@
 
     <div class="mt-10 flex w-full justify-center">
       <el-button
-          v-if="getTotalMsg()===0"
+          v-if="verifyCalc()===0"
           disabled
           type="primary"
           icon="el-icon-success"
@@ -124,9 +136,9 @@ export default {
   },
   data() {
     return {
-      studentId: '32047538-7289-4eb1-b0ce-82b3740e074b',
+      studentId: 'a16a42ff-b8e4-47dd-bc99-230c3fce5b35',
       type: '',
-      data: {
+      avdForm: {
         date : '',
         bath : 0,
         dress : 0,
@@ -140,83 +152,110 @@ export default {
   },
   computed:{
     total(){
-      return this.data.bath + this.data.dress + this.data.bathroom + this.data.transfer + this.data.salute + this.data.feeding 
+      return this.avdForm.bath + this.avdForm.dress + this.avdForm.bathroom + this.avdForm.transfer + this.avdForm.salute + this.avdForm.feeding 
     },      
   },
+  
   methods: {
     getTotalMsg() {
-      if(this.data.bath === 1 &&  this.data.dress === 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute === 1 && this.data.feeding === 1)
+      if(this.avdForm.bath === 1 &&  this.avdForm.dress === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute === 1 && this.avdForm.feeding === 1)
        return { description: descriptions['group-1'][0], type: 'success' };
-      if((this.data.bath === 1 && this.data.dress === 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute === 1 && this.data.feeding > 1) ||
-      (this.data.bath === 1 && this.data.dress === 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute > 1 && this.data.feeding === 1)||
-      (this.data.bath === 1 && this.data.dress  === 1 && this.data.bathroom === 1 && this.data.transfer > 1 && this.data.salute === 1 && this.data.feeding === 1)||
-      (this.data.bath === 1 && this.data.dress === 1 && this.data.bathroom > 1 && this.data.transfer === 1 && this.data.salute === 1 && this.data.feeding === 1)||
-      (this.data.bath === 1 && this.data.dress > 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute === 1 && this.data.feeding === 1)||
-      (this.data.bath > 1 &&  this.data.dress === 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute === 1 && this.data.feeding === 1))
+      if((this.avdForm.bath === 1 && this.avdForm.dress === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute === 1 && this.avdForm.feeding > 1) ||
+      (this.avdForm.bath === 1 && this.avdForm.dress === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute > 1 && this.avdForm.feeding === 1)||
+      (this.avdForm.bath === 1 && this.avdForm.dress  === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer > 1 && this.avdForm.salute === 1 && this.avdForm.feeding === 1)||
+      (this.avdForm.bath === 1 && this.avdForm.dress === 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer === 1 && this.avdForm.salute === 1 && this.avdForm.feeding === 1)||
+      (this.avdForm.bath === 1 && this.avdForm.dress > 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute === 1 && this.avdForm.feeding === 1)||
+      (this.avdForm.bath > 1 &&  this.avdForm.dress === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute === 1 && this.avdForm.feeding === 1))
        return { description: descriptions['group-2'][0], type: 'success' };
-       if((this.data.bath === 1 && this.data.dress === 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute > 1 && this.data.feeding > 1) ||
-      (this.data.bath === 1 && this.data.dress === 1 && this.data.bathroom === 1 && this.data.transfer > 1 && this.data.salute === 1 && this.data.feeding > 1)||
-      (this.data.bath === 1 && this.data.dress  === 1 && this.data.bathroom === 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding === 1)||
-      (this.data.bath ===1 && this.data.dress === 1 && this.data.bathroom > 1 && this.data.transfer === 1 && this.data.salute === 1 && this.data.feeding > 1)||
-      (this.data.bath ===1 && this.data.dress  === 1 && this.data.bathroom > 1 && this.data.transfer ===1 && this.data.salute > 1 && this.data.feeding === 1)||
-      (this.data.bath ===1 &&  this.data.dress === 1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute === 1 && this.data.feeding === 1)||
-      (this.data.bath > 1 && this.data.dress  === 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute === 1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  === 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute > 1 && this.data.feeding === 1)||
-      (this.data.bath > 1 && this.data.dress  > 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute === 1 && this.data.feeding ===1))
+       if((this.avdForm.bath === 1 && this.avdForm.dress === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1) ||
+      (this.avdForm.bath === 1 && this.avdForm.dress === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer > 1 && this.avdForm.salute === 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath === 1 && this.avdForm.dress  === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding === 1)||
+      (this.avdForm.bath ===1 && this.avdForm.dress === 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer === 1 && this.avdForm.salute === 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath ===1 && this.avdForm.dress  === 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer ===1 && this.avdForm.salute > 1 && this.avdForm.feeding === 1)||
+      (this.avdForm.bath ===1 &&  this.avdForm.dress === 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute === 1 && this.avdForm.feeding === 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute === 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute > 1 && this.avdForm.feeding === 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute === 1 && this.avdForm.feeding ===1))
        return { description: descriptions['group-3'][0], type: 'success' };
-       if((this.data.bath === 1 && this.data.dress === 1 && this.data.bathroom === 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding > 1) ||
-      (this.data.bath === 1 && this.data.dress ===1 && this.data.bathroom > 1 && this.data.transfer ===1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath === 1 && this.data.dress  ===1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute ===1 && this.data.feeding > 1)||
-      (this.data.bath ===1 && this.data.dress ===1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding ===1)||
-      (this.data.bath ===1 && this.data.dress  > 1 && this.data.bathroom ===1 && this.data.transfer ===1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath ===1 &&  this.data.dress > 1 && this.data.bathroom ===1 && this.data.transfer > 1 && this.data.salute ===1 && this.data.feeding > 1)||
-      (this.data.bath ===1 && this.data.dress  > 1 && this.data.bathroom ===1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding ===1)||
-      (this.data.bath ===1 && this.data.dress  > 1 && this.data.bathroom > 1 && this.data.transfer ===1 && this.data.salute ===1 && this.data.feeding > 1)||
-      (this.data.bath ===1 && this.data.dress  > 1 && this.data.bathroom > 1 && this.data.transfer ===1 && this.data.salute ===1 && this.data.feeding ===1)||
-      (this.data.bath > 1 && this.data.dress  ===1 && this.data.bathroom ===1 && this.data.transfer ===1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  ===1 && this.data.bathroom ===1 && this.data.transfer > 1 && this.data.salute ===1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  ===1 && this.data.bathroom ===1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding ===1)||
-      (this.data.bath > 1 && this.data.dress  > 1 && this.data.bathroom ===1 && this.data.transfer ===1 && this.data.salute ===1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  > 1 && this.data.bathroom ===1 && this.data.transfer ===1 && this.data.salute > 1 && this.data.feeding ===1))
+       if((this.avdForm.bath === 1 && this.avdForm.dress === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1) ||
+      (this.avdForm.bath === 1 && this.avdForm.dress ===1 && this.avdForm.bathroom > 1 && this.avdForm.transfer ===1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath === 1 && this.avdForm.dress  ===1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute ===1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath ===1 && this.avdForm.dress ===1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding ===1)||
+      (this.avdForm.bath ===1 && this.avdForm.dress  > 1 && this.avdForm.bathroom ===1 && this.avdForm.transfer ===1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath ===1 &&  this.avdForm.dress > 1 && this.avdForm.bathroom ===1 && this.avdForm.transfer > 1 && this.avdForm.salute ===1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath ===1 && this.avdForm.dress  > 1 && this.avdForm.bathroom ===1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding ===1)||
+      (this.avdForm.bath ===1 && this.avdForm.dress  > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer ===1 && this.avdForm.salute ===1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath ===1 && this.avdForm.dress  > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer ===1 && this.avdForm.salute ===1 && this.avdForm.feeding ===1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  ===1 && this.avdForm.bathroom ===1 && this.avdForm.transfer ===1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  ===1 && this.avdForm.bathroom ===1 && this.avdForm.transfer > 1 && this.avdForm.salute ===1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  ===1 && this.avdForm.bathroom ===1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding ===1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom ===1 && this.avdForm.transfer ===1 && this.avdForm.salute ===1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom ===1 && this.avdForm.transfer ===1 && this.avdForm.salute > 1 && this.avdForm.feeding ===1))
        return { description: descriptions['group-4'][0], type: 'success' };
-       if((this.data.bath ===1 && this.data.dress ===1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding > 1) ||
-      (this.data.bath === 1 && this.data.dress > 1 && this.data.bathroom ===1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath === 1 && this.data.dress  > 1 && this.data.bathroom > 1 && this.data.transfer ===1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath ===1 && this.data.dress > 1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute ===1 && this.data.feeding > 1)||
-      (this.data.bath ===1 && this.data.dress  > 1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding ===1)||
-      (this.data.bath > 1 &&  this.data.dress ===1 && this.data.bathroom ===1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  ===1 && this.data.bathroom > 1 && this.data.transfer ===1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  ===1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute ===1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  ===1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding ===1)||
-      (this.data.bath > 1 && this.data.dress  > 1 && this.data.bathroom ===1 && this.data.transfer ===1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  > 1 && this.data.bathroom ===1 && this.data.transfer > 1 && this.data.salute ===1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  > 1 && this.data.bathroom ===1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding ===1)||
-      (this.data.bath > 1 && this.data.dress  > 1 && this.data.bathroom > 1 && this.data.transfer ===1 && this.data.salute ===1 && this.data.feeding ===1)||
-      (this.data.bath > 1 && this.data.dress  > 1 && this.data.bathroom > 1 && this.data.transfer ===1 && this.data.salute > 1 && this.data.feeding ===1))
+       if((this.avdForm.bath ===1 && this.avdForm.dress ===1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1) ||
+      (this.avdForm.bath === 1 && this.avdForm.dress > 1 && this.avdForm.bathroom ===1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath === 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer ===1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath ===1 && this.avdForm.dress > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute ===1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath ===1 && this.avdForm.dress  > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding ===1)||
+      (this.avdForm.bath > 1 &&  this.avdForm.dress ===1 && this.avdForm.bathroom ===1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  ===1 && this.avdForm.bathroom > 1 && this.avdForm.transfer ===1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  ===1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute ===1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  ===1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding ===1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom ===1 && this.avdForm.transfer ===1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom ===1 && this.avdForm.transfer > 1 && this.avdForm.salute ===1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom ===1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding ===1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer ===1 && this.avdForm.salute ===1 && this.avdForm.feeding ===1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer ===1 && this.avdForm.salute > 1 && this.avdForm.feeding ===1))
        return { description: descriptions['group-5'][0], type: 'success' };
-       if((this.data.bath === 1 && this.data.dress > 1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding > 1) ||
-      (this.data.bath >  1 && this.data.dress === 1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath >  1 && this.data.dress  > 1 && this.data.bathroom === 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress > 1 && this.data.bathroom > 1 && this.data.transfer === 1 && this.data.salute > 1 && this.data.feeding > 1)||
-      (this.data.bath > 1 && this.data.dress  > 1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute === 1 && this.data.feeding > 1)||
-      (this.data.bath > 1 &&  this.data.dress > 1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding  === 1))
+       if((this.avdForm.bath === 1 && this.avdForm.dress > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1) ||
+      (this.avdForm.bath >  1 && this.avdForm.dress === 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath >  1 && this.avdForm.dress  > 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer === 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 && this.avdForm.dress  > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute === 1 && this.avdForm.feeding > 1)||
+      (this.avdForm.bath > 1 &&  this.avdForm.dress > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding  === 1))
        return { description: descriptions['group-6'][0], type: 'success' };
-       if((this.data.bath > 1 && this.data.dress > 1 && this.data.bathroom > 1 && this.data.transfer > 1 && this.data.salute > 1 && this.data.feeding > 1))
+       if((this.avdForm.bath > 1 && this.avdForm.dress > 1 && this.avdForm.bathroom > 1 && this.avdForm.transfer > 1 && this.avdForm.salute > 1 && this.avdForm.feeding > 1))
         return { description: descriptions['total-descriptions'][0], type: 'success' };
       return 0;
     },
     calc(){
-        this.result = this.data.bath + this.data.dress + this.data.bathroom + this.data.transfer + this.data.salute + this.data.feeding 
+        this.result = this.avdForm.bath + this.avdForm.dress + this.avdForm.bathroom + this.avdForm.transfer + this.avdForm.salute + this.avdForm.feeding 
     },
-    dateNow(){
-      const date = new Date();
-      this.data.date = date.replace('dd', date.getDate()).replace('mm-', date.getMonth() + 1).replace('aaaa-', date.getFullYear());
+    verifyCalc(){
+      if(this.avdForm.bath !== 0 &&  this.avdForm.dress !== 0 && this.avdForm.bathroom !== 0 && this.avdForm.transfer !== 0  && this.avdForm.salute !== 0 && this.avdForm.feeding !== 0)
+        return 1
+      else 
+        return 0
     },
+    // dateNow(){
+    //   this.avdForm.date = "22/12/2020"
+    //   const date = new Date();
+    //   this.avdForm.date = date.replace('dd', date.getDate()).replace('mm-', date.getMonth() + 1).replace('aaaa-', date.getFullYear());
+    // },
+    async mounted() {
+    // this.studentId = sessionStorage.getItem('id'); tirar comentário ao subir pra main
+    if (this.$props.edit) {
+      const { data } = await this.$axios.get(
+        `/evaluation/${this.evaluationId}`,
+        { params: { type: 'AVD' } }
+      )
+      setTimeout(() => {
+        this.avdForm.date = (date) => new Date(date).getTime();
+        this.avdForm.bath = data.bath
+        this.avdForm.dress = data.dress
+        this.avdForm.bathroom = data.bathroom
+        this.avdForm.transfer = data.transfer
+        this.avdForm.salute = data.salute
+        this.avdForm.feeding = data.feeding
+      }, 100)
+    }
+  },
     async submitForm() {
+      // this.studentId = sessionStorage.getItem('id'); tirar comentário ao subir pra main
       this.calc();
-      this.dateNow();
+      // this.dateNow();
       const evaluation = {
-        ...this.data,
+        ...this.avdForm,
                 result: this.result,
             };
       try {
