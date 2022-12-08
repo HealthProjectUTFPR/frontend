@@ -89,7 +89,7 @@ export default {
       try {
         const { data } = await this.$axios.post(
           'http://localhost:3333/auth/login',
-          this.login,
+          this.login
         );
         localStorage.setItem('token', data);
         this.$router.push('/');
@@ -115,5 +115,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

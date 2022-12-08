@@ -1,8 +1,8 @@
 <template>
-    <div>
-      <SignupC />
-    </div>
-  </template>
+  <div>
+    <SignupC />
+  </div>
+</template>
 
 <script>
 import SignupC from '@/components/signup/signupC.vue';
@@ -16,5 +16,4 @@ export default {
 };
 </script>
 
-  <style>
-  </style>
+<style></style>
