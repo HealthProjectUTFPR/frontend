@@ -5,13 +5,12 @@
         >Gráfico do Monitoramento</span
       >
     </div>
-
     <div class="shadow-lg  p-4 bg-white dark:bg-gray-700 w-full">
       <div class="OptionsPicker">
-        
           <div class="order1">
             <el-select 
-              v-model="value" 
+              v-model="value"
+              :required="!selected" 
               class="select" 
               filterable placeholder="Alunos"
             >
@@ -81,7 +80,6 @@
   </div>
 </template>
 
-
 <script>
   import moment from 'moment';
 
@@ -91,9 +89,9 @@
       return{
         valuePrePos: "",
         value: "",
+        graphon: false,
         display: false,
         alunos: [],
-        idAluno: "",
         prePoso : [
           {
             value: 'Pré',
@@ -109,7 +107,6 @@
         value2:null,
         loading: false,
         dialogFormVisible: false,
-
         series: [
           {
             name: "PAD",
@@ -168,7 +165,7 @@
             categories: [],
           }
         },
-      }
+      };
     },
     watch: {
       value(){
@@ -186,6 +183,7 @@
         
       },
       clearseries(){
+        this.graphon = false;
         this.series[0].data.splice(0,this.series[0].data.length)
         this.series[1].data.splice(0,this.series[1].data.length)
         this.series[2].data.splice(0,this.series[2].data.length)
@@ -265,13 +263,12 @@
         }
       },
       changeDiplay2(){
-        if( this.display === false){
+        if( this.display === true){
           this.display = false; 
         }
       },  
       graficoPrePos () {
         this.clearseries();
-        
         this.items.forEach((item)=>{
           if(new Date(item.date).valueOf() >= new Date(this.value1).valueOf() &&  new Date(item.date).valueOf() <= new Date(this.value2).valueOf() ){
               if (this.valuePrePos === "Pré"){
@@ -281,14 +278,24 @@
                 this.defineDatePos(item)
               }
             this.changeDiplay();
-          }else{
+            this.graphon = true
+          }
+
+        })
+        if(this.graphon === false){ 
+          this.changeDiplay2();
+          if(this.valuePrePos === "" || this.value === ""  || this.value1 === null || this.value2 ===null){
             this.$notify.error({
             title: 'Erro',
-            message: 'Não há registro na faixa de tempo selecionada'
+            message: 'Algum campo não foi preenchido corretamente'
           });
-          this.changeDiplay2();
+          }else{
+            this.$notify.error({
+              title: 'Erro',
+              message: 'Não há registro de dados na faixa de tempo selecionada'
+            });
           }
-        })
+        }
       },
       async fetchData() {
         this.loading = true;
