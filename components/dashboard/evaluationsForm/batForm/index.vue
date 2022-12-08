@@ -143,11 +143,19 @@
 
 <script>
 import description from '@/components/dashboard/evaluationsForm/batForm/description.js'
+import formatDateToInput from '@/helpers/formatDateToInput';
+
 export default {
   name: 'BatForm',
+  props: {
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      studentId: '5fb3a2c2-42e8-4fe6-b721-14c654339f05',
+      studentId: '32047538-7289-4eb1-b0ce-82b3740e074b',
       evaluationId: '',
       studentInfos: {},
       indiceTable1: 18,
@@ -1088,14 +1096,14 @@ export default {
       }
     },
     async mounted() {
-      this.studentId = sessionStorage.getItem('id');
+      // this.studentId = sessionStorage.getItem('id');
       const { data: studentInfos } = await this.$axios.get(`/student/show/${this.studentId}`);
       this.studentInfos.sex = studentInfos.sex;
-      this.studentInfos.birthDate = studentInfos.birthDate;
+      this.studentInfos.birthDate = new Date().getFullYear() - new Date(studentInfos.birthDate).getFullYear;
       this.evaluationId = this.$route.params.id;
       const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'functionalBattery' }})
       setTimeout(() => {
-        this.bateriaFunc.date = data.date;
+        this.bateriaFunc.date =  formatDateToInput(data.date);
         this.bateriaFunc.sitAndDown = data.sitAndDown;
         this.bateriaFunc.elbowFlexion = data.elbowFlexion;
         this.bateriaFunc.marchWouldPark = data.marchWouldPark;
@@ -1156,12 +1164,11 @@ export default {
           {
             type: "functionalBattery",
             data: evaluation,
-          },
+          }, 
         );
       } catch (error){
         console.log(error);
       }
-      this.$router.go();
     },
   },
 }
