@@ -2,19 +2,40 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true
-  },
-  parserOptions: {
-    parser: '@babel/eslint-parser',
-    requireConfigFile: false
+    es2021: true,
   },
   extends: [
     '@nuxtjs',
-    'plugin:nuxt/recommended',
-    'prettier'
+    'prettier',
+    'plugin:vue/essential',
+    'eslint:recommended',
+    'airbnb-base',
+    'plugin:tailwindcss/recommended',
   ],
-  plugins: [
-  ],
-  // add your custom rules here
-  rules: {}
-}
+  parserOptions: {
+    parser: '@babel/eslint-parser',
+    requireConfigFile: false,
+  },
+  plugins: ['vue', 'tailwindcss', 'prettier'],
+  rules: {
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    'tailwindcss/no-custom-classname': 'off',
+    'max-len': 'off',
+    'no-param-reassign': 'off',
+    'operator-linebreak': 'off',
+    'object-curly-newline': ['error', { multiline: true }],
+    'comma-dangle': 'off',
+    'vue/multi-word-component-names': 'off',
+    'linebreak-style': 0,
+    'padded-blocks:': 0,
+  },
+  settings: {
+    'import/core-modules': ['vue', 'vuex'], // these modules are included in nuxt.js
+    'import/resolver': {
+      alias: {
+        map: [['@', '.']],
+        extensions: ['.vue', '.js'],
+      },
+    },
+  },
+};

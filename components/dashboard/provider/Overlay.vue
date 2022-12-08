@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'Overlay',
+  name: 'OverlayProvider',
   inject: ['state', 'toggle'],
-}
+};
 </script>
