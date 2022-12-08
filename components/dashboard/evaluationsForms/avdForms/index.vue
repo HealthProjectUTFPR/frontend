@@ -14,6 +14,18 @@
             :model="data"
             label-position="top"
         >
+        <el-form-item label="Data" prop="date">
+          <el-date-picker
+              v-model="data.date"
+              type="date"
+              placeholder="XX/XX/XXXX"
+              size="large"
+              style="width: 23em"
+              format="dd/MM/yyyy"
+          >
+          </el-date-picker>
+        </el-form-item>
+
           <el-form-item label="1. Banho - Banho de leito, Banheira ou Chuveiro" prop="bath">
             <span v-if="data.bath===1">Não recebe assistência</span>
             <span v-if="data.bath===2">Recebe assistência apenas para uma parte do corpo</span>
@@ -99,7 +111,7 @@
 
     <div class="mt-10 flex w-full justify-center">
       <el-button
-          v-if="getTotalMsg()===0"
+          v-if="verifyCalc()===0"
           disabled
           type="primary"
           icon="el-icon-success"
@@ -124,7 +136,7 @@ export default {
   },
   data() {
     return {
-      studentId: '32047538-7289-4eb1-b0ce-82b3740e074b',
+      studentId: 'a16a42ff-b8e4-47dd-bc99-230c3fce5b35',
       type: '',
       data: {
         date : '',
@@ -143,6 +155,7 @@ export default {
       return this.data.bath + this.data.dress + this.data.bathroom + this.data.transfer + this.data.salute + this.data.feeding 
     },      
   },
+  
   methods: {
     getTotalMsg() {
       if(this.data.bath === 1 &&  this.data.dress === 1 && this.data.bathroom === 1 && this.data.transfer === 1 && this.data.salute === 1 && this.data.feeding === 1)
@@ -208,13 +221,21 @@ export default {
     calc(){
         this.result = this.data.bath + this.data.dress + this.data.bathroom + this.data.transfer + this.data.salute + this.data.feeding 
     },
-    dateNow(){
-      const date = new Date();
-      this.data.date = date.replace('dd', date.getDate()).replace('mm-', date.getMonth() + 1).replace('aaaa-', date.getFullYear());
+    verifyCalc(){
+      if(this.data.bath !== 0 &&  this.data.dress !== 0 && this.data.bathroom !== 0 && this.data.transfer !== 0  && this.data.salute !== 0 && this.data.feeding !== 0)
+        return 1
+      else 
+        return 0
     },
+    // dateNow(){
+    //   this.data.date = "22/12/2020"
+    //   const date = new Date();
+    //   this.data.date = date.replace('dd', date.getDate()).replace('mm-', date.getMonth() + 1).replace('aaaa-', date.getFullYear());
+    // },
     async submitForm() {
+      // this.studentId = sessionStorage.getItem('id');
       this.calc();
-      this.dateNow();
+      // this.dateNow();
       const evaluation = {
         ...this.data,
                 result: this.result,
