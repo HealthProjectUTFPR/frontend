@@ -111,6 +111,7 @@
 import calculateVO2LMin from '@/helpers/evaluations/cardiorespiratoryCapacity/calculateVO2Lmin';
 import calculateVO2MlKg from '@/helpers/evaluations/cardiorespiratoryCapacity/calculateVO2MlKg';
 import classifyResult from '@/helpers/evaluations/cardiorespiratoryCapacity/classifyResult';
+import formatDateToInput from '@/helpers/formatDateToInput';
 
 export default {
   name: 'CardiorespiratoryCapacityForm',
@@ -124,10 +125,10 @@ export default {
   data() {
     return {
       studentId: 'd0525a86-7b04-4f14-92e2-9d4552f05cd8',
-      mockup: {
-        sex: 'Homem',
-        age: 70,
-      },
+      // mockup: {
+      //   sex: 'Homem',
+      //   age: 70,
+      // },
       userData: {
         sex: '',
         age: 0,
@@ -144,6 +145,7 @@ export default {
         finalFC: '',
         vo2Lmin: '',
         vo2MlKG: '',
+        result: '',
       },
       rules: {
         date: [
@@ -268,25 +270,23 @@ export default {
     this.userData.age =
       new Date().getFullYear() - new Date(studentInfos.birthDate).getFullYear();
 
-    console.log('paso', this.studentId);
-    // if (this.$props.edit) {
-    //   // const { data } = await this.$axios.get(
-    //   //   `/evaluation/${this.evaluationId}`,
-    //   //   { params: { type: 'ACR' } },
-    //   // );
+    if (this.$props.edit) {
+      this.evaluationId = this.$route.params.id;
+      const { data } = await this.$axios.get(
+        `/evaluation/${this.evaluationId}`,
+        { params: { type: 'ACR' } },
+      );
 
-    //   setTimeout(() => {
-    //     this.cardiorespiratoryCapacityForm = studentInfos;
-    //   }, 1000);
-
-    //   console.log('GET do ACR: ', studentInfos);
-    // }
+      this.cardiorespiratoryCapacityForm.date = formatDateToInput(data.date);
+      this.cardiorespiratoryCapacityForm.weight = data.weight;
+      this.cardiorespiratoryCapacityForm.time = data.time;
+      this.cardiorespiratoryCapacityForm.finalFC = data.finalFC;
+    }
 
     const { weight, finalFC, time, vo2Lmin } =
       this.cardiorespiratoryCapacityForm;
 
     const { age, sex } = this.userData;
-    console.log('estou aqui!', age, sex);
 
     this.cardiorespiratoryCapacityForm.vo2MlKG = calculateVO2MlKg({
       weight,
@@ -305,13 +305,33 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
+          this.cardiorespiratoryCapacityForm.result = this.elAlertState.title;
           try {
-            await this.$axios.post(`/evaluation/${this.studentId}`, {
-              type: 'ACR',
-              data: this.cardiorespiratoryCapacityForm,
-            });
+            if (this.$props.edit) {
+              await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
+                type: 'ACR',
+                data: this.cardiorespiratoryCapacityForm,
+              });
+
+              this.$message({
+                message: 'Avaliação atualizada com sucesso!',
+                type: 'success',
+              });
+            } else {
+              await this.$axios.post(`/evaluation/${this.studentId}`, {
+                type: 'ACR',
+                data: this.cardiorespiratoryCapacityForm,
+              });
+              this.$message({
+                message: 'Avaliação criada com sucesso!',
+                type: 'success',
+              });
+            }
+            setTimeout(() => {
+              this.$router.push({ path: '/' });
+            }, 500);
           } catch (error) {
-            console.log(error);
+            this.$message.error({ message: `${error.response.data.message}` });
           }
         }
         return false;
@@ -322,18 +342,19 @@ export default {
       this.calculated = false;
     },
     calculateResult() {
+      const { result: _, ...rest } = this.cardiorespiratoryCapacityForm;
       const isAllFieldsFilled = Object.values(
-        this.cardiorespiratoryCapacityForm,
+        rest,
       ).every((field) => !!field);
 
-      // const { sex } = this.mockup;
+      const { sex } = this.userData;
       const { vo2MlKG } = this.cardiorespiratoryCapacityForm;
 
       if (isAllFieldsFilled) {
-        const { type, title } = classifyResult({
-          sex: this.userData.sex,
+        const { type, title } = classifyResult(
+          sex,
           vo2MlKG,
-        });
+        );
 
         this.calculated = true;
         this.elAlertState = {

@@ -1,9 +1,9 @@
 const getEditRouter = (formName) => {
   switch (formName) {
-    case 'ACR': return '/equilibrio';
-    case 'sarcopenia': return '/avaliacao/editar/sarcopenia';
-    case 'bodyComposition': return '/avaliacao/editar/composicaoCorporal';
-    case 'AEQ': return '/avaliacao/editar/equilibrio';
+    case 'ACR': return { evaluationName: 'Cardiorrespiratório', to: '/avaliacao/editar/capacidadeCardiorrespiratoria' };
+    case 'sarcopenia': return { evaluationName: 'Sarcopenia', to: '/avaliacao/editar/sarcopenia' };
+    case 'bodyComposition': return { evaluationName: 'Composição Corporal', to: '/avaliacao/editar/composicaoCorporal' };
+    case 'AEQ': return { evaluationName: 'Equilíbrio', to: '/avaliacao/editar/equilibrio' };
     default: return undefined;
   }
 };

@@ -1,4 +1,5 @@
 function verifyCardiorespiratoryCapacityOfMan({ vo2MlKG }) {
+  console.log('retornando o result');
   let type = '';
   let title = '';
 
@@ -46,10 +47,10 @@ function verifyCardiorespiratoryCapacityOfWoman({ vo2MlKG }) {
   return { type, title };
 }
 
-function classifyResult({ sex, vo2MlKG }) {
+function classifyResult(sex, vo2MlKG) {
   let response;
 
-  if (sex === 'Homem') {
+  if (sex === 'M') {
     response = verifyCardiorespiratoryCapacityOfMan({ vo2MlKG });
   } else {
     response = verifyCardiorespiratoryCapacityOfWoman({ vo2MlKG });

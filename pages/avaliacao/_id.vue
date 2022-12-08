@@ -259,10 +259,10 @@ export default {
       });
       this.tableData = list.data.map((it) => ({
         id: it.id,
-        avaliacao: it.name,
+        avaliacao: getEditRouter(it.name).evaluationName,
         data: formatDate(it.date),
         resultado: it.result,
-        to: getEditRouter(it.name),
+        to: getEditRouter(it.name).to,
       }));
     },
   },

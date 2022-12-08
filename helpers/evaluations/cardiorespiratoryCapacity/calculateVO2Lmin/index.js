@@ -3,7 +3,7 @@ const calculateVO2LMin = ({ weight, finalFC, time, age, sex }) => {
     return '';
   }
 
-  const sexWeight = sex === 'Homem' ? 1 : 0;
+  const sexWeight = sex === 'M' ? 1 : 0;
 
   const result =
         6.952 +
