@@ -250,45 +250,90 @@ export default {
     resetGraph() {
       this.chartData1 = {
         labels: [],
-        datasets: []
+        datasets: [
+          {
+            label: 'AVD',
+            backgroundColor: '#F08700'
+          }
+        ]
       }
       this.chartData2 = {
         labels: [],
-        datasets: []
+        datasets: [
+          {
+            label: 'AEQ',
+            backgroundColor: '#17BEBB'
+          }
+        ]
       }
       this.chartData3 = {
         labels: [],
-        datasets: []
+        datasets: [
+          {
+            label: 'IMC',
+            backgroundColor: '#E4572E'          
+          }
+        ]
       }
       this.chartData4 = {
         labels: [],
-        datasets: []
+        datasets: [
+          {
+            label: 'Sarcopenia',
+            backgroundColor: '#9BC53D'
+          }
+        ]
       }
       this.chartData5 = {
         labels: [],
-        datasets: []
+        datasets: [
+          {
+            label: 'ACR',
+            backgroundColor: '#FA7921'
+          }
+        ]
       }
       this.chartData6 = {
         labels: [],
-        datasets: []
+        datasets: [
+          {
+            label: 'Depressão',
+            backgroundColor: '#FDE74C'
+          }
+        ]
       }
       this.chartData7 = {
         labels: [],
-        datasets: []
+        datasets: [
+          {
+            label: 'Fragilidade',
+            backgroundColor: '#9368B7'
+          }
+        ]
       }
       this.chartData8 = {
         labels: [],
-        datasets: []
+        datasets: [
+          {
+            label: 'Sentar e abaixar',
+            backgroundColor: '#E87461'
+          }
+        ]
       }
       this.chartData9 = {
         labels: [],
-        datasets: []
+        datasets: [
+          {
+            label: 'Flexão de cotovelo',
+            backgroundColor: '#38369A'
+          }
+        ]
       }
     },
     emptyGraph() {
       this.$notify.error({
         title: 'Erro',
-        message: 'Não existe avaliações entre as datas selecionadas'
+        message: 'Não existe avaliações no período selecionado'
       });
     },
     async getGraph() {
