@@ -143,7 +143,7 @@
                   <el-divider content-position="left">Dados Pré Treino</el-divider>
 
                   <!-- Hora pre treino -->
-                  <el-form-item label="Hora pré treino" prop="date">
+                  <el-form-item label="Hora pré treino" prop="date" required>
                     <el-time-picker
                       v-model.number="form.horarioPre"
                       placeholder="HH:MM:SS"
@@ -155,7 +155,7 @@
                   </el-form-item>
 
                   <!-- Informacoes do exame -->
-                  <el-form-item label="PAS(mmHg)" prop="pasPre">
+                  <el-form-item label="PAS(mmHg)" prop="pasPre" required>
                     <el-row class="row" justify="space-evenly">
                       <el-col class="col-md-6 mb-3">
                         <el-input
@@ -169,7 +169,7 @@
                     </el-row>
                   </el-form-item>
                 
-                  <el-form-item label="PAD(mmHg)" prop="padPre">
+                  <el-form-item label="PAD(mmHg)" prop="padPre" required>
                     <el-row class="row-bg" justify="space-evenly">
                       <el-col class="col-md-6 mb-3">
                         <el-input 
@@ -184,7 +184,7 @@
                     </el-row>
                   </el-form-item>
 
-                  <el-form-item label="PES" prop="pseEPre">
+                  <el-form-item label="PES" prop="pseEPre" required>
                     <el-row class="row-bg" justify="space-evenly">
                       <el-col class="col-md-6 mb-3">
                         <el-input 
@@ -198,7 +198,7 @@
                     </el-row>
                   </el-form-item>
 
-                  <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPre">
+                  <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPre" required>
                     <el-row class="row-bg" justify="space-evenly">
                       <el-col class="col-md-6 mb-3">
                         <el-input
@@ -218,7 +218,7 @@
                   <el-divider content-position="left">Dados Pós Treino</el-divider>
                   
                   <!-- Hora pos treino -->
-                  <el-form-item label="Hora pós treino" prop="date">
+                  <el-form-item label="Hora pós treino" prop="date" required>
                     <el-time-picker
                       v-model.number="form.horarioPos"
                       placeholder="HH:MM:SS"
@@ -229,7 +229,7 @@
                   </el-form-item>
 
                   <!-- Informacoes do exame -->
-                  <el-form-item label="PAS(mmHg)" prop="pasPos">
+                  <el-form-item label="PAS(mmHg)" prop="pasPos" required>
                     <el-row class="row" justify="space-evenly">
                       <el-col class="col-md-6 mb-3">
                         <el-input 
@@ -243,7 +243,7 @@
                     </el-row>
                   </el-form-item>
                 
-                  <el-form-item label="PAD(mmHg)" prop="padPos">
+                  <el-form-item label="PAD(mmHg)" prop="padPos" required>
                     <el-row class="row-bg" justify="space-evenly">
                       <el-col class="col-md-6 mb-3">
                         <el-input 
@@ -257,7 +257,7 @@
                     </el-row>
                   </el-form-item>
 
-                  <el-form-item label="PES" prop="pseEPos">
+                  <el-form-item label="PES" prop="pseEPos" required>
                     <el-row class="row-bg" justify="space-evenly">
                       <el-col class="col-md-6 mb-3">
                         <el-input 
@@ -271,7 +271,7 @@
                     </el-row>
                   </el-form-item>
 
-                  <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPos">
+                  <el-form-item label="Glicemia(mg/dL)" prop="glicemiaPos" required>
                     <el-row class="row-bg" justify="space-evenly">
                       <el-col class="col-md-6 mb-3">
                         <el-input 
@@ -287,7 +287,7 @@
                 </el-form-item>
                 
                 <!-- Tempo total do treino -->
-                <el-form-item label="Tempo total do treino(min)">
+                <el-form-item label="Tempo total do treino(min)" required>
                   <el-input 
                     v-model="form.horarioTreino"
                     placeholder="Tempo total do treino"
@@ -298,7 +298,7 @@
                 </el-form-item>
       
                 <!-- Observacao -->
-                <el-form-item>
+                <el-form-item required>
                   <el-divider content-position="left">Observação</el-divider>
                   <el-input v-model="form.observacao" type="textarea" placeholder="Observação" />
                 </el-form-item>
