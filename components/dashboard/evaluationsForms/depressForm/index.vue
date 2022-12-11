@@ -225,7 +225,11 @@
       </div>
 
       <div class="mt-10 flex w-full justify-center">
-        <el-button type="primary" icon="el-icon-success" @click="submitForm()">
+        <el-button
+          type="primary"
+          icon="el-icon-success"
+          @click="submitForm('depressionForm')"
+        >
           Salvar
         </el-button>
       </div>
@@ -246,7 +250,7 @@ export default {
   },
   data() {
     return {
-      studentId: '32047538-7289-4eb1-b0ce-82b3740e074b',
+      studentId: '',
       evaluationId: '',
       depressionForm: {
         date: '',
@@ -302,8 +306,9 @@ export default {
     },
   },
   async mounted() {
-    // this.studentId = sessionStorage.getItem('id');
+    this.studentId = sessionStorage.getItem('id')
     if (this.$props.edit) {
+      this.evaluationId = this.$route.params.id
       const { data } = await this.$axios.get(
         `/evaluation/${this.evaluationId}`,
         { params: { type: 'Depression' } }
@@ -347,19 +352,42 @@ export default {
         this.depressionForm.campo14 +
         this.depressionForm.campo15
     },
-    async submitForm() {
+    submitForm(formName) {
       this.calc()
-      const evaluation = {
-        ...this.depressionForm,
-      }
-      try {
-        await this.$axios.post(`/evaluation/${this.studentId}`, {
-          type: 'Depression',
-          data: evaluation,
-        })
-      } catch (error) {
-        console.log(error)
-      }
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          try {
+            if (this.$props.edit) {
+              await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
+                type: 'Depression',
+                data: this.depressionForm,
+              })
+              this.$message({
+                message: 'Avaliação atualizada com sucesso!',
+                type: 'success',
+              })
+            } else {
+              const evaluation = {
+                ...this.depressionForm,
+              }
+              await this.$axios.post(`/evaluation/${this.studentId}`, {
+                type: 'Depression',
+                data: evaluation,
+              })
+              this.$message({
+                message: 'Avaliação criada com sucesso!',
+                type: 'success',
+              })
+            }
+            setTimeout(() => {
+              this.$router.push({ path: '/' })
+            }, 500)
+          } catch (error) {
+            this.$message.error({ message: `${error.response.data.message}` })
+          }
+        }
+        return false
+      })
     },
   },
 }
