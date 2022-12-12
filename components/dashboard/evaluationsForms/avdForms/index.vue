@@ -130,13 +130,19 @@
 
 <script>
 import descriptions from '@/components/dashboard/evaluationsForms/avdForms/descriptions';
+// import formatDateToInput from '@/helpers/formatDateToInput'
 
 export default {
-  provide() {
+  name: 'avdForm',
+  props: {
+    edit: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
-      studentId: 'a16a42ff-b8e4-47dd-bc99-230c3fce5b35',
+      studentId: '9c0baa5a-8358-461b-ba80-62d61f7fec86',
       type: '',
       avdForm: {
         date : '',
@@ -147,8 +153,18 @@ export default {
         salute : 0,
         feeding : 0,
         result : 0
-      }
-    };
+      },
+      rules: {
+        date: [
+          {
+            type: 'date',
+            required: true,
+            message: 'Por favor, escolha uma data',
+            trigger: 'change',
+          },
+        ],
+      },
+    }
   },
   computed:{
     total(){
@@ -233,13 +249,15 @@ export default {
     //   this.avdForm.date = date.replace('dd', date.getDate()).replace('mm-', date.getMonth() + 1).replace('aaaa-', date.getFullYear());
     // },
     async mounted() {
-    // this.studentId = sessionStorage.getItem('id'); tirar comentário ao subir pra main
-    if (this.$props.edit) {
-      const { data } = await this.$axios.get(
-        `/evaluation/${this.evaluationId}`,
-        { params: { type: 'AVD' } }
-      )
+      // this.studentId = sessionStorage.getItem('id')
+      if (this.$props.edit) {
+        this.evaluationId = this.$route.params.id
+        const { data } = await this.$axios.get(
+          `/evaluation/${this.evaluationId}`,
+          { params: { type: 'AVD' } }
+        )
       setTimeout(() => {
+        // this.avdForm.date = formatDateToInput(data.date)
         this.avdForm.date = (date) => new Date(date).getTime();
         this.avdForm.bath = data.bath
         this.avdForm.dress = data.dress
@@ -250,26 +268,43 @@ export default {
       }, 100)
     }
   },
-    async submitForm() {
-      // this.studentId = sessionStorage.getItem('id'); tirar comentário ao subir pra main
-      this.calc();
-      // this.dateNow();
-      const evaluation = {
-        ...this.avdForm,
-                result: this.result,
-            };
-      try {
-        await this.$axios.post(
-          `/evaluation/${this.studentId}`,
-        {
-          type: "AVD",
-          data: evaluation,
-        },);} 
-      catch (error){
-        console.log(error);
-      }
-        this.$router.go();
-    }
+  submitForm(formName) {
+      this.calc()
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          try {
+            if (this.$props.edit) {
+              await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
+                type: 'AVD',
+                data: this.avdForm,
+              })
+              this.$message({
+                message: 'Avaliação atualizada com sucesso!',
+                type: 'success',
+              })
+            } else {
+              const evaluation = {
+                ...this.avdForm,
+              }
+              await this.$axios.post(`/evaluation/${this.studentId}`, {
+                type: 'AVD',
+                data: evaluation,
+              })
+              this.$message({
+                message: 'Avaliação criada com sucesso!',
+                type: 'success',
+              })
+            }
+            setTimeout(() => {
+              this.$router.push({ path: '/' })
+            }, 500)
+          } catch (error) {
+            this.$message.error({ message: `${error.response.data.message}` })
+          }
+        }
+        return false
+      })
+    },
   }
 };
 </script> 
