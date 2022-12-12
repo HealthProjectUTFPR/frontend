@@ -286,10 +286,11 @@
               <el-form ref="modalEditForm" :model="studentEdit">
                 <div class="mx-3 mt-3 mb-2">
                   <el-form-item prop="birthDate">
-                    <el-input
+                    <el-date-picker
                       v-model="studentEdit.birthDate"
-                      placeholder="Data de nascimento"
-                    ></el-input>
+                      type="date"
+                      placeholder="Data"
+                    ></el-date-picker>
                   </el-form-item>
                 </div>
                 <div class="mx-3 mt-3 mb-2">
@@ -335,10 +336,15 @@
                 </div>
                 <div class="mx-3">
                   <el-form-item prop="sex">
-                    <el-input
-                      v-model="studentEdit.sex"
-                      placeholder="Sexo"
-                    ></el-input>
+                    <el-select v-model="studentEdit.sex" placeholder="Sexo">
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
                   </el-form-item>
                 </div>
                 <div class="mx-3">
@@ -398,6 +404,16 @@ export default {
 
   data() {
     return {
+      options: [
+        {
+          value: 'M',
+          label: 'Masculino',
+        },
+        {
+          value: 'F',
+          label: 'Feminino',
+        },
+      ],
       moment,
       date: 0,
       componentKey: 0,
@@ -508,6 +524,9 @@ export default {
         `http://localhost:3333/student/show/${this.student.id}`,
       );
       this.student = data;
+      let date = new Date();
+      date = date.getFullYear();
+      this.date = date - moment(String(this.student.birthDate)).format('YYYY');
     },
     async handleEdit() {
       this.$refs.modalEditForm.validate(async (valid) => {
