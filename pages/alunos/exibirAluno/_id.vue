@@ -224,7 +224,7 @@
                   leading-8
                   text-center
                 "
-                >{{ student.sex }}</span
+                >{{ sexString }}</span
               >
             </div>
           </div>
@@ -417,6 +417,7 @@ export default {
       moment,
       date: 0,
       componentKey: 0,
+      sexString: '',
       student: {},
       studentEdit: {
         birthDate: '',
@@ -500,9 +501,7 @@ export default {
   async created() {
     this.student.id = this.$route.params.id;
     await this.getStudent();
-    this.studentEdit.birthDate = moment(String(this.student.birthDate)).format(
-      'DD/MM/YYYY',
-    );
+    this.studentEdit.birthDate = this.student.birthDate;
     let date = new Date();
     date = date.getFullYear();
     this.date = date - moment(String(this.student.birthDate)).format('YYYY');
@@ -514,6 +513,11 @@ export default {
     this.studentEdit.sex = this.student.sex;
     this.studentEdit.healthPlan = this.student.healthPlan;
     this.studentEdit.note = this.student.note;
+    if (this.student.sex === 'M') {
+      this.sexString = 'Masculino';
+    } else {
+      this.sexString = 'Feminino';
+    }
   },
   methods: {
     async getStudent() {
@@ -526,6 +530,11 @@ export default {
       this.student = data;
       let date = new Date();
       date = date.getFullYear();
+      if (this.student.sex === 'M') {
+        this.sexString = 'Masculino';
+      } else {
+        this.sexString = 'Feminino';
+      }
       this.date = date - moment(String(this.student.birthDate)).format('YYYY');
     },
     async handleEdit() {
@@ -534,7 +543,19 @@ export default {
           try {
             await axios.patch(
               `http://localhost:3333/student/update/${this.student.id}`,
-              this.studentEdit,
+              {
+                name: this.studentEdit.name,
+                address: this.studentEdit.address,
+                sex: this.studentEdit.sex,
+                breed: this.studentEdit.breed,
+                stature: this.studentEdit.stature,
+                contact: this.studentEdit.contact,
+                emergencyContact: this.studentEdit.emergencyContact,
+                healthPlan: this.studentEdit.healthPlan,
+                birthDate: this.studentEdit.birthDate,
+                note: this.studentEdit.note,
+                flag: true,
+              },
             );
             this.$notify.success({
               title: 'Sucesso',
