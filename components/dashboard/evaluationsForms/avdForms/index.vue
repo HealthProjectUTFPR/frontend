@@ -133,7 +133,7 @@ import descriptions from '@/components/dashboard/evaluationsForms/avdForms/descr
 import formatDateToInput from '@/helpers/formatDateToInput'
 
 export default {
-  name: 'avdForm',
+  name: 'AvdForm',
   props: {
     edit: {
       type: Boolean,
@@ -142,7 +142,8 @@ export default {
   },
   data() {
     return {
-      studentId: '9c0baa5a-8358-461b-ba80-62d61f7fec86',
+      studentId: '',
+      evaluationId: '',
       type: '',
       avdForm: {
         date : '',
@@ -171,7 +172,25 @@ export default {
       return this.avdForm.bath + this.avdForm.dress + this.avdForm.bathroom + this.avdForm.transfer + this.avdForm.salute + this.avdForm.feeding 
     },      
   },
-  
+  async mounted() {
+      this.studentId = sessionStorage.getItem('id')
+      if (this.$props.edit) {
+        this.evaluationId = this.$route.params.id
+        const { data } = await this.$axios.get(
+          `/evaluation/${this.evaluationId}`,
+          { params: { type: 'AVD' } }
+        )
+      setTimeout(() => {
+        this.avdForm.date = formatDateToInput(data.date)
+        this.avdForm.bath = data.bath
+        this.avdForm.dress = data.dress
+        this.avdForm.bathroom = data.bathroom
+        this.avdForm.transfer = data.transfer
+        this.avdForm.salute = data.salute
+        this.avdForm.feeding = data.feeding
+      }, 100)
+    }
+  },
   methods: {
     getTotalMsg() {
       if(this.avdForm.bath === 1 &&  this.avdForm.dress === 1 && this.avdForm.bathroom === 1 && this.avdForm.transfer === 1 && this.avdForm.salute === 1 && this.avdForm.feeding === 1)
@@ -243,32 +262,7 @@ export default {
       else 
         return 0
     },
-    // dateNow(){
-    //   this.avdForm.date = "22/12/2020"
-    //   const date = new Date();
-    //   this.avdForm.date = date.replace('dd', date.getDate()).replace('mm-', date.getMonth() + 1).replace('aaaa-', date.getFullYear());
-    // },
-    async mounted() {
-      // this.studentId = sessionStorage.getItem('id')
-      if (this.$props.edit) {
-        this.evaluationId = this.$route.params.id
-        const { data } = await this.$axios.get(
-          `/evaluation/${this.evaluationId}`,
-          { params: { type: 'AVD' } }
-        )
-      setTimeout(() => {
-        // this.avdForm.date = (date) => new Date(date).getTime();
-        this.avdForm.date = formatDateToInput(data.date)
-        this.avdForm.bath = data.bath
-        this.avdForm.dress = data.dress
-        this.avdForm.bathroom = data.bathroom
-        this.avdForm.transfer = data.transfer
-        this.avdForm.salute = data.salute
-        this.avdForm.feeding = data.feeding
-      }, 100)
-    }
-  },
-  submitForm(formName) {
+    submitForm(formName) {
       this.calc()
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
