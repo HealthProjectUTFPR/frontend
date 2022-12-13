@@ -290,6 +290,8 @@
                       v-model="studentEdit.birthDate"
                       type="date"
                       placeholder="Data"
+                      size="large"
+                      style="width: 100%"
                     ></el-date-picker>
                   </el-form-item>
                 </div>
@@ -307,6 +309,7 @@
                     <el-input
                       v-model="studentEdit.contact"
                       placeholder="Contato"
+                      type="number"
                     ></el-input>
                   </el-form-item>
                 </div>
@@ -315,6 +318,7 @@
                     <el-input
                       v-model="studentEdit.emergencyContact"
                       placeholder="Contato de emergência"
+                      type="number"
                     ></el-input>
                   </el-form-item>
                 </div>
@@ -323,6 +327,7 @@
                     <el-input
                       v-model="studentEdit.stature"
                       placeholder="Estatura"
+                      type="number"
                     ></el-input>
                   </el-form-item>
                 </div>
@@ -336,7 +341,12 @@
                 </div>
                 <div class="mx-3">
                   <el-form-item prop="sex">
-                    <el-select v-model="studentEdit.sex" placeholder="Sexo">
+                    <el-select
+                      v-model="studentEdit.sex"
+                      placeholder="Sexo"
+                      size="large"
+                      style="width: 100%"
+                    >
                       <el-option
                         v-for="item in options"
                         :key="item.value"
