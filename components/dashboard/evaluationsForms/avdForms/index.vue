@@ -121,7 +121,7 @@
           v-else
           type="primary"
           icon="el-icon-success"
-          @click="submitForm()"
+          @click="submitForm('avdForm')"
           >Salvar
       </el-button>
     </div>
@@ -130,14 +130,14 @@
 
 <script>
 import descriptions from '@/components/dashboard/evaluationsForms/avdForms/descriptions';
-// import formatDateToInput from '@/helpers/formatDateToInput'
+import formatDateToInput from '@/helpers/formatDateToInput'
 
 export default {
   name: 'avdForm',
   props: {
     edit: {
-      type: Number,
-      default: 0,
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -257,8 +257,8 @@ export default {
           { params: { type: 'AVD' } }
         )
       setTimeout(() => {
-        // this.avdForm.date = formatDateToInput(data.date)
-        this.avdForm.date = (date) => new Date(date).getTime();
+        // this.avdForm.date = (date) => new Date(date).getTime();
+        this.avdForm.date = formatDateToInput(data.date)
         this.avdForm.bath = data.bath
         this.avdForm.dress = data.dress
         this.avdForm.bathroom = data.bathroom
