@@ -399,8 +399,8 @@ export default {
         checked7_1: false,
         checked7_2: false,
         checked8_1: false,
-        checked9_2: false,
         checked9_1: false,
+        checked9_2: false,
         checked9_3: false,
         checked10_1: false,
         checked11_1: false,
@@ -461,8 +461,8 @@ export default {
         this.checkedGroups.checked7_1 = data.checked7_1;
         this.checkedGroups.checked7_2 = data.checked7_2;
         this.checkedGroups.checked8_1 = data.checked8_1;
-        this.checkedGroups.checked9_2 = data.checked9_2;
         this.checkedGroups.checked9_1 = data.checked9_1;
+        this.checkedGroups.checked9_2 = data.checked9_2;
         this.checkedGroups.checked9_3 = data.checked9_3;
         this.checkedGroups.checked10_1 = data.checked10_1;
         this.checkedGroups.checked11_1 = data.checked11_1;
@@ -490,7 +490,43 @@ export default {
     async submitForm() {
       const evaluation = {
         scholarity: Number(this.scholarity),
-        ...this.checkedGroups,
+        date: '',
+        checked: false,
+        checked1_1: this.checkedGroups.checked1_1,
+        checked1_2: this.checkedGroups.checked1_2,
+        checked1_3: this.checkedGroups.checked1_3,
+        checked1_4: this.checkedGroups.checked1_4,
+        checked1_5: this.checkedGroups.checked1_5,
+        checked2_1: this.checkedGroups.checked2_1,
+        checked2_2: this.checkedGroups.checked2_2,
+        checked2_3: this.checkedGroups.checked2_3,
+        checked2_4: this.checkedGroups.checked2_4,
+        checked2_5: this.checkedGroups.checked2_5,
+        checked3_1: this.checkedGroups.checked3_1,
+        checked3_2: this.checkedGroups.checked3_2,
+        checked3_3: this.checkedGroups.checked3_3,
+        checked4_1: this.checkedGroups.checked4_1,
+        checked4_2: this.checkedGroups.checked4_2,
+        checked4_3: this.checkedGroups.checked4_3,
+        checked4_4: this.checkedGroups.checked4_4,
+        checked4_5: this.checkedGroups.checked4_5,
+        checked5_1: this.checkedGroups.checked5_1,
+        checked5_2: this.checkedGroups.checked5_2,
+        checked5_3: this.checkedGroups.checked5_3,
+        checked5_4: this.checkedGroups.checked5_4,
+        checked5_5: this.checkedGroups.checked5_5,
+        checked6_1: this.checkedGroups.checked6_1,
+        checked6_2: this.checkedGroups.checked6_2,
+        checked6_3: this.checkedGroups.checked6_3,
+        checked7_1: this.checkedGroups.checked7_1,
+        checked7_2: this.checkedGroups.checked7_2,
+        checked8_1: this.checkedGroups.checked8_1,
+        checked9_1: this.checkedGroups.checked9_1,
+        checked9_2: this.checkedGroups.checked9_2,
+        checked9_3: this.checkedGroups.checked9_3,
+        checked10_1: this.checkedGroups.checked10_1,
+        checked11_1: this.checkedGroups.checked11_1,
+        checked12_1: this.checkedGroups.checked12_1,
         result: this.result,
       };
       try {
