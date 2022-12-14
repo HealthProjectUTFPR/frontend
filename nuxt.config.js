@@ -60,7 +60,7 @@ export default {
   server: { port: process.env.PORT || 3000 },
 
   // Axios Configuration: https://axios.nuxtjs.org/options
-  axios: { baseURL: process.env.API_BASE_URL },
+  axios: { baseURL: process.env.API_URL },
 
   // Font Awesome Configuration: https://github.com/nuxt-community/fontawesome-module
   fontawesome: { icons: { solid: true } },
