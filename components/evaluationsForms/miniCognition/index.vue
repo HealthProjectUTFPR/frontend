@@ -346,13 +346,11 @@
 
 <script>
 // eslint-disable-next-line import/no-unresolved
-import CheckInputGroup from '@/components/evaluationsForms/MiniCognition/CheckInputGroup.vue';
+import CheckInputGroup from '@/components/evaluationsForms/miniCognition/CheckInputGroup.vue';
 
 export default {
   name: 'MiniCognitionForm',
-  components: {
-    CheckInputGroup,
-  },
+  components: { CheckInputGroup },
   provide() {
     return { checkedGroups: this.checkedGroups };
   },
@@ -370,11 +368,12 @@ export default {
       result: '',
       checkedGroups: {
         date: '',
+        checked: false,
         checked1_1: false,
+        checked1_2: false,
         checked1_3: false,
         checked1_4: false,
         checked1_5: false,
-        checked1_2: false,
         checked2_1: false,
         checked2_2: false,
         checked2_3: false,
@@ -414,8 +413,9 @@ export default {
   computed: {
     total() {
       return Object.values(this.checkedGroups).reduce((a, b) => {
+        if (typeof a !== 'number') return 0;
+        if (typeof b !== 'boolean') return a;
         if (b === true) return a + 1;
-        if (a === true || a === false) return 0;
         return a;
       });
     },
@@ -424,7 +424,10 @@ export default {
   async mounted() {
     this.studentId = sessionStorage.getItem('id');
     if (this.$props.edit) {
-      const { data } = await this.$axios.get(`/evaluation/${this.evaluationId}`, { params: { type: 'MiniCognition' } });
+      const { data } = await this.$axios.get(
+        `/evaluation/${this.evaluationId}`,
+        { params: { type: 'MiniCognition' } },
+      );
       setTimeout(() => {
         // this.checkedGroups.date = new Date(data.date).getTime();
         this.checkedGroups.date = data.date;
@@ -470,11 +473,11 @@ export default {
   methods: {
     getTotalMsg() {
       if (
-        (this.scholarity === 0 && this.total < 20)
-        || (this.scholarity > 0 && this.scholarity <= 4 && this.total < 25)
-        || (this.scholarity > 4 && this.scholarity <= 8 && this.total < 27)
-        || (this.scholarity > 8 && this.scholarity <= 11 && this.total < 28)
-        || (this.scholarity > 11 && this.total < 29)
+        (this.scholarity === 0 && this.total < 20) ||
+        (this.scholarity > 0 && this.scholarity <= 4 && this.total < 25) ||
+        (this.scholarity > 4 && this.scholarity <= 8 && this.total < 27) ||
+        (this.scholarity > 8 && this.scholarity <= 11 && this.total < 28) ||
+        (this.scholarity > 11 && this.total < 29)
       ) {
         this.result = 'Possui um declínio cognitivo.';
         return { description: this.result, type: 'warning' };
@@ -490,13 +493,10 @@ export default {
         result: this.result,
       };
       try {
-        await this.$axios.post(
-          `/evaluation/${this.studentId}`,
-          {
-            type: 'MiniCognition',
-            data: evaluation,
-          },
-        );
+        await this.$axios.post(`/evaluation/${this.studentId}`, {
+          type: 'MiniCognition',
+          data: evaluation,
+        });
         this.$router.go();
       } catch (error) {
         this.$notify.error({
