@@ -224,7 +224,7 @@
                   leading-8
                   text-center
                 "
-                >{{ student.sex }}</span
+                >{{ sexString }}</span
               >
             </div>
           </div>
@@ -286,10 +286,13 @@
               <el-form ref="modalEditForm" :model="studentEdit">
                 <div class="mx-3 mt-3 mb-2">
                   <el-form-item prop="birthDate">
-                    <el-input
+                    <el-date-picker
                       v-model="studentEdit.birthDate"
-                      placeholder="Data de nascimento"
-                    ></el-input>
+                      type="date"
+                      placeholder="Data"
+                      size="large"
+                      style="width: 100%"
+                    ></el-date-picker>
                   </el-form-item>
                 </div>
                 <div class="mx-3 mt-3 mb-2">
@@ -306,6 +309,7 @@
                     <el-input
                       v-model="studentEdit.contact"
                       placeholder="Contato"
+                      type="number"
                     ></el-input>
                   </el-form-item>
                 </div>
@@ -314,6 +318,7 @@
                     <el-input
                       v-model="studentEdit.emergencyContact"
                       placeholder="Contato de emergência"
+                      type="number"
                     ></el-input>
                   </el-form-item>
                 </div>
@@ -322,6 +327,7 @@
                     <el-input
                       v-model="studentEdit.stature"
                       placeholder="Estatura"
+                      type="number"
                     ></el-input>
                   </el-form-item>
                 </div>
@@ -335,10 +341,20 @@
                 </div>
                 <div class="mx-3">
                   <el-form-item prop="sex">
-                    <el-input
+                    <el-select
                       v-model="studentEdit.sex"
                       placeholder="Sexo"
-                    ></el-input>
+                      size="large"
+                      style="width: 100%"
+                    >
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
                   </el-form-item>
                 </div>
                 <div class="mx-3">
@@ -374,16 +390,6 @@
           class="absolute inset-0 z-40 bg-black opacity-25"
         ></div>
       </div>
-
-      <div class="flex justify-end right-20 bottom-28 absolute">
-        <el-button
-          type="primary"
-          size="medium"
-          icon="el-icon-s-order"
-          circle
-          @click="$router.push(`/avaliacao/${student.id}`)"
-        ></el-button>
-      </div>
     </div>
   </div>
 </template>
@@ -398,9 +404,20 @@ export default {
 
   data() {
     return {
+      options: [
+        {
+          value: 'M',
+          label: 'Masculino',
+        },
+        {
+          value: 'F',
+          label: 'Feminino',
+        },
+      ],
       moment,
       date: 0,
       componentKey: 0,
+      sexString: '',
       student: {},
       studentEdit: {
         birthDate: '',
@@ -484,9 +501,7 @@ export default {
   async created() {
     this.student.id = this.$route.params.id;
     await this.getStudent();
-    this.studentEdit.birthDate = moment(String(this.student.birthDate)).format(
-      'DD/MM/YYYY',
-    );
+    this.studentEdit.birthDate = this.student.birthDate;
     let date = new Date();
     date = date.getFullYear();
     this.date = date - moment(String(this.student.birthDate)).format('YYYY');
@@ -498,6 +513,11 @@ export default {
     this.studentEdit.sex = this.student.sex;
     this.studentEdit.healthPlan = this.student.healthPlan;
     this.studentEdit.note = this.student.note;
+    if (this.student.sex === 'M') {
+      this.sexString = 'Masculino';
+    } else {
+      this.sexString = 'Feminino';
+    }
   },
   methods: {
     async getStudent() {
@@ -508,14 +528,35 @@ export default {
         `http://localhost:3333/student/show/${this.student.id}`,
       );
       this.student = data;
+      let date = new Date();
+      date = date.getFullYear();
+      if (this.student.sex === 'M') {
+        this.sexString = 'Masculino';
+      } else {
+        this.sexString = 'Feminino';
+      }
+      this.date = date - moment(String(this.student.birthDate)).format('YYYY');
     },
+    // eslint-disable-next-line require-await
     async handleEdit() {
       this.$refs.modalEditForm.validate(async (valid) => {
         if (valid) {
           try {
             await axios.patch(
               `http://localhost:3333/student/update/${this.student.id}`,
-              this.studentEdit,
+              {
+                name: this.studentEdit.name,
+                address: this.studentEdit.address,
+                sex: this.studentEdit.sex,
+                breed: this.studentEdit.breed,
+                stature: this.studentEdit.stature,
+                contact: this.studentEdit.contact,
+                emergencyContact: this.studentEdit.emergencyContact,
+                healthPlan: this.studentEdit.healthPlan,
+                birthDate: this.studentEdit.birthDate,
+                note: this.studentEdit.note,
+                flag: true,
+              },
             );
             this.$notify.success({
               title: 'Sucesso',
@@ -535,6 +576,7 @@ export default {
     resetForm() {
       this.getStudent(this.student.id);
     },
+    // eslint-disable-next-line require-await
     async handleCancel() {
       this.getStudent(this.student.id);
       this.studentEdit = this.student;
