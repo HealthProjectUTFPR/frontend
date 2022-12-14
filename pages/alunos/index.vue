@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="grid h-60 mb-20">
     <NavBar />
@@ -340,6 +341,7 @@ export default {
         });
       }
     },
+    // eslint-disable-next-line require-await
     async handleCreate() {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
         'token',

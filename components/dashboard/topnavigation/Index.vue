@@ -189,6 +189,8 @@ export default {
         case 'profile':
           this.$router.push('/profile');
           break;
+        default:
+          break;
       }
     },
   },
