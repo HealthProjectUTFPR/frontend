@@ -25,6 +25,11 @@ const getEditRouter = (formName) => {
             evaluationName: 'AVD',
             to: '/avaliacao/editar/avd',
         };
+      case 'fragilidade':
+        return {
+            evaluationName: 'Fragilidade',
+            to: '/avaliacao/editar/fragilidade',
+        };
       default:
         return undefined;
     }
