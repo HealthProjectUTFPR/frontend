@@ -498,13 +498,13 @@ export default {
   methods: {
     gerarClassificacao(){
       if(this.soma === 0){
-        this.classificacao = 'NÃO FRÁGIL'
+        this.classificacao = 'não frágil'
       } else if(this.soma === 1){
-        this.classificacao = 'PRÉ FRÁGIL'
+        this.classificacao = 'pré frágil'
       } else if(this.soma === 2){
-        this.classificacao = 'PRÉ FRÁGIL'
+        this.classificacao = 'pré frágil'
       } else if(this.soma >= 3){
-        this.classificacao = 'FRÁGIL'
+        this.classificacao = 'frágil'
       }
       return 0
     },
