@@ -528,6 +528,7 @@ export default {
       date = date.getFullYear();
       this.date = date - moment(String(this.student.birthDate)).format('YYYY');
     },
+    // eslint-disable-next-line require-await
     async handleEdit() {
       this.$refs.modalEditForm.validate(async (valid) => {
         if (valid) {
@@ -554,6 +555,7 @@ export default {
     resetForm() {
       this.getStudent(this.student.id);
     },
+    // eslint-disable-next-line require-await
     async handleCancel() {
       this.getStudent(this.student.id);
       this.studentEdit = this.student;
