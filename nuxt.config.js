@@ -18,13 +18,18 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/element-ui', '@/plugins/axios'],
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/axios',
+    '@/plugins/apexcharts'
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+  
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
@@ -55,7 +60,7 @@ export default {
   server: { port: process.env.PORT || 3000 },
 
   // Axios Configuration: https://axios.nuxtjs.org/options
-  axios: { baseURL: process.env.API_BASE_URL },
+  axios: { baseURL: process.env.API_URL },
 
   // Font Awesome Configuration: https://github.com/nuxt-community/fontawesome-module
   fontawesome: { icons: { solid: true } },
