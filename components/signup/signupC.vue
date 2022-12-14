@@ -125,7 +125,7 @@ export default {
 
     async doSignup() {
       try {
-        await this.$axios.post('http://localhost:3333/auth/register', {
+        await this.$axios.post('/auth/register', {
           email: this.signup.email,
           name: this.signup.name,
           password: this.signup.password,
