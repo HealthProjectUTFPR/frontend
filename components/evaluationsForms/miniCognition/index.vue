@@ -490,8 +490,7 @@ export default {
     async submitForm() {
       const evaluation = {
         scholarity: Number(this.scholarity),
-        date: '',
-        checked: false,
+        date: this.checkedGroups.date,
         checked1_1: this.checkedGroups.checked1_1,
         checked1_2: this.checkedGroups.checked1_2,
         checked1_3: this.checkedGroups.checked1_3,
