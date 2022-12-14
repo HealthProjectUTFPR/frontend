@@ -3,9 +3,7 @@
     <sidenav-item title="Dashboard" to="/">
       <font-awesome-icon icon="chart-simple" />
     </sidenav-item>
-    <sidenav-item title="Categoria" to="/category">
-      <font-awesome-icon icon="list-ul" />
-    </sidenav-item>
+
     <sidenav-item title="Alunos" to="/alunos">
       <font-awesome-icon icon="users" />
     </sidenav-item>
@@ -17,8 +15,6 @@ import SidenavItem from './Item.vue';
 
 export default {
   name: 'SidenavItems',
-  components: {
-    SidenavItem,
-  },
+  components: { SidenavItem },
 };
 </script>

@@ -51,9 +51,7 @@ export default {
       tableData: [],
       loading: false,
       dialogFormVisible: false,
-      form: {
-        name: '',
-      },
+      form: { name: '' },
       rules: {
         name: [
           {
@@ -183,9 +181,7 @@ export default {
     },
 
     resetForm() {
-      this.form = {
-        name: '',
-      };
+      this.form = { name: '' };
     },
   },
 };

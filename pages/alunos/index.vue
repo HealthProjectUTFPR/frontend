@@ -25,8 +25,16 @@
           >
           <span class="text-base text-gray-500 mt-2"
             >Data de nascimento:
-            {{ moment(String(aluno.birthDate)).format('DD/MM/YYYY') }}</span
+            {{ moment(String(aluno.birthDate)).format('MM/DD/YYYY') }}</span
           >
+        </el-col>
+        <el-col :span="2">
+          <el-button
+            type="primary"
+            icon="el-icon-notebook-2"
+            circle
+            @click="handleEdit(aluno.id)"
+          ></el-button>
         </el-col>
         <el-col :span="2">
           <el-button
@@ -79,10 +87,12 @@
             </div>
             <div class="mx-3 mt-3 mb-2">
               <el-form-item prop="birthDate">
-                <el-input
+                <el-date-picker
                   v-model="modalCreate.birthDate"
-                  placeholder="Data de nascimento"
-                ></el-input>
+                  type="date"
+                  placeholder="Data"
+                >
+                </el-date-picker>
               </el-form-item>
             </div>
             <div class="mx-3 mt-3 mb-2">
@@ -127,10 +137,15 @@
             </div>
             <div class="mx-3">
               <el-form-item prop="sex">
-                <el-input
-                  v-model="modalCreate.sex"
-                  placeholder="Sexo"
-                ></el-input>
+                <el-select v-model="modalCreate.sex" placeholder="Sexo">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
               </el-form-item>
             </div>
             <div class="mx-3">
@@ -174,11 +189,19 @@ import moment from 'moment';
 import NavBar from '@/components/bottomNav/index.vue';
 
 export default {
-  components: {
-    NavBar,
-  },
+  components: { NavBar },
   data() {
     return {
+      options: [
+        {
+          value: 'M',
+          label: 'Masculino',
+        },
+        {
+          value: 'F',
+          label: 'Feminino',
+        },
+      ],
       alunos: [],
       moment,
       modalCreate: {
@@ -276,14 +299,18 @@ export default {
   methods: {
     async getStudents() {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        'token'
+        'token',
       )}`;
       const { data } = await axios.get('http://localhost:3333/student/index');
       this.alunos = data;
     },
+    handleEdit(id) {
+      this.$router.push(`/avaliacao/${id}`);
+    },
+
     async handleDelete(index) {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        'token'
+        'token',
       )}`;
       try {
         await axios.patch(`http://localhost:3333/student/delete/${index}`);
@@ -305,7 +332,7 @@ export default {
     },
     async handleCreate() {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        'token'
+        'token',
       )}`;
       this.$refs.modalCreateForm.validate(async (valid) => {
         if (valid) {
@@ -320,7 +347,7 @@ export default {
               emergencyContact: this.modalCreate.emergencyContact,
               healthPlan: this.modalCreate.healthPlan,
               birthDate: moment(String(this.modalCreate.birthDate)).format(
-                'DD/MM/YYYY'
+                'DD/MM/YYYY',
               ),
               note: this.modalCreate.note,
               flag: true,

@@ -1,14 +1,21 @@
 <template>
   <div>
-    <MiniCognition />
+    <!-- <EvaluationsFormsBalanceForm /> -->
+    <!-- <BodyCompositionForm /> -->
+    <!-- <SarcopeniaForm /> -->
+    <CardioRespiratoryForm />
+    <BalanceForm />
   </div>
 </template>
 
 <script>
-import MiniCognition from '@/components/evaluationsForms/MiniCognition/index.vue';
+// import BodyCompositionForm from '@/components/evaluationsForms/bodyCompositionForm/index.vue';
+// import SarcopeniaForm from '@/somponents/evaluationsForms/sarcopenia/index.vue';
+// import BalanceForm from '@/components/evaluationsForms/balanceForm/index.vue';
+import CardioRespiratoryForm from '@/components/evaluationsForms/cardiorespiratoryCapacity/index.vue';
 
 export default {
   name: 'IndexPage',
-  components: { MiniCognition },
+  components: { CardioRespiratoryForm },
 };
 </script>

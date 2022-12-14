@@ -286,10 +286,11 @@
               <el-form ref="modalEditForm" :model="studentEdit">
                 <div class="mx-3 mt-3 mb-2">
                   <el-form-item prop="birthDate">
-                    <el-input
+                    <el-date-picker
                       v-model="studentEdit.birthDate"
-                      placeholder="Data de nascimento"
-                    ></el-input>
+                      type="date"
+                      placeholder="Data"
+                    ></el-date-picker>
                   </el-form-item>
                 </div>
                 <div class="mx-3 mt-3 mb-2">
@@ -335,10 +336,15 @@
                 </div>
                 <div class="mx-3">
                   <el-form-item prop="sex">
-                    <el-input
-                      v-model="studentEdit.sex"
-                      placeholder="Sexo"
-                    ></el-input>
+                    <el-select v-model="studentEdit.sex" placeholder="Sexo">
+                      <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
                   </el-form-item>
                 </div>
                 <div class="mx-3">
@@ -394,12 +400,20 @@ import moment from 'moment';
 import NavBar from '@/components/bottomNav/index.vue';
 
 export default {
-  components: {
-    NavBar,
-  },
+  components: { NavBar },
 
   data() {
     return {
+      options: [
+        {
+          value: 'M',
+          label: 'Masculino',
+        },
+        {
+          value: 'F',
+          label: 'Feminino',
+        },
+      ],
       moment,
       date: 0,
       componentKey: 0,
@@ -487,7 +501,7 @@ export default {
     this.student.id = this.$route.params.id;
     await this.getStudent();
     this.studentEdit.birthDate = moment(String(this.student.birthDate)).format(
-      'DD/MM/YYYY'
+      'DD/MM/YYYY',
     );
     let date = new Date();
     date = date.getFullYear();
@@ -504,12 +518,15 @@ export default {
   methods: {
     async getStudent() {
       axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem(
-        'token'
+        'token',
       )}`;
       const { data } = await axios.get(
-        `http://localhost:3333/student/show/${this.student.id}`
+        `http://localhost:3333/student/show/${this.student.id}`,
       );
       this.student = data;
+      let date = new Date();
+      date = date.getFullYear();
+      this.date = date - moment(String(this.student.birthDate)).format('YYYY');
     },
     async handleEdit() {
       this.$refs.modalEditForm.validate(async (valid) => {
@@ -517,7 +534,7 @@ export default {
           try {
             await axios.patch(
               `http://localhost:3333/student/update/${this.student.id}`,
-              this.studentEdit
+              this.studentEdit,
             );
             this.$notify.success({
               title: 'Sucesso',
@@ -541,7 +558,7 @@ export default {
       this.getStudent(this.student.id);
       this.studentEdit = this.student;
       this.studentEdit.birthDate = moment(
-        String(this.student.birthDate)
+        String(this.student.birthDate),
       ).format('DD/MM/YYYY');
       this.toggleModalEdit = false;
     },
