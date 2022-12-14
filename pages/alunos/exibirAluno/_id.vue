@@ -390,16 +390,6 @@
           class="absolute inset-0 z-40 bg-black opacity-25"
         ></div>
       </div>
-
-      <div class="flex justify-end right-20 bottom-28 absolute">
-        <el-button
-          type="primary"
-          size="medium"
-          icon="el-icon-s-order"
-          circle
-          @click="$router.push(`/avaliacao/${student.id}`)"
-        ></el-button>
-      </div>
     </div>
   </div>
 </template>
