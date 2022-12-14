@@ -288,6 +288,7 @@ export default {
       type: '',
       soma: 0,
       genero: '',
+      teste: '',
       classificacao: '',
       fragilidadeForm: {
         date: '',
@@ -471,6 +472,7 @@ export default {
       )
       setTimeout(() => {
         this.fragilidadeForm.date = formatDateToInput(data.date)
+        this.teste = data.date
         this.fragilidadeForm.weight = data.weight
         this.fragilidadeForm.looseWeight = data.looseWeight
         this.fragilidadeForm.activityDifficultLastWeekFrequency =
@@ -480,6 +482,7 @@ export default {
         this.fragilidadeForm.walkingDays = data.walkingDays
         this.fragilidadeForm.walkingMinutesPerDay = data.walkingMinutesPerDay
         this.fragilidadeForm.moderateActivityDays = data.moderateActivityDays
+        this.fragilidadeForm.moderateActivityMinutesPerDay = data.moderateActivityMinutesPerDay
         this.fragilidadeForm.vigorousActivityDays = data.vigorousActivityDays
         this.fragilidadeForm.vigorousActivityMinutesPerDay =
           data.vigorousActivityMinutesPerDay
@@ -536,6 +539,8 @@ export default {
       this.fragilidadeForm.score = this.soma
       this.fragilidadeForm.result = this.classificacao
       console.log(this.fragilidadeForm)
+      console.log(this.fragilidadeForm.date)
+      console.log(this.teste)
     },
     calc() {
       this.fragilidadeForm.mets1 = this.mets1
