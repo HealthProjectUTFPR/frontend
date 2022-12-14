@@ -1,13 +1,13 @@
 <template>
   <div>
-  <AvdForms/>
+  <FragilityForms/>
   </div>
 </template>
 
 <script>
-import AvdForms from '../components/dashboard/evaluationsForms/avdForms/index.vue'; 
-// import FragilityForms from '../components/dashboard/evaluationsForms/FragilityForms/index.vue';
+import FragilityForms from '@/components/dashboard/evaluationsForms/fragilityForms/index.vue'; 
 export default {
-    components: { AvdForms },
+  name: 'AvdFormsEvaluation',
+    components: { FragilityForms },
 }
 </script>

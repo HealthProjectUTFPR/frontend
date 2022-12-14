@@ -12,8 +12,19 @@
         label-position="top">
             <div class="px-6 py-3">
                 <div class="mp-3 flex flex-col">
-                    <el-row :gutter="24">
-                        <el-col :span="8">
+                    <el-form-item label="Data" prop="date">
+                        <el-date-picker
+                            v-model="fragilityForm.date"
+                            type="date"
+                            placeholder="XX/XX/XXXX"
+                            size="large"
+                            style="width: 23em"
+                            format="dd/MM/yyyy"
+                        >
+                        </el-date-picker>
+                    </el-form-item>
+                    <!-- <el-row :gutter="24"> -->
+                        <!-- <el-col :span="8">
                             <div class="grid-content bg-purple">
                                 <el-form-item
                                 label="Estatura"
@@ -26,48 +37,48 @@
                                     ></el-input>
                                 </el-form-item>
                             </div>
-                        </el-col>
-                        <el-col :span="8">
+                        </el-col> -->
+                        <!-- <el-col :span="8"> -->
                             <div class="grid-content bg-purple">
                                 <el-form-item
-                                label="Peso (kg)"
+                                label="Peso(KG)"
                                 prop="weight"
                                 >
                                     <el-input
-                                    disabled
-                                    v-model.number="fragilityForm.peso"
-                                    placeholder="Peso (kg)"
+                                    v-model.number="fragilityForm.weight"
+                                    placeholder="weight (kg)"
                                     type="number"
                                     ></el-input>
                                 </el-form-item>
                             </div>
-                        </el-col>
-                        <el-col :span="8">
+                        <!-- </el-col> -->
+                        <!-- <el-col :span="8">
                             <div class="grid-content bg-purple">
                                 <el-form-item
                                 label="IMC"
                                 prop="number"
                                 >
                                     <el-input
-                                    disabled
                                     v-model.number="fragilityForm.imc"
                                     placeholder="IMC"
                                     type="number"
                                     >
                                     </el-input>
-                                </el-form-item>
+                                </el-form-item> -->
+                                <!-- <span>{{imc}}</span> -->
                             </div>
-                        </el-col>
-                    </el-row>
+                        <!-- </el-col> -->
+                    <!-- </el-row> -->
                 </div>
             </div>
             <div class="mb-3 flex flex-col">
                 <el-form-item
-                label="1. Nos últimos 12 meses o Sr(a) tem diminuído de peso sem fazer nenhuma dieta? Quantos KGs?"
+                label="1. Nos últimos 12 meses o Sr(a) tem diminuído de peso sem fazer nenhuma dieta? Resposta em KGs"
                 prop="number"
                 >
                     <el-input
-                    v-model.number="fragilityForm.pergunta1"
+                    v-model.number="fragilityForm.looseWeight"
+                    type="number"
                     placeholder="please input"
                     >
                     </el-input>
@@ -80,7 +91,8 @@
                 prop="number"
                 >
                     <el-input
-                    v-model.number="fragilityForm.pergunta2"
+                    type="number"
+                    v-model.number="fragilityForm.activityDifficultLastWeekFrequency"
                     placeholder="please input" 
                     >
                     </el-input>
@@ -93,7 +105,8 @@
                 prop="number"
                 >
                     <el-input
-                    v-model.number="fragilityForm.pergunta3"
+                    type="number"
+                    v-model.number="fragilityForm.KeepGoingDifficultLastWeekFrequency"
                     placeholder="please input" 
                     >
                     </el-input>
@@ -106,7 +119,8 @@
                 prop="number"
                 >
                     <el-input
-                    v-model.number="fragilityForm.pergunta4"
+                    type="number"
+                    v-model.number="fragilityForm.handgripStrength"
                     placeholder="please input"   
                     >
                     </el-input>
@@ -115,11 +129,12 @@
     
             <div class="mb-3 flex flex-col">
                 <el-form-item
-                label="5. Teste de caminhada habitual(4,5 metros) Tempo"
+                label="5. Teste de caminhada habitual(Tempo)"
                 prop="number"
                 >
                     <el-input
-                    v-model.number="fragilityForm.pergunta5"
+                    type="number"
+                    v-model.number="fragilityForm.time"
                     placeholder="please input"   
                     >
                     </el-input>
@@ -128,10 +143,11 @@
     
             <div class="mb-3 flex flex-col">
             <el-form-item
-                label="6. IPAQ(autorrelato de caminhada, atividades moderadas e atividades vigorosas) Kcal"
+                label="6. IPAQ(autorrelato de caminhada, atividades moderadas e atividades vigorosas), resposta em Kcal"
                 prop="number"
                 >
                     <el-input
+                    type="number"
                     v-model.number="fragilityForm.pergunta6"
                     placeholder="please input"   
                     >
@@ -149,7 +165,8 @@
                     prop="number"
                     >
                         <el-input
-                        v-model.number="fragilityForm.caminhada_dps"
+                        type="number"
+                        v-model.number="fragilityForm.walkingDays"
                         placeholder="please input"   
                         >
                         </el-input>
@@ -161,7 +178,8 @@
                     prop="number"
                     >
                         <el-input
-                        v-model.number="fragilityForm.caminhada_mpd"
+                        type="number"
+                        v-model.number="fragilityForm.walkingMinutesPerDay"
                         placeholder="please input"   
                         >
                         </el-input>
@@ -179,7 +197,8 @@
                     prop="number"
                     >
                         <el-input
-                        v-model.number="fragilityForm.atvModerada_dps"
+                        type="number"
+                        v-model.number="fragilityForm.moderateActivityDays"
                         placeholder="please input"   
                         >
                         </el-input>
@@ -191,7 +210,8 @@
                     prop="number"
                     >
                         <el-input
-                        v-model.number="fragilityForm.atvModerada_mpd"
+                        type="number"
+                        v-model.number="fragilityForm.moderateActivityMinutesPerDay"
                         placeholder="please input"   
                         >
                         </el-input>
@@ -209,7 +229,8 @@
                     prop="number"
                     >
                         <el-input
-                        v-model.number="fragilityForm.atvVigorosa_dps"
+                        type="number"
+                        v-model.number="fragilityForm.vigorousActivityDays"
                         placeholder="please input"   
                         >
                         </el-input>
@@ -221,7 +242,8 @@
                     prop="number"
                     >
                         <el-input
-                        v-model.number="fragilityForm.atvVigorosa_mpd"
+                        type="number"
+                        v-model.number="fragilityForm.vigorousActivityMinutesPerDay"
                         placeholder="please input"   
                         >
                         </el-input>
@@ -250,7 +272,7 @@
             <el-button
                 type="primary"
                 icon="el-icon-success"
-                @click="submitForm()"
+                @click="submitForm('fragilityForm')"
                 >Salvar
             </el-button>
         </div>
@@ -266,68 +288,174 @@
 
 
   <script>
-  export default {
-    provide() {
+  import formatDateToInput from '@/helpers/formatDateToInput'
+  import imcFunc from '@/helpers/evaluations/fragility/imc/index';
+
+    export default {
+        name: 'FragilityForm',
+        props: {
+        edit: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
+            studentId: '',
+            evaluationId: '',
+            type: '',
             fragilityForm: {
-            estatura: '',
-            peso: '',
-            imc: '',
-            pergunta1: '',
-            pergunta2: '',
-            pergunta3: '',
-            pergunta4   : '',
-            pergunta5: '',
-            pergunta6: '',
-            caminhada_dps: '',
-            caminhada_mpd: '',
-            atvModerada_dps: '',
-            atvModerada_mpd: '',
-            atvVigorosa_dps: '',
-            atvVigorosa_mpd: '',
+                date: '',
+                weight: '',
+                looseWeight:'',
+                activityDifficultLastWeekFrequency:'',
+                KeepGoingDifficultLastWeekFrequency:'',
+                walkingDays:'',
+                walkingMinutesPerDay:'',
+                moderateActivityDays:'',
+                moderateActivityMinutesPerDay:'',
+                vigorousActivityDays:'',
+                vigorousActivityMinutesPerDay:'',
+                time:'',
+                handgripStrength:'',
+                imc:'',
+                mets1:'',
+                mets2:'',
+                mets3:'',
+                metsTotal:'',
+                kcal:'',
+                score:'',
+                result:'',
+            },
+            rules: {
+                date: [{
+                    type: 'date',
+                    required: true,
+                    message: 'Por favor, escolha uma data',
+                    trigger: 'change',
+                },],
             },
         };
     },
     computed:{
-        Genero(){
-            return this.radio
+        imc() {
+            return imcFunc(this.fragilityForm.weight, '20');
         },
         mets1(){
-            if(this.fragilityForm.caminhada_dps !== "" && this.fragilityForm.caminhada_mpd !== "")
-                return (this.fragilityForm.caminhada_dps * this.fragilityForm.caminhada_mpd * 3.3)
-            else    
-                return ""
+            if(this.fragilityForm.walkingDays !== "" && this.fragilityForm.walkingMinutesPerDay !== ""){
+                return (this.fragilityForm.walkingDays * this.fragilityForm.walkingMinutesPerDay * 3.3)
+            }else    
+                return ''
         },
         mets2(){
-            if(this.fragilityForm.atvModerada_dps !== "" && this.fragilityForm.atvModerada_mpd !== "")
-                return (this.fragilityForm.atvModerada_dps * this.fragilityForm.atvModerada_mpd * 3.3)
+            if(this.fragilityForm.moderateActivityDays !== "" && this.fragilityForm.moderateActivityMinutesPerDay !== "")
+                return (this.fragilityForm.moderateActivityDays * this.fragilityForm.moderateActivityMinutesPerDay * 3.3)
             else    
-                return ""
+                return ''
         },
         mets3(){
-            if(this.fragilityForm.atvVigorosa_dps !== "" && this.fragilityForm.atvVigorosa_mpd !== "")
-                return (this.fragilityForm.atvVigorosa_dps * this.fragilityForm.atvVigorosa_mpd * 3.3)
+            if(this.fragilityForm.vigorousActivityDays !== "" && this.fragilityForm.vigorousActivityMinutesPerDay !== "")
+                return (this.fragilityForm.vigorousActivityDays * this.fragilityForm.vigorousActivityMinutesPerDay * 3.3)
             else    
-                return ""
+                return ''
         },
         metsTotal(){
-            if(this.fragilityForm.caminhada_dps !== "" || this.fragilityForm.caminhada_mpd !== "" || 
-            this.fragilityForm.atvModerada_dps !== "" || this.fragilityForm.atvModerada_mpd !== "" || 
-            this.fragilityForm.atvVigorosa_dps !== "" || this.fragilityForm.atvVigorosa_mpd !== "")
-                return ((this.fragilityForm.caminhada_dps * this.fragilityForm.caminhada_mpd * 3.3) + 
-                (this.fragilityForm.atvModerada_dps * this.fragilityForm.atvModerada_mpd * 3.3) + 
-                (this.fragilityForm.atvVigorosa_dps * this.fragilityForm.atvVigorosa_mpd * 3.3))
+            if(this.fragilityForm.walkingDays !== "" || this.fragilityForm.walkingMinutesPerDay !== "" || 
+            this.fragilityForm.moderateActivityDays !== "" || this.fragilityForm.moderateActivityMinutesPerDay !== "" || 
+            this.fragilityForm.vigorousActivityDays !== "" || this.fragilityForm.vigorousActivityMinutesPerDay !== "")
+                return ((this.fragilityForm.walkingDays * this.fragilityForm.walkingMinutesPerDay * 3.3) + 
+                (this.fragilityForm.moderateActivityDays * this.fragilityForm.moderateActivityMinutesPerDay * 3.3) + 
+                (this.fragilityForm.vigorousActivityDays * this.fragilityForm.vigorousActivityMinutesPerDay * 3.3))
             else    
-                return ""
+                return ''
         },
         kcal(){
-            if(this.fragilityForm.peso!=="")
-            return this.fragilityForm.peso * (this.fragilityForm.caminhada_dps * this.fragilityForm.caminhada_mpd * 3.3) + 
-                (this.fragilityForm.atvModerada_dps * this.fragilityForm.atvModerada_mpd * 3.3) + 
-                (this.fragilityForm.atvVigorosa_dps * this.fragilityForm.atvVigorosa_mpd * 3.3)
-            else return ""
+            if(this.fragilityForm.weight!=="")
+            return this.fragilityForm.weight * (this.fragilityForm.walkingDays * this.fragilityForm.walkingMinutesPerDay * 3.3) + 
+                (this.fragilityForm.moderateActivityDays * this.fragilityForm.moderateActivityMinutesPerDay * 3.3) + 
+                (this.fragilityForm.vigorousActivityDays * this.fragilityForm.vigorousActivityMinutesPerDay * 3.3)
+            else return ''
+        },
+    },
+    async mounted() {
+      this.studentId = sessionStorage.getItem('id')
+      if (this.$props.edit) {
+        this.evaluationId = this.$route.params.id
+        const { data } = await this.$axios.get(
+          `/evaluation/${this.evaluationId}`,
+          { params: { type: 'fragilidade' } }
+        )
+      setTimeout(() => {
+        this.fragilityForm.date = formatDateToInput(data.date)
+        this.fragilityForm.weight = data.weight
+        this.fragilityForm.looseWeight = data.looseWeight
+        this.fragilityForm.activityDifficultLastWeekFrequency = data.activityDifficultLastWeekFrequency
+        this.fragilityForm.KeepGoingDifficultLastWeekFrequency = data.KeepGoingDifficultLastWeekFrequency
+        this.fragilityForm.walkingDays = data.walkingDays
+        this.fragilityForm.walkingMinutesPerDay = data.walkingMinutesPerDay
+        this.fragilityForm.moderateActivityDays = data.moderateActivityDays
+        this.fragilityForm.vigorousActivityDays = data.vigorousActivityDays
+        this.fragilityForm.vigorousActivityMinutesPerDay = data.vigorousActivityMinutesPerDay
+        this.fragilityForm.handgripStrength = data.handgripStrength
+        this.fragilityForm.imc = data.imc
+        this.fragilityForm.mets1 = data.mets1
+        this.fragilityForm.mets2 = data.mets2
+        this.fragilityForm.mets3 = data.mets3
+        this.fragilityForm.metsTotal = data.metsTotal
+        this.fragilityForm.kcal = data.kcal
+        this.fragilityForm.score = data.score
+        this.fragilityForm.result = data.result
+      }, 100)
+    }
+  },
+    methods:{
+        calc(){
+            this.fragilityForm.mets1 = (this.fragilityForm.walkingDays * this.fragilityForm.walkingMinutesPerDay * 3.3)
+            this.fragilityForm.mets2 = (this.fragilityForm.moderateActivityDays * this.fragilityForm.moderateActivityMinutesPerDay * 3.3)
+            this.fragilityForm.mets3 = (this.fragilityForm.vigorousActivityDays * this.fragilityForm.vigorousActivityMinutesPerDay * 3.3)
+            this.fragilityForm.metsTotal = ((this.fragilityForm.walkingDays * this.fragilityForm.walkingMinutesPerDay * 3.3) + 
+                (this.fragilityForm.moderateActivityDays * this.fragilityForm.moderateActivityMinutesPerDay * 3.3) + 
+                (this.fragilityForm.vigorousActivityDays * this.fragilityForm.vigorousActivityMinutesPerDay * 3.3))
+            this.fragilityForm.kcal = this.fragilityForm.weight * (this.fragilityForm.walkingDays * this.fragilityForm.walkingMinutesPerDay * 3.3) + 
+                (this.fragilityForm.moderateActivityDays * this.fragilityForm.moderateActivityMinutesPerDay * 3.3) + 
+                (this.fragilityForm.vigorousActivityDays * this.fragilityForm.vigorousActivityMinutesPerDay * 3.3)
+        },
+        submitForm(formName) {
+            this.calc()
+            this.$refs[formName].validate(async (valid) => {
+                if (valid) {
+                try {
+                    if (this.$props.edit) {
+                    await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
+                        type: 'fragilidade',
+                        data: this.fragilityForm,
+                    })
+                    this.$message({
+                        message: 'Avaliação atualizada com sucesso!',
+                        type: 'success',
+                    })
+                    } else {
+                    const evaluation = {
+                        ...this.fragilityForm,
+                    }
+                    await this.$axios.post(`/evaluation/${this.studentId}`, {
+                        type: 'fragilidade',
+                        data: evaluation,
+                    })
+                    this.$message({
+                        message: 'Avaliação criada com sucesso!',
+                        type: 'success',
+                    })
+                    }
+                    setTimeout(() => {
+                    this.$router.push({ path: '/' })
+                    }, 500)
+                } catch (error) {
+                    this.$message.error({ message: `${error.response.data.message}` })
+                }
+                }
+                return false
+            })
         },
     }
 };
