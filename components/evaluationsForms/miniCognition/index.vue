@@ -347,6 +347,7 @@
 <script>
 // eslint-disable-next-line import/no-unresolved
 import CheckInputGroup from '@/components/evaluationsForms/miniCognition/CheckInputGroup.vue';
+import formatDateToInput from '@/helpers/formatDateToInput';
 
 export default {
   name: 'MiniCognitionForm',
@@ -430,7 +431,7 @@ export default {
       );
       setTimeout(() => {
         // this.checkedGroups.date = new Date(data.date).getTime();
-        this.checkedGroups.date = data.date;
+        this.checkedGroups.date = formatDateToInput(data.date);
         this.checkedGroups.checked1_1 = data.checked1_1;
         this.checkedGroups.checked1_2 = data.checked1_2;
         this.checkedGroups.checked1_3 = data.checked1_3;
