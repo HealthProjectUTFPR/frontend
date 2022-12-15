@@ -238,7 +238,7 @@
 </template>
 
 <script>
-import formatDateToInput from '@/helpers/formatDateToInput'
+import formatDateToInput from '@/helpers/formatDateToInput';
 
 export default {
   name: 'DepressForm',
@@ -282,7 +282,7 @@ export default {
           },
         ],
       },
-    }
+    };
   },
   computed: {
     total() {
@@ -302,35 +302,35 @@ export default {
         this.depressionForm.campo13 +
         this.depressionForm.campo14 +
         this.depressionForm.campo15
-      )
+      );
     },
   },
   async mounted() {
-    this.studentId = sessionStorage.getItem('id')
+    this.studentId = sessionStorage.getItem('id');
     if (this.$props.edit) {
-      this.evaluationId = this.$route.params.id
+      this.evaluationId = this.$route.params.id;
       const { data } = await this.$axios.get(
         `/evaluation/${this.evaluationId}`,
-        { params: { type: 'Depression' } }
-      )
+        { params: { type: 'Depression' } },
+      );
       setTimeout(() => {
-        this.depressionForm.date = formatDateToInput(data.date)
-        this.depressionForm.campo1 = data.campo1
-        this.depressionForm.campo2 = data.campo2
-        this.depressionForm.campo3 = data.campo3
-        this.depressionForm.campo4 = data.campo4
-        this.depressionForm.campo5 = data.campo5
-        this.depressionForm.campo6 = data.campo6
-        this.depressionForm.campo7 = data.campo7
-        this.depressionForm.campo8 = data.campo8
-        this.depressionForm.campo9 = data.campo9
-        this.depressionForm.campo10 = data.campo10
-        this.depressionForm.campo11 = data.campo11
-        this.depressionForm.campo12 = data.campo12
-        this.depressionForm.campo13 = data.campo13
-        this.depressionForm.campo14 = data.campo14
-        this.depressionForm.campo15 = data.campo15
-      }, 100)
+        this.depressionForm.date = formatDateToInput(data.date);
+        this.depressionForm.campo1 = data.campo1;
+        this.depressionForm.campo2 = data.campo2;
+        this.depressionForm.campo3 = data.campo3;
+        this.depressionForm.campo4 = data.campo4;
+        this.depressionForm.campo5 = data.campo5;
+        this.depressionForm.campo6 = data.campo6;
+        this.depressionForm.campo7 = data.campo7;
+        this.depressionForm.campo8 = data.campo8;
+        this.depressionForm.campo9 = data.campo9;
+        this.depressionForm.campo10 = data.campo10;
+        this.depressionForm.campo11 = data.campo11;
+        this.depressionForm.campo12 = data.campo12;
+        this.depressionForm.campo13 = data.campo13;
+        this.depressionForm.campo14 = data.campo14;
+        this.depressionForm.campo15 = data.campo15;
+      }, 100);
     }
   },
   methods: {
@@ -350,10 +350,10 @@ export default {
         this.depressionForm.campo12 +
         this.depressionForm.campo13 +
         this.depressionForm.campo14 +
-        this.depressionForm.campo15
+        this.depressionForm.campo15;
     },
     submitForm(formName) {
-      this.calc()
+      this.calc();
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
@@ -361,34 +361,32 @@ export default {
               await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
                 type: 'Depression',
                 data: this.depressionForm,
-              })
+              });
               this.$message({
                 message: 'Avaliação atualizada com sucesso!',
                 type: 'success',
-              })
+              });
             } else {
-              const evaluation = {
-                ...this.depressionForm,
-              }
+              const evaluation = { ...this.depressionForm };
               await this.$axios.post(`/evaluation/${this.studentId}`, {
                 type: 'Depression',
                 data: evaluation,
-              })
+              });
               this.$message({
                 message: 'Avaliação criada com sucesso!',
                 type: 'success',
-              })
+              });
             }
             setTimeout(() => {
-              this.$router.push({ path: '/' })
-            }, 500)
+              this.$router.push({ path: '/' });
+            }, 500);
           } catch (error) {
-            this.$message.error({ message: `${error.response.data.message}` })
+            this.$message.error({ message: `${error.response.data.message}` });
           }
         }
-        return false
-      })
+        return false;
+      });
     },
   },
-}
+};
 </script>
