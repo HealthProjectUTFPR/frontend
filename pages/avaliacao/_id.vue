@@ -111,7 +111,7 @@
 
         <el-button @click="outerVisible = true">Mini Cognição</el-button>
 
-        <el-button @click="outerVisible = true">
+        <el-button @click="$router.push('/avaliacao/criar/depressao')">
           Escala de Depressão Geriátrica
         </el-button>
 
