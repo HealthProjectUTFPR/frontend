@@ -1,6 +1,5 @@
 <template>
   <div>
-    <NavBar />
     <div class="h-7 w-full bg-gray-700 text-center">
       <span class="font-sans text-xs font-bold text-white"
         >Informações do Aluno</span
@@ -27,7 +26,7 @@
     </div>
     <div
       :key="componentKey"
-      class="h-57 md: lg:7/12 mx-auto mt-16 w-7/12 shadow-2xl w-7/12"
+      class="h-57 md: lg:7/12 mx-auto mt-16 w-7/12 shadow-2xl"
     >
       <div class="mb-10 h-7 w-full bg-gray-700">
         <div class="mb-2 flex flex-row">
@@ -308,8 +307,8 @@
                   <el-form-item prop="contact">
                     <el-input
                       v-model="studentEdit.contact"
+                      v-mask="'(##) #####-####'"
                       placeholder="Contato"
-                      type="number"
                     ></el-input>
                   </el-form-item>
                 </div>
@@ -317,8 +316,8 @@
                   <el-form-item prop="emergency contact">
                     <el-input
                       v-model="studentEdit.emergencyContact"
+                      v-mask="'(##) #####-####'"
                       placeholder="Contato de emergência"
-                      type="number"
                     ></el-input>
                   </el-form-item>
                 </div>
@@ -376,10 +375,10 @@
               </el-form>
               <div class="mx-3 mt-11 flex justify-between">
                 <el-button type="danger" @click="handleCancel()"
-                  >Cancelar</el-button
+                  >Fechar</el-button
                 >
                 <el-button type="success" @click="handleEdit()"
-                  >Confirmar</el-button
+                  >Salvar</el-button
                 >
               </div>
             </div>
@@ -397,10 +396,9 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import NavBar from '@/components/bottomNav/index.vue';
 
 export default {
-  components: { NavBar },
+  components: {},
 
   data() {
     return {
