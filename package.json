@@ -23,8 +23,8 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
-    "apexcharts": "^3.36.0",
     "@vitejs/plugin-vue2": "2.1.0",
+    "apexcharts": "^3.36.0",
     "axios": "^1.1.3",
     "chart.js": "^3.9.1",
     "core-js": "^3.15.1",
@@ -34,11 +34,12 @@
     "install-peerdeps": "^3.0.3",
     "moment": "^2.29.4",
     "nuxt": "^2.15.7",
+    "v-mask": "^2.3.0",
+    "vite": "3.2.5",
+    "vitest": "0.25.6",
     "vue-apexcharts": "^1.6.2",
     "vue-chartjs": "^4.1.2",
-    "vue-chartjs-exporter": "^1.0.2",
-    "vite": "3.2.5",
-    "vitest": "0.25.6"
+    "vue-chartjs-exporter": "^1.0.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.14.7",
