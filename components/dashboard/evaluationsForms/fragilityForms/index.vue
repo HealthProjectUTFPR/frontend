@@ -559,6 +559,7 @@ export default {
         if (valid) {
           try {
             if (this.$props.edit) {
+              this.fragilidadeForm.date = new Date(this.fragilidadeForm.date)
               await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
                 type: 'fragilidade',
                 data: this.fragilidadeForm,
