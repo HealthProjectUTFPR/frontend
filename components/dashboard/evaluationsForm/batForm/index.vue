@@ -146,8 +146,10 @@
 </template>
 
 <script>
-import description from '@/components/dashboard/evaluationsForm/batForm/description.js'
-import formatDateToInput from '@/helpers/formatDateToInput'
+// eslint-disable-next-line import/no-unresolved, import/extensions
+import description from '@/components/dashboard/evaluationsForm/batForm/description.js';
+// eslint-disable-next-line import/no-unresolved, import/extensions
+import formatDateToInput from '@/helpers/formatDateToInput';
 
 export default {
   name: 'BatForm',
@@ -241,876 +243,877 @@ export default {
           },
         ],
       },
-    }
+    };
   },
   async mounted() {
-      this.studentId = sessionStorage.getItem('id');
-      const { data: studentInfos } = await this.$axios.get(
-        `/student/show/${this.studentId}`
-      )
-      this.genero = studentInfos.sex
-      this.idade = new Date().getFullYear() - new Date(studentInfos.birthDate).getFullYear()
-      if (this.$props.edit) {
-        this.evaluationId = this.$route.params.id
-        const { data } = await this.$axios.get(
-          `/evaluation/${this.evaluationId}`,
-          { params: { type: 'functionalBattery' } }
-        )
-        setTimeout(() => {
-          this.bateriaFunc.date = formatDateToInput(data.date)
-          this.bateriaFunc.sitAndDown = data.sitAndDown
-          this.bateriaFunc.elbowFlexion = data.elbowFlexion
-          this.bateriaFunc.marchWouldPark = data.marchWouldPark
-          this.bateriaFunc.sitAndReachYourFeet = data.sitAndReachYourFeet
-          this.bateriaFunc.reachTheBack = data.reachTheBack
-          this.bateriaFunc.tug = data.tug
-        }, 100)
-      }
-    },
+    this.studentId = sessionStorage.getItem('id');
+    const { data: studentInfos } = await this.$axios.get(
+      `/student/show/${this.studentId}`,
+    );
+    this.genero = studentInfos.sex;
+    this.idade =
+      new Date().getFullYear() - new Date(studentInfos.birthDate).getFullYear();
+    if (this.$props.edit) {
+      this.evaluationId = this.$route.params.id;
+      const { data } = await this.$axios.get(
+        `/evaluation/${this.evaluationId}`,
+        { params: { type: 'functionalBattery' } },
+      );
+      setTimeout(() => {
+        this.bateriaFunc.date = formatDateToInput(data.date);
+        this.bateriaFunc.sitAndDown = data.sitAndDown;
+        this.bateriaFunc.elbowFlexion = data.elbowFlexion;
+        this.bateriaFunc.marchWouldPark = data.marchWouldPark;
+        this.bateriaFunc.sitAndReachYourFeet = data.sitAndReachYourFeet;
+        this.bateriaFunc.reachTheBack = data.reachTheBack;
+        this.bateriaFunc.tug = data.tug;
+      }, 100);
+    }
+  },
   methods: {
     gerarPercentil() {
       if (this.genero === 'M') {
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarHomem.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarHomem.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarHomem.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarHomem.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarHomem.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarHomem.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarHomem.noventa[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloHomem.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloHomem.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloHomem.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloHomem.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloHomem.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloHomem.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloHomem.noventa[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaHomem.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaHomem.sessentaecincoAsessentaenove[
                 i
               ]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaHomem.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaHomem.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaHomem.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaHomem.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaHomem.noventa[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarHomem.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarHomem.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarHomem.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarHomem.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarHomem.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarHomem.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarHomem.noventa[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasHomem.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasHomem.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasHomem.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasHomem.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasHomem.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasHomem.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasHomem.noventa[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.homemTUG.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable6 = i
-              break
+              this.indiceTable6 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.homemTUG.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable6 = i
-              break
+              this.indiceTable6 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.homemTUG.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable6 = i
-              break
+              this.indiceTable6 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.homemTUG.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable6 = i
-              break
+              this.indiceTable6 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.homemTUG.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable6 = i
-              break
+              this.indiceTable6 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.homemTUG.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable6 = i
-              break
+              this.indiceTable6 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (this.bateriaFunc.tug >= description.homemTUG.noventa[i]) {
-              this.indiceTable6 = i
-              break
+              this.indiceTable6 = i;
+              break;
             }
           }
         }
       } else {
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarMulher.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarMulher.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarMulher.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarMulher.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarMulher.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarMulher.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndDown >=
               description.sentarLevantarMulher.noventa[i]
             ) {
-              this.indiceTable1 = i
-              break
+              this.indiceTable1 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloMulher.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloMulher.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloMulher.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloMulher.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloMulher.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloMulher.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.elbowFlexion >=
               description.flexaoCotoveloMulher.noventa[i]
             ) {
-              this.indiceTable2 = i
-              break
+              this.indiceTable2 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaMulher.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaMulher.sessentaecincoAsessentaenove[
                 i
               ]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaMulher.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaMulher.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaMulher.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaMulher.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.marchWouldPark >=
               description.marchaEstacionariaMulher.noventa[i]
             ) {
-              this.indiceTable3 = i
-              break
+              this.indiceTable3 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarMulher.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarMulher.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarMulher.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarMulher.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarMulher.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarMulher.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.sitAndReachYourFeet >=
               description.sentarAlcancarMulher.noventa[i]
             ) {
-              this.indiceTable4 = i
-              break
+              this.indiceTable4 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasMulher.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasMulher.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasMulher.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasMulher.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasMulher.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasMulher.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.reachTheBack >=
               description.alcancarCostasMulher.noventa[i]
             ) {
-              this.indiceTable5 = i
-              break
+              this.indiceTable5 = i;
+              break;
             }
           }
         }
         if (this.idade >= 60 && this.idade <= 64) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.mulherTUG.sessentaAsessentaequatro[i]
             ) {
-              this.indiceTable6 = i
+              this.indiceTable6 = i;
             }
           }
         } else if (this.idade >= 65 && this.idade <= 69) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.mulherTUG.sessentaecincoAsessentaenove[i]
             ) {
-              this.indiceTable6 = i
+              this.indiceTable6 = i;
             }
           }
         } else if (this.idade >= 70 && this.idade <= 74) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.mulherTUG.setentaAsetentaequatro[i]
             ) {
-              this.indiceTable6 = i
+              this.indiceTable6 = i;
             }
           }
         } else if (this.idade >= 75 && this.idade <= 79) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.mulherTUG.setentaecincoAsetentaenove[i]
             ) {
-              this.indiceTable6 = i
+              this.indiceTable6 = i;
             }
           }
         } else if (this.idade >= 80 && this.idade <= 84) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.mulherTUG.oitentaAoitentaequatro[i]
             ) {
-              this.indiceTable6 = i
+              this.indiceTable6 = i;
             }
           }
         } else if (this.idade >= 85 && this.idade <= 89) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (
               this.bateriaFunc.tug >=
               description.mulherTUG.oitentaecincoAoitentaenove[i]
             ) {
-              this.indiceTable6 = i
+              this.indiceTable6 = i;
             }
           }
         } else if (this.idade >= 90) {
-          for (let i = 0; i < 19; i++) {
+          for (let i = 0; i < 19; i += 1) {
             if (this.bateriaFunc.tug >= description.mulherTUG.noventa[i]) {
-              this.indiceTable6 = i
+              this.indiceTable6 = i;
             }
           }
         }
@@ -1120,150 +1123,150 @@ export default {
           this.indiceTable1
         ] < 30
       ) {
-        this.resultTable1 = 'RUIM'
+        this.resultTable1 = 'RUIM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable1
         ] < 55
       ) {
-        this.resultTable1 = 'REGULAR'
+        this.resultTable1 = 'REGULAR';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable1
         ] <= 70
       ) {
-        this.resultTable1 = 'BOM'
+        this.resultTable1 = 'BOM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable1
         ] > 70
       ) {
-        this.resultTable1 = 'ÓTIMO'
+        this.resultTable1 = 'ÓTIMO';
       }
       if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable2
         ] < 30
       ) {
-        this.resultTable2 = 'RUIM'
+        this.resultTable2 = 'RUIM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable2
         ] < 55
       ) {
-        this.resultTable2 = 'REGULAR'
+        this.resultTable2 = 'REGULAR';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable2
         ] <= 70
       ) {
-        this.resultTable2 = 'BOM'
+        this.resultTable2 = 'BOM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable2
         ] > 70
       ) {
-        this.resultTable2 = 'ÓTIMO'
+        this.resultTable2 = 'ÓTIMO';
       }
       if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable3
         ] < 30
       ) {
-        this.resultTable3 = 'RUIM'
+        this.resultTable3 = 'RUIM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable3
         ] < 55
       ) {
-        this.resultTable3 = 'REGULAR'
+        this.resultTable3 = 'REGULAR';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable3
         ] <= 70
       ) {
-        this.resultTable3 = 'BOM'
+        this.resultTable3 = 'BOM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable3
         ] > 70
       ) {
-        this.resultTable3 = 'ÓTIMO'
+        this.resultTable3 = 'ÓTIMO';
       }
       if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable4
         ] < 30
       ) {
-        this.resultTable4 = 'RUIM'
+        this.resultTable4 = 'RUIM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable4
         ] < 55
       ) {
-        this.resultTable4 = 'REGULAR'
+        this.resultTable4 = 'REGULAR';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable4
         ] <= 70
       ) {
-        this.resultTable4 = 'BOM'
+        this.resultTable4 = 'BOM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable4
         ] > 70
       ) {
-        this.resultTable4 = 'ÓTIMO'
+        this.resultTable4 = 'ÓTIMO';
       }
       if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable5
         ] < 30
       ) {
-        this.resultTable5 = 'RUIM'
+        this.resultTable5 = 'RUIM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable5
         ] < 55
       ) {
-        this.resultTable5 = 'REGULAR'
+        this.resultTable5 = 'REGULAR';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable5
         ] <= 70
       ) {
-        this.resultTable5 = 'BOM'
+        this.resultTable5 = 'BOM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable5
         ] > 70
       ) {
-        this.resultTable5 = 'ÓTIMO'
+        this.resultTable5 = 'ÓTIMO';
       }
       if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable6
         ] < 30
       ) {
-        this.resultTable6 = 'RUIM'
+        this.resultTable6 = 'RUIM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable6
         ] < 55
       ) {
-        this.resultTable6 = 'REGULAR'
+        this.resultTable6 = 'REGULAR';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable6
         ] <= 70
       ) {
-        this.resultTable6 = 'BOM'
+        this.resultTable6 = 'BOM';
       } else if (
         description.sentarLevantarHomem.classificacao_percentil[
           this.indiceTable6
         ] > 70
       ) {
-        this.resultTable6 = 'ÓTIMO'
+        this.resultTable6 = 'ÓTIMO';
       }
     },
     add() {
@@ -1275,9 +1278,9 @@ export default {
         this.bateriaFunc.reachTheBack === '' ||
         this.bateriaFunc.tug === ''
       ) {
-        return
+        return;
       }
-      this.gerarPercentil()
+      this.gerarPercentil();
       if (this.genero === 'homem') {
         this.tableData.push({
           result: this.bateriaFunc.sitAndDown,
@@ -1286,7 +1289,7 @@ export default {
               this.indiceTable1
             ],
           classif: this.resultTable1,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.elbowFlexion,
           percent:
@@ -1294,7 +1297,7 @@ export default {
               this.indiceTable2
             ],
           classif: this.resultTable2,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.marchWouldPark,
           percent:
@@ -1302,7 +1305,7 @@ export default {
               this.indiceTable3
             ],
           classif: this.resultTable3,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.sitAndReachYourFeet,
           percent:
@@ -1310,7 +1313,7 @@ export default {
               this.indiceTable4
             ],
           classif: this.resultTable4,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.reachTheBack,
           percent:
@@ -1318,7 +1321,7 @@ export default {
               this.indiceTable5
             ],
           classif: this.resultTable5,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.tug,
           percent:
@@ -1326,7 +1329,7 @@ export default {
               this.indiceTable6
             ],
           classif: this.resultTable6,
-        })
+        });
       } else {
         this.tableData.push({
           result: this.bateriaFunc.sitAndDown,
@@ -1335,7 +1338,7 @@ export default {
               this.indiceTable1
             ],
           classif: this.resultTable1,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.elbowFlexion,
           percent:
@@ -1343,7 +1346,7 @@ export default {
               this.indiceTable2
             ],
           classif: this.resultTable2,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.marchWouldPark,
           percent:
@@ -1351,7 +1354,7 @@ export default {
               this.indiceTable3
             ],
           classif: this.resultTable3,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.sitAndReachYourFeet,
           percent:
@@ -1359,7 +1362,7 @@ export default {
               this.indiceTable4
             ],
           classif: this.resultTable4,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.reachTheBack,
           percent:
@@ -1367,7 +1370,7 @@ export default {
               this.indiceTable5
             ],
           classif: this.resultTable5,
-        })
+        });
         this.tableData.push({
           result: this.bateriaFunc.tug,
           percent:
@@ -1375,10 +1378,10 @@ export default {
               this.indiceTable6
             ],
           classif: this.resultTable6,
-        })
+        });
       }
     },
-      submitForm(formName) {
+    submitForm(formName) {
       if (
         this.resultTable1 === '' ||
         this.resultTable2 === '' ||
@@ -1387,12 +1390,12 @@ export default {
         this.resultTable5 === '' ||
         this.resultTable6 === ''
       ) {
-        return
+        return;
       }
       this.$refs[formName].validate(async (valid) => {
-        if(valid){
+        if (valid) {
           try {
-            if(this.$props.edit){
+            if (this.$props.edit) {
               await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
                 type: 'functionalBattery',
                 data: this.bateriaFunc,
@@ -1406,60 +1409,60 @@ export default {
                 date: this.bateriaFunc.date,
                 sitAndDownResult: this.bateriaFunc.sitAndDown,
                 sitAndDownPercent:
-                description.sentarLevantarHomem.classificacao_percentil[
-                this.indiceTable1
-              ],
+                  description.sentarLevantarHomem.classificacao_percentil[
+                    this.indiceTable1
+                  ],
                 sitAndDownClassification: this.resultTable1,
                 elbowFlexionResult: this.bateriaFunc.elbowFlexion,
                 elbowFlexionPercent:
-                description.sentarLevantarHomem.classificacao_percentil[
-                this.indiceTable2
-              ],
+                  description.sentarLevantarHomem.classificacao_percentil[
+                    this.indiceTable2
+                  ],
                 elbowFlexionClassification: this.resultTable2,
                 marchWouldParkResult: this.bateriaFunc.marchWouldPark,
                 marchWouldParkPercent:
-                description.sentarLevantarMulher.classificacao_percentil[
-                this.indiceTable3
-              ],
+                  description.sentarLevantarMulher.classificacao_percentil[
+                    this.indiceTable3
+                  ],
                 marchWouldParkClassification: this.resultTable3,
                 sitAndReachYourFeetResult: this.bateriaFunc.sitAndReachYourFeet,
                 sitAndReachYourFeetPercent:
-                description.sentarLevantarMulher.classificacao_percentil[
-                this.indiceTable4
-              ],
+                  description.sentarLevantarMulher.classificacao_percentil[
+                    this.indiceTable4
+                  ],
                 sitAndReachYourFeetClassification: this.resultTable4,
                 reachTheBackResult: this.bateriaFunc.reachTheBack,
                 reachTheBackPercent:
-                description.sentarLevantarMulher.classificacao_percentil[
-                this.indiceTable5
-              ],
+                  description.sentarLevantarMulher.classificacao_percentil[
+                    this.indiceTable5
+                  ],
                 reachTheBackClassification: this.resultTable5,
                 tugResult: this.bateriaFunc.tug,
                 tugPercent:
-                description.sentarLevantarMulher.classificacao_percentil[
-                this.indiceTable6
-              ],
+                  description.sentarLevantarMulher.classificacao_percentil[
+                    this.indiceTable6
+                  ],
                 tugClassification: this.resultTable6,
-              }
-            await this.$axios.post(`/evaluation/${this.studentId}`, {
-              type: 'functionalBattery',
-              data: evaluation,
-            })
-            this.$message({
+              };
+              await this.$axios.post(`/evaluation/${this.studentId}`, {
+                type: 'functionalBattery',
+                data: evaluation,
+              });
+              this.$message({
                 message: 'Avaliação criada com sucesso!',
                 type: 'success',
-              })
+              });
             }
             setTimeout(() => {
-              this.$router.push({ path: '/' })
-            }, 500)
+              this.$router.push({ path: '/' });
+            }, 500);
           } catch (error) {
-            this.$message.error({ message: `${error.response.data.message}` })
+            this.$message.error({ message: `${error.response.data.message}` });
           }
         }
-        return false
-        })
-      },
+        return false;
+      });
     },
-}
+  },
+};
 </script>
