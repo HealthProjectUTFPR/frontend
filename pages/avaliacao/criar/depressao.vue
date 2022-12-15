@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import DepressForm from '@/components/dashboard/evaluationsForms/depressForm/index.vue';
+import DepressForm from '@/components/evaluationsForms/depressForm/index.vue';
 
 export default {
   name: 'DepressFormEvaluation',
