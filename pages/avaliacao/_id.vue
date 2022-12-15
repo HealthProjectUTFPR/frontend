@@ -257,6 +257,7 @@ export default {
           orderBy: 'updatedAt',
         },
       });
+
       this.tableData = list.data.map((it) => ({
         id: it.id,
         avaliacao: getEditRouter(it.name).evaluationName,
@@ -268,7 +269,6 @@ export default {
   },
 };
 </script>
-.el-button {
 
 <style scoped>
 .el-button {
