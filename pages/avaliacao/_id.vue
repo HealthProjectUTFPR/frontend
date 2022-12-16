@@ -109,7 +109,9 @@
           Avaliação de Equilíbrio
         </el-button>
 
-        <el-button @click="outerVisible = true">Mini Cognição</el-button>
+        <el-button @click="$router.push('/avaliacao/criar/miniCognicao')">
+          Mini Cognição
+        </el-button>
 
         <el-button @click="$router.push('/avaliacao/criar/depressao')">
           Escala de Depressão Geriátrica
