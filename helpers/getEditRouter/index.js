@@ -20,7 +20,7 @@ const getEditRouter = (formName) => {
         evaluationName: 'Equilíbrio',
         to: '/avaliacao/editar/equilibrio',
       };
-    case 'miniCognition':
+    case 'MiniCognition':
       return {
         evaluationName: 'Mini Cognição',
         to: '/avaliacao/editar/miniCognicao',
