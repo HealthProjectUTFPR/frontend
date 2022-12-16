@@ -109,9 +109,11 @@
           Avaliação de Equilíbrio
         </el-button>
 
-        <el-button @click="outerVisible = true">Mini Cognição</el-button>
+        <el-button @click="$router.push('/avaliacao/criar/miniCognicao')">
+          Mini Cognição
+        </el-button>
 
-        <el-button @click="outerVisible = true">
+        <el-button @click="$router.push('/avaliacao/criar/depressao')">
           Escala de Depressão Geriátrica
         </el-button>
 
@@ -119,7 +121,9 @@
           Avaliação de Sarcopenia
         </el-button>
 
-        <el-button @click="outerVisible = true">Bateria Funcional</el-button>
+        <el-button @click="$router.push('/avaliacao/criar/bateriaFuncional')">
+          Bateria Funcional
+        </el-button>
 
         <el-button
           @click="
@@ -257,6 +261,7 @@ export default {
           orderBy: 'updatedAt',
         },
       });
+
       this.tableData = list.data.map((it) => ({
         id: it.id,
         avaliacao: getEditRouter(it.name).evaluationName,
@@ -268,7 +273,6 @@ export default {
   },
 };
 </script>
-.el-button {
 
 <style scoped>
 .el-button {
