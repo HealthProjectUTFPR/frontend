@@ -25,6 +25,11 @@ const getEditRouter = (formName) => {
         evaluationName: 'Depressão',
         to: '/avaliacao/editar/depressao',
       };
+    case 'functionalBattery':
+      return {
+        evaluationName: 'Bateria Funcional',
+        to: '/avaliacao/editar/bateriaFuncional',
+      };
     default:
       return undefined;
   }
