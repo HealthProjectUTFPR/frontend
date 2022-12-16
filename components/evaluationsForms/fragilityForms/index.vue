@@ -246,7 +246,6 @@
         <span>Frágilidade: {{ classificacao }}</span>
       </div>
 
-
       <el-divider content-position="center">Descrição</el-divider>
       <el-alert
         :title="`Mets Total:${metsTotal}`"
@@ -269,8 +268,10 @@
 </template>
 
 <script>
-import formatDateToInput from '@/helpers/formatDateToInput'
-import imcFunc from '@/helpers/evaluations/fragility/imc/index'
+// eslint-disable-next-line import/no-unresolved, import/extensions
+import formatDateToInput from '@/helpers/formatDateToInput';
+// eslint-disable-next-line import/no-unresolved, import/extensions
+import imcFunc from '@/helpers/evaluations/fragility/imc/index';
 
 export default {
   name: 'FragilityForm',
@@ -323,33 +324,33 @@ export default {
           },
         ],
       },
-    }
+    };
   },
   computed: {
-    calculoIPAQ(){
-      return this.mets1 + this.mets2 + this.mets3 + this.metsTotal + this.kcal
+    calculoIPAQ() {
+      return this.mets1 + this.mets2 + this.mets3 + this.metsTotal + this.kcal;
     },
     calculateWalkingTest() {
       if (this.genero === 'M') {
         if (this.fragilidadeForm.time > 7 && this.studentInfos.height <= 1.73) {
-          return 1
+          return 1;
         }
 
         if (this.fragilidadeForm.time > 6 && this.studentInfos.height > 1.73) {
-          return 1
+          return 1;
         }
       }
 
       if (this.genero === 'W') {
         if (this.fragilidadeForm.time > 7 && this.studentInfos.height <= 1.73) {
-          return 1
+          return 1;
         }
 
         if (this.fragilidadeForm.time > 6 && this.studentInfos.height > 1.59) {
-          return 1
+          return 1;
         }
       }
-      return 0
+      return 0;
     },
     calculateHandgripStrength() {
       if (this.genero === 'M') {
@@ -357,49 +358,61 @@ export default {
           this.fragilidadeForm.handgripStrength <= 29 &&
           this.fragilidadeForm.imc <= 24
         ) {
-          return 1
-        } else if (this.fragilidadeForm.handgripStrength <= 30) {
-          if (this.fragilidadeForm.imc >= 24.1 && this.fragilidadeForm.imc <= 26) {
-            return 1
-          } else if (
+          return 1;
+        }
+        if (this.fragilidadeForm.handgripStrength <= 30) {
+          if (
+            this.fragilidadeForm.imc >= 24.1 &&
+            this.fragilidadeForm.imc <= 26
+          ) {
+            return 1;
+          }
+          if (
             this.fragilidadeForm.imc >= 26.1 &&
             this.fragilidadeForm.imc <= 28
           ) {
-            return 1
+            return 1;
           }
         } else if (
           this.fragilidadeForm.handgripStrength <= 32 &&
           this.fragilidadeForm.imc >= 29
         ) {
-          return 1
+          return 1;
         }
       } else if (this.genero === 'W') {
         if (
           this.fragilidadeForm.handgripStrength <= 17 &&
           this.fragilidadeForm.imc <= 23
         ) {
-          return 1
-        } else if (this.fragilidadeForm.handgripStrength <= 17.3) {
-          if (this.fragilidadeForm.imc >= 25.1 && this.fragilidadeForm.imc <= 26) {
-            return 1
+          return 1;
+        }
+        if (this.fragilidadeForm.handgripStrength <= 17.3) {
+          if (
+            this.fragilidadeForm.imc >= 25.1 &&
+            this.fragilidadeForm.imc <= 26
+          ) {
+            return 1;
           }
         }
         if (this.fragilidadeForm.handgripStrength <= 18) {
-          if (this.fragilidadeForm.imc >= 26.1 && this.fragilidadeForm.imc <= 29) {
-            return 1
+          if (
+            this.fragilidadeForm.imc >= 26.1 &&
+            this.fragilidadeForm.imc <= 29
+          ) {
+            return 1;
           }
         } else if (
           this.fragilidadeForm.handgripStrength <= 21 &&
           this.fragilidadeForm.imc >= 29
         ) {
-          return 1
+          return 1;
         }
       }
 
-      return 0
+      return 0;
     },
     imc() {
-      return imcFunc(this.fragilidadeForm.weight, this.studentInfos.height)
+      return imcFunc(this.fragilidadeForm.weight, this.studentInfos.height);
     },
     mets1() {
       if (
@@ -410,32 +423,35 @@ export default {
           this.fragilidadeForm.walkingDays *
           this.fragilidadeForm.walkingMinutesPerDay *
           3.3
-        )
-      } else return ''
+        );
+      }
+      return '';
     },
     mets2() {
       if (
         this.fragilidadeForm.moderateActivityDays !== '' &&
         this.fragilidadeForm.moderateActivityMinutesPerDay !== ''
-      )
+      ) {
         return (
           this.fragilidadeForm.moderateActivityDays *
           this.fragilidadeForm.moderateActivityMinutesPerDay *
           4
-        )
-      else return ''
+        );
+      }
+      return '';
     },
     mets3() {
       if (
         this.fragilidadeForm.vigorousActivityDays !== '' &&
         this.fragilidadeForm.vigorousActivityMinutesPerDay !== ''
-      )
+      ) {
         return (
           this.fragilidadeForm.vigorousActivityDays *
           this.fragilidadeForm.vigorousActivityMinutesPerDay *
           8
-        )
-      else return ''
+        );
+      }
+      return '';
     },
     metsTotal() {
       if (
@@ -445,114 +461,115 @@ export default {
         this.fragilidadeForm.moderateActivityMinutesPerDay !== '' ||
         this.fragilidadeForm.vigorousActivityDays !== '' ||
         this.fragilidadeForm.vigorousActivityMinutesPerDay !== ''
-      )
-        return (
-          this.mets1 + this.mets2 + this.mets3
-        )
-      else return ''
+      ) {
+        return this.mets1 + this.mets2 + this.mets3;
+      }
+      return '';
     },
     kcal() {
-      if (this.fragilidadeForm.weight !== '')
-        return (this.metsTotal * this.fragilidadeForm.weight) / 60
-      else return ''
+      if (this.fragilidadeForm.weight !== '') {
+        return (this.metsTotal * this.fragilidadeForm.weight) / 60;
+      }
+      return '';
     },
   },
   async mounted() {
-    this.studentId = sessionStorage.getItem('id')
+    this.studentId = sessionStorage.getItem('id');
     const { data: studentInfos } = await this.$axios.get(
-      `/student/show/${this.studentId}`
-    )
-    this.genero = studentInfos.sex
-    this.studentInfos.height = studentInfos.stature
+      `/student/show/${this.studentId}`,
+    );
+    this.genero = studentInfos.sex;
+    this.studentInfos.height = studentInfos.stature;
     if (this.$props.edit) {
-      this.evaluationId = this.$route.params.id
+      this.evaluationId = this.$route.params.id;
       const { data } = await this.$axios.get(
         `/evaluation/${this.evaluationId}`,
-        { params: { type: 'fragilidade' } }
-      )
+        { params: { type: 'fragilidade' } },
+      );
       setTimeout(() => {
-        this.fragilidadeForm.date = formatDateToInput(data.date)
-        this.teste = data.date
-        this.fragilidadeForm.weight = data.weight
-        this.fragilidadeForm.looseWeight = data.looseWeight
+        this.fragilidadeForm.date = formatDateToInput(data.date);
+        this.teste = data.date;
+        this.fragilidadeForm.weight = data.weight;
+        this.fragilidadeForm.looseWeight = data.looseWeight;
         this.fragilidadeForm.activityDifficultLastWeekFrequency =
-          data.activityDifficultLastWeekFrequency
+          data.activityDifficultLastWeekFrequency;
         this.fragilidadeForm.KeepGoingDifficultLastWeekFrequency =
-          data.KeepGoingDifficultLastWeekFrequency
-        this.fragilidadeForm.walkingDays = data.walkingDays
-        this.fragilidadeForm.walkingMinutesPerDay = data.walkingMinutesPerDay
-        this.fragilidadeForm.moderateActivityDays = data.moderateActivityDays
-        this.fragilidadeForm.moderateActivityMinutesPerDay = data.moderateActivityMinutesPerDay
-        this.fragilidadeForm.vigorousActivityDays = data.vigorousActivityDays
+          data.KeepGoingDifficultLastWeekFrequency;
+        this.fragilidadeForm.walkingDays = data.walkingDays;
+        this.fragilidadeForm.walkingMinutesPerDay = data.walkingMinutesPerDay;
+        this.fragilidadeForm.moderateActivityDays = data.moderateActivityDays;
+        this.fragilidadeForm.moderateActivityMinutesPerDay =
+          data.moderateActivityMinutesPerDay;
+        this.fragilidadeForm.vigorousActivityDays = data.vigorousActivityDays;
         this.fragilidadeForm.vigorousActivityMinutesPerDay =
-          data.vigorousActivityMinutesPerDay
-        this.fragilidadeForm.handgripStrength = data.handgripStrength
-        this.fragilidadeForm.imc = data.imc
-        this.fragilidadeForm.mets1 = data.mets1
-        this.fragilidadeForm.mets2 = data.mets2
-        this.fragilidadeForm.mets3 = data.mets3
-        this.fragilidadeForm.metsTotal = data.metsTotal
-        this.fragilidadeForm.kcal = data.kcal
-        this.fragilidadeForm.score = data.score
-        this.fragilidadeForm.time = data.time
-        this.fragilidadeForm.result = data.result
-      }, 100)
+          data.vigorousActivityMinutesPerDay;
+        this.fragilidadeForm.handgripStrength = data.handgripStrength;
+        this.fragilidadeForm.imc = data.imc;
+        this.fragilidadeForm.mets1 = data.mets1;
+        this.fragilidadeForm.mets2 = data.mets2;
+        this.fragilidadeForm.mets3 = data.mets3;
+        this.fragilidadeForm.metsTotal = data.metsTotal;
+        this.fragilidadeForm.kcal = data.kcal;
+        this.fragilidadeForm.score = data.score;
+        this.fragilidadeForm.time = data.time;
+        this.fragilidadeForm.result = data.result;
+      }, 100);
     }
   },
   methods: {
-    gerarClassificacao(){
-      if(this.soma === 0){
-        this.classificacao = 'não frágil'
-      } else if(this.soma === 1){
-        this.classificacao = 'pré frágil'
-      } else if(this.soma === 2){
-        this.classificacao = 'pré frágil'
-      } else if(this.soma >= 3){
-        this.classificacao = 'frágil'
+    gerarClassificacao() {
+      if (this.soma === 0) {
+        this.classificacao = 'não frágil';
+      } else if (this.soma === 1) {
+        this.classificacao = 'pré frágil';
+      } else if (this.soma === 2) {
+        this.classificacao = 'pré frágil';
+      } else if (this.soma >= 3) {
+        this.classificacao = 'frágil';
       }
-      return 0
+      return 0;
     },
     calcularFragilidade() {
-      this.fragilidadeForm.imc = this.imc
-      this.calc()
+      this.fragilidadeForm.imc = this.imc;
+      this.calc();
       // perda de peso
-      this.soma += this.fragilidadeForm.looseWeight >= 4.5 ? 1 : 0
+      this.soma += this.fragilidadeForm.looseWeight >= 4.5 ? 1 : 0;
       // dificuldade em fazer exercicios
       this.soma +=
         this.fragilidadeForm.activityDifficultLastWeekFrequency >= 2 ||
         this.fragilidadeForm.KeepGoingDifficultLastWeekFrequency >= 2
           ? 1
-          : 0
+          : 0;
       // teste de caminhada
-      this.soma += this.calculateWalkingTest
+      this.soma += this.calculateWalkingTest;
       // teste de IPAQ
       if (
         this.mets1 + this.mets2 + this.mets3 + this.metsTotal + this.kcal <
         383
       ) {
-        this.soma += 1
+        this.soma += 1;
       } else {
-        this.soma += 0
+        this.soma += 0;
       }
-      
-      this.soma += this.calculateHandgripStrength
-      this.gerarClassificacao()
-      this.fragilidadeForm.score = this.soma
-      this.fragilidadeForm.result = this.classificacao
+
+      this.soma += this.calculateHandgripStrength;
+      this.gerarClassificacao();
+      this.fragilidadeForm.score = this.soma;
+      this.fragilidadeForm.result = this.classificacao;
     },
     calc() {
-      this.fragilidadeForm.mets1 = this.mets1
-        
-      this.fragilidadeForm.mets2 = this.mets2
-       
-      this.fragilidadeForm.mets3 = this.mets3
+      this.fragilidadeForm.mets1 = this.mets1;
 
-      this.fragilidadeForm.metsTotal = this.metsTotal
+      this.fragilidadeForm.mets2 = this.mets2;
 
-      this.fragilidadeForm.kcal = this.kcal
+      this.fragilidadeForm.mets3 = this.mets3;
+
+      this.fragilidadeForm.metsTotal = this.metsTotal;
+
+      this.fragilidadeForm.kcal = this.kcal;
     },
     submitForm(formName) {
-      this.calc()
+      this.calc();
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
@@ -560,36 +577,34 @@ export default {
               await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
                 type: 'fragilidade',
                 data: this.fragilidadeForm,
-              })
+              });
               this.$message({
                 message: 'Avaliação atualizada com sucesso!',
                 type: 'success',
-              })
+              });
             } else {
-              const evaluation = {
-                ...this.fragilidadeForm,
-              }
+              const evaluation = { ...this.fragilidadeForm };
               await this.$axios.post(`/evaluation/${this.studentId}`, {
                 type: 'fragilidade',
                 data: evaluation,
-              })
+              });
               this.$message({
                 message: 'Avaliação criada com sucesso!',
                 type: 'success',
-              })
+              });
             }
             setTimeout(() => {
-              this.$router.push({ path: '/' })
-            }, 500)
+              this.$router.push({ path: '/' });
+            }, 500);
           } catch (error) {
-            this.$message.error({ message: `${error.response.data.message}` })
+            this.$message.error({ message: `${error.response.data.message}` });
           }
         }
-        return false
-      })
+        return false;
+      });
     },
   },
-}
+};
 </script>
 
 <style>
