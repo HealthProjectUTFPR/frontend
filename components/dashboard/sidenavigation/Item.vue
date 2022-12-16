@@ -3,17 +3,17 @@
     <router-link :to="to">
       <span
         class="
-          duration-200
+          my-2
           flex
-          font-thin
+          w-full
           items-center
           justify-start
-          my-2
           p-4
-          transition-colors
-          text-gray-500
+          font-thin
           uppercase
-          w-full
+          text-gray-500
+          transition-colors
+          duration-200
           lg:hover:text-blue-500
         "
         :class="
@@ -24,7 +24,7 @@
         <span>
           <slot />
         </span>
-        <span class="font-normal mx-4 text-sm">
+        <span class="mx-4 text-sm font-normal">
           {{ title }}
         </span>
       </span>
@@ -45,5 +45,5 @@ export default {
       default: '',
     },
   },
-}
+};
 </script>

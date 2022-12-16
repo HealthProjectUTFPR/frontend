@@ -1,15 +1,26 @@
 <template>
   <div>
-  <FragilityForms />
+    <!-- <EvaluationsFormsBalanceForm /> -->
+    <!-- <BodyCompositionForm /> -->
+    <!-- <SarcopeniaForm /> -->
+    <CardioRespiratoryForm />
+    <BalanceForm />
+    <DepressForm />
+    <BatForm />
+    <FragilityForms />
   </div>
 </template>
 
 <script>
-// import AvdForms from '../components/dashboard/evaluationsForms/avdForms/index.vue'; 
-import FragilityForms from '../components/evaluationsForms/fragilityForms/index.vue';
+// import BodyCompositionForm from '@/components/evaluationsForms/bodyCompositionForm/index.vue';
+// import SarcopeniaForm from '@/somponents/evaluationsForms/sarcopenia/index.vue';
+// import BalanceForm from '@/components/evaluationsForms/balanceForm/index.vue';
+// import CardioRespiratoryForm from '@/components/evaluationsForms/cardiorespiratoryCapacity/index.vue';
+// import DepressForm from '../components/evaluationsForms/depressForm/index.vue';
+import BatForm from '../components/evaluationsForms/batForm/index.vue';
 
 export default {
-    name: 'IndexPage',
-    components: { FragilityForms },
-}
+  name: 'IndexPage',
+  components: { BatForm },
+};
 </script>
