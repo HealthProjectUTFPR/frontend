@@ -267,6 +267,7 @@ export default {
         this.avdForm.transfer = data.transfer;
         this.avdForm.salute = data.salute;
         this.avdForm.feeding = data.feeding;
+        this.avdForm.result = data.result;
       }, 100);
     }
   },
@@ -612,7 +613,7 @@ export default {
       return 0;
     },
     calc() {
-      this.result =
+      this.avdForm.result =
         this.avdForm.bath +
         this.avdForm.dress +
         this.avdForm.bathroom +
