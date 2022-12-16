@@ -16,7 +16,7 @@
       ></el-input>
       <span class="px-3">Date: </span>
       <el-date-picker
-        v-model="checkedGroups.date"
+        v-model="date"
         type="date"
         placeholder="XX/XX/XXXX"
         size="large"
@@ -368,7 +368,6 @@ export default {
       colSpan: 12,
       result: '',
       checkedGroups: {
-        date: '',
         checked: false,
         checked1_1: false,
         checked1_2: false,
@@ -406,6 +405,7 @@ export default {
         checked11_1: false,
         checked12_1: false,
       },
+      date: '',
       descriptions: {},
       studentId: '',
       evaluationId: '',
@@ -431,8 +431,7 @@ export default {
         { params: { type: 'MiniCognition' } },
       );
       setTimeout(() => {
-        // this.checkedGroups.date = new Date(data.date).getTime();
-        this.checkedGroups.date = formatDateToInput(data.date);
+        this.date = formatDateToInput(data.date);
         this.checkedGroups.checked1_1 = data.checked1_1;
         this.checkedGroups.checked1_2 = data.checked1_2;
         this.checkedGroups.checked1_3 = data.checked1_3;
@@ -491,7 +490,7 @@ export default {
     async submitForm() {
       const evaluation = {
         scholarity: Number(this.scholarity),
-        date: this.checkedGroups.date,
+        date: this.date,
         checked1_1: this.checkedGroups.checked1_1,
         checked1_2: this.checkedGroups.checked1_2,
         checked1_3: this.checkedGroups.checked1_3,
