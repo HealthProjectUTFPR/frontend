@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import descriptions from '@/components/dashboard/evaluationsForms/avdForms/descriptions';
+import descriptions from '@/components/evaluationsForms/avdForms/descriptions';
 import formatDateToInput from '@/helpers/formatDateToInput'
 
 export default {

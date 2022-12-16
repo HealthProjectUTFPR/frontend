@@ -101,7 +101,7 @@
             Avaliação de Fragilidade
           </el-button>
   
-          <el-button @click="outerVisible = true">
+          <el-button @click="$router.push('/avaliacao/criar/avd')">
             Independência nas Atividades Diárias
           </el-button>
   
