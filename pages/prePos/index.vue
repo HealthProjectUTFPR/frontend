@@ -68,11 +68,7 @@
 
             <section class="wrap container">
               <div class="edit_delet">
-                <el-button
-                  type="primary"
-                  round
-                  size="medium"
-                  @click="getEntity(props.row)"
+                <el-button type="primary" @click="getEntity(props.row)"
                   >Editar</el-button
                 >
                 <el-popconfirm
@@ -81,7 +77,7 @@
                   cancel-button-text="Cancelar"
                   @confirm="handleDelete(props.$index, props.row)"
                 >
-                  <el-button slot="reference" size="medium" type="danger" round>
+                  <el-button slot="reference" type="danger">
                     Deletar
                   </el-button>
                 </el-popconfirm>
@@ -95,19 +91,37 @@
             <h3>{{ moment(props.row.date).format('DD/MM/YYYY') }}</h3>
           </template>
         </el-table-column>
-
+        <!--
+            <el-button
+              type="primary"
+              icon="el-icon-data-analysis"
+              @click="$router.push('prepos/monitoringPrePos')"
+            >
+              Ver desempenho
+            </el-button>
+            <el-button
+              class="criar"
+              type="primary"
+              icon="el-icon-circle-plus"
+              @click="addNewEntity()"
+            >
+              Criar
+            </el-button>
+        -->
         <el-table-column align="right">
           <template slot="header">
-            <div class="register">
+            <div class="buttons">
               <el-button
-                class="register"
                 type="primary"
-                round
-                size="mini"
+                icon="el-icon-data-analysis"
+                circle
+                @click="$router.push('prepos/monitoringPrePos')"
+              />
+              <el-button
+                type="primary"
+                icon="el-icon-circle-plus"
                 @click="addNewEntity()"
-              >
-                Adicionar
-              </el-button>
+              />
             </div>
           </template>
         </el-table-column>
@@ -530,6 +544,12 @@ h3 {
     font-size: 15px;
   }
 }
+@media only screen and (max-device-width: 419px) {
+  .el-button .criar {
+    color: bisque;
+    size: 'mini';
+  }
+}
 @media only screen and (max-device-width: 395px) {
   h3 {
     font-size: 13px;
@@ -549,6 +569,10 @@ h3 {
   h3 {
     font-size: 16px;
   }
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
 }
 
 .text_box {

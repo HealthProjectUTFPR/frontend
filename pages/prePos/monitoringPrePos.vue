@@ -57,12 +57,7 @@
           </el-select>
         </div>
         <div class="order5">
-          <el-button
-            type="primary"
-            round
-            class="btt2"
-            @click="() => graficoPrePos()"
-          >
+          <el-button type="primary" class="btt2" @click="() => graficoPrePos()">
             Buscar
           </el-button>
         </div>
