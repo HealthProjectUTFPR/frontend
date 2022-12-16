@@ -121,7 +121,9 @@
           Avaliação de Sarcopenia
         </el-button>
 
-        <el-button @click="outerVisible = true">Bateria Funcional</el-button>
+        <el-button @click="$router.push('/avaliacao/criar/bateriaFuncional')">
+          Bateria Funcional
+        </el-button>
 
         <el-button
           @click="
