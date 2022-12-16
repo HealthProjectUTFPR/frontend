@@ -533,7 +533,11 @@ export default {
           type: 'MiniCognition',
           data: evaluation,
         });
-        this.$router.go();
+        this.$message({
+          message: 'Avaliação criada com sucesso!',
+          type: 'success',
+        });
+        // this.$router.go();
       } catch (error) {
         this.$notify.error({
           title: 'Erro',
