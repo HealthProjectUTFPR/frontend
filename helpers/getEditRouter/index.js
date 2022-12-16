@@ -24,6 +24,11 @@ const getEditRouter = (formName) => {
       return {
         evaluationName: 'Mini Cognição',
         to: '/avaliacao/editar/miniCognicao',
+      }
+    case 'Depression':
+      return {
+        evaluationName: 'Depressão',
+        to: '/avaliacao/editar/depressao',
       };
     default:
       return undefined;

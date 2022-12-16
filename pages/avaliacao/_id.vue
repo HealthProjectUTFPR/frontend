@@ -113,7 +113,7 @@
           Mini Cognição
         </el-button>
 
-        <el-button @click="outerVisible = true">
+        <el-button @click="$router.push('/avaliacao/criar/depressao')">
           Escala de Depressão Geriátrica
         </el-button>
 
@@ -259,6 +259,7 @@ export default {
           orderBy: 'updatedAt',
         },
       });
+
       this.tableData = list.data.map((it) => ({
         id: it.id,
         avaliacao: getEditRouter(it.name).evaluationName,
@@ -270,7 +271,6 @@ export default {
   },
 };
 </script>
-.el-button {
 
 <style scoped>
 .el-button {
