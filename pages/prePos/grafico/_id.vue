@@ -7,21 +7,6 @@
     </div>
     <div class="shadow-lg p-4 bg-white dark:bg-gray-700 w-full">
       <div class="OptionsPicker">
-        <div class="order1">
-          <el-select
-            v-model="value"
-            class="select"
-            filterable
-            placeholder="Alunos"
-          >
-            <el-option
-              v-for="item in alunos"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
-        </div>
         <div class="order3">
           <div class="date">
             <el-date-picker
@@ -86,6 +71,7 @@ export default {
       value: '',
       graphon: false,
       display: false,
+      student_Id: '',
       alunos: [],
       prePoso: [
         {
@@ -148,13 +134,8 @@ export default {
       },
     };
   },
-  watch: {
-    value() {
-      this.fetchData();
-    },
-  },
   mounted() {
-    this.getStudents();
+    this.fetchData();
   },
   methods: {
     moment,
@@ -233,7 +214,6 @@ export default {
         },
       });
     },
-    // eslint-disable-next-line object-shorthand
     changeDiplay() {
       if (this.display === false) {
         this.display = true;
@@ -282,9 +262,12 @@ export default {
       }
     },
     async fetchData() {
+      this.student_Id = this.$route.params.id;
       this.loading = true;
       try {
-        const { data } = await this.$axios.get(`/prepos/student/${this.value}`);
+        const { data } = await this.$axios.get(
+          `/prepos/student/${this.student_Id}`,
+        );
         this.items = data.data;
       } catch (e) {
         this.$notify.error({
@@ -318,6 +301,7 @@ export default {
 .OptionsPicker {
   margin: 0 auto;
   display: flex;
+  justify-content: center;
   width: 100%;
 }
 .select {

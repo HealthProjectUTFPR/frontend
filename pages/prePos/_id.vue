@@ -6,14 +6,6 @@
       >
     </div>
     <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-700 w-full">
-      <el-select v-model="value" filterable placeholder="Alunos">
-        <el-option
-          v-for="item in alunos"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
-        />
-      </el-select>
       <el-table v-loading="loading" :data="tableData">
         <el-table-column type="expand">
           <template #default="props">
@@ -107,22 +99,24 @@
             >
               Criar
             </el-button>
+            <el-icon><DataBoard /></el-icon>
         -->
         <el-table-column align="right">
           <template slot="header">
-            <div class="buttons">
-              <el-button
-                type="primary"
-                icon="el-icon-data-analysis"
-                circle
-                @click="$router.push('prepos/monitoringPrePos')"
-              />
-              <el-button
-                type="primary"
-                icon="el-icon-circle-plus"
-                @click="addNewEntity()"
-              />
-            </div>
+            <el-button
+              type="primary"
+              icon="el-icon-circle-plus"
+              @click="addNewEntity()"
+            >
+              Criar
+            </el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-data-analysis"
+              @click="$router.push(`/prePos/grafico/${student_Id}`)"
+            >
+              Desempenho
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -349,10 +343,9 @@ export default {
         height: 768,
       },
       tableData: [],
-      alunos: [],
-      value: '',
       defaultTime: '',
       loading: false,
+      student_Id: '',
       dialogFormVisible: false,
       form: {
         date: 'date',
@@ -372,13 +365,8 @@ export default {
       rules: { date: [] },
     };
   },
-  watch: {
-    value() {
-      this.fetchData();
-    },
-  },
   mounted() {
-    this.getStudents();
+    this.fetchData();
     window.addEventListener('resize', this.handleResize);
   },
 
@@ -387,15 +375,15 @@ export default {
   },
   methods: {
     moment,
-    async getStudents() {
-      const data = await this.$axios.$get('/student/index');
-      this.alunos = data;
-    },
     async fetchData() {
+      this.student_Id = this.$route.params.id;
       this.loading = true;
       try {
-        const { data } = await this.$axios.get(`/prepos/student/${this.value}`);
+        const { data } = await this.$axios.get(
+          `/prepos/student/${this.student_Id}`,
+        );
         this.tableData = data.data;
+        this.tableData.sort((a, b) => new Date(b.date) - new Date(a.date));
       } catch (e) {
         this.$notify.error({
           title: 'Erro',
@@ -446,7 +434,7 @@ export default {
               pseEPos: Number(this.form.pseEPos),
               horarioTreino: Number(this.form.horarioTreino),
               observacao: this.form.observacao,
-              studentId: this.value,
+              studentId: this.student_Id,
             });
             this.$notify.success({
               title: 'Sucesso',
