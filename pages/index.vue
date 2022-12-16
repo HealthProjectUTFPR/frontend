@@ -7,6 +7,7 @@
     <BalanceForm />
     <DepressForm />
     <BatForm />
+    <FragilityForms />
   </div>
 </template>
 
