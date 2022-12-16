@@ -424,6 +424,7 @@ export default {
 
   async mounted() {
     this.studentId = sessionStorage.getItem('id');
+    this.evaluationId = this.$route.params.id;
     if (this.$props.edit) {
       const { data } = await this.$axios.get(
         `/evaluation/${this.evaluationId}`,
