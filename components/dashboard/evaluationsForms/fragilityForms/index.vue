@@ -494,6 +494,7 @@ export default {
         this.fragilidadeForm.metsTotal = data.metsTotal
         this.fragilidadeForm.kcal = data.kcal
         this.fragilidadeForm.score = data.score
+        this.fragilidadeForm.time = data.time
         this.fragilidadeForm.result = data.result
       }, 100)
     }
@@ -538,9 +539,6 @@ export default {
       this.gerarClassificacao()
       this.fragilidadeForm.score = this.soma
       this.fragilidadeForm.result = this.classificacao
-      console.log(this.fragilidadeForm)
-      console.log(this.fragilidadeForm.date)
-      console.log(this.teste)
     },
     calc() {
       this.fragilidadeForm.mets1 = this.mets1
@@ -559,7 +557,6 @@ export default {
         if (valid) {
           try {
             if (this.$props.edit) {
-              this.fragilidadeForm.date = new Date(this.fragilidadeForm.date)
               await this.$axios.patch(`/evaluation/${this.evaluationId}`, {
                 type: 'fragilidade',
                 data: this.fragilidadeForm,
