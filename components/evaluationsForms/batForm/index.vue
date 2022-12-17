@@ -146,10 +146,8 @@
 </template>
 
 <script>
-// eslint-disable-next-line import/no-unresolved, import/extensions
-import description from '@/components/dashboard/evaluationsForm/batForm/description.js';
-// eslint-disable-next-line import/no-unresolved, import/extensions
 import formatDateToInput from '@/helpers/formatDateToInput';
+import description from '@/helpers/batForm/description';
 
 export default {
   name: 'BatForm',

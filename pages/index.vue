@@ -7,6 +7,7 @@
     <BalanceForm />
     <DepressForm />
     <BatForm />
+    <FragilityForms />
   </div>
 </template>
 
@@ -16,7 +17,7 @@
 // import BalanceForm from '@/components/evaluationsForms/balanceForm/index.vue';
 // import CardioRespiratoryForm from '@/components/evaluationsForms/cardiorespiratoryCapacity/index.vue';
 // import DepressForm from '../components/evaluationsForms/depressForm/index.vue';
-import BatForm from '../components/dashboard/evaluationsForm/batForm/index.vue';
+import BatForm from '../components/evaluationsForms/batForm/index.vue';
 
 export default {
   name: 'IndexPage',

@@ -104,11 +104,11 @@
           md:max-h-[50vh] md:overflow-y-scroll
         "
       >
-        <el-button @click="outerVisible = true">
+        <el-button @click="$router.push('/avaliacao/criar/fragilidade')">
           Avaliação de Fragilidade
         </el-button>
 
-        <el-button @click="outerVisible = true">
+        <el-button @click="$router.push('/avaliacao/criar/avd')">
           Independência nas Atividades Diárias
         </el-button>
 

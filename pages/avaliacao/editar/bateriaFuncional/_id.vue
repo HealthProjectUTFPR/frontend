@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import BatForm from '@/components/dashboard/evaluationsForm/batForm/index.vue';
+import BatForm from '@/components/evaluationsForms/batForm/index.vue';
 
 export default {
   name: 'BatFormEdit',
