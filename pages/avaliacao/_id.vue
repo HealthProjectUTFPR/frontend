@@ -15,6 +15,13 @@
           </el-button>
           <el-button
             type="primary"
+            icon="el-icon-tickets"
+            @click="$router.push(`/prepos/${studentId}`)"
+          >
+            Monitoramento
+          </el-button>
+          <el-button
+            type="primary"
             icon="el-icon-data-analysis"
             @click="$router.push('/avalgraficos/')"
           >
