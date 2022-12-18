@@ -315,14 +315,14 @@
         <!-- Botoes no fim do modal -->
         <div class="mt-10 flex w-full justify-center">
           <el-button icon="el-icon-error" @click="dialogFormVisible = false">
-            Cancelar
+            Limpar
           </el-button>
           <el-button
             type="primary"
             icon="el-icon-success"
             @click="handleConfirm()"
           >
-            Confirmar
+            Salvar
           </el-button>
         </div>
         <span slot="footer" class="dialog-footer"> </span>
